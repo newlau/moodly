@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodly - AI陪聊，懂你的每一刻</title>
+    <meta name="description" content="Moodly是你的AI陪聊伙伴，随时随地陪你聊天、倾听、陪伴。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e8e8ed;
+            overflow-x: hidden;
+        }
+
+        /* Gradient background */
+        .bg-glow {
+            position: fixed;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        nav a {
+            color: #a0a0b0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover { color: #fff; }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            font-size: 13px;
+            color: #a78bfa;
+            margin-bottom: 32px;
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #a78bfa;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        h1 {
+            font-size: clamp(40px, 8vw, 72px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #8888a0;
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: #c0c0d0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Phone mockup */
+        .phone-mockup {
+            margin-top: 64px;
+            width: 280px;
+            height: 560px;
+            border-radius: 40px;
+            background: linear-gradient(145deg, #1a1a2e, #16162a);
+            border: 2px solid rgba(255,255,255,0.08);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 120px rgba(139, 92, 246, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-notch {
+            width: 120px;
+            height: 28px;
+            background: #0a0a0f;
+            border-radius: 0 0 20px 20px;
+            margin: 0 auto;
+        }
+
+        .phone-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .chat-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 85%;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            color: #d4c4f7;
+            align-self: flex-start;
+            border-bottom-left-radius: 6px;
+        }
+
+        .chat-bubble.user {
+            background: rgba(255,255,255,0.08);
+            color: #c0c0d0;
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+        }
+
+        .chat-bubble:nth-child(1) { animation-delay: 0.3s; }
+        .chat-bubble:nth-child(2) { animation-delay: 1s; }
+        .chat-bubble:nth-child(3) { animation-delay: 1.8s; }
+        .chat-bubble:nth-child(4) { animation-delay: 2.5s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Features */
+        .features {
+            position: relative;
+            z-index: 1;
+            padding: 100px 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            letter-spacing: -1px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(139, 92, 246, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card:nth-child(1) .feature-icon { background: rgba(139, 92, 246, 0.15); }
+        .feature-card:nth-child(2) .feature-icon { background: rgba(59, 130, 246, 0.15); }
+        .feature-card:nth-child(3) .feature-icon { background: rgba(52, 211, 153, 0.15); }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #7878a0;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 24px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        footer .logo {
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        footer p {
+            color: #5a5a70;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        footer a {
+            color: #7878a0;
+            text-decoration: none;
+        }
+        footer a:hover { color: #a78bfa; }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            nav { padding: 16px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .subtitle { font-size: 16px; }
+            .phone-mockup { width: 240px; height: 480px; }
+            .features { padding: 60px 20px; }
+            .features h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <nav>
+        <div class="logo">Moodly</div>
+        <div style="display:flex;gap:24px;">
+            <a href="#features">Features</a>
+            <a href="#download">Download</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="badge">AI Companion</div>
+        <h1><span>Moodly</span><br>懂你的AI陪聊</h1>
+        <p class="subtitle">无论开心还是低落，Moodly 随时在你身边。智能对话、情感陪伴，做你最温暖的倾听者。</p>
+        <div class="cta-group" id="download">
+            <a href="#" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                App Store
+            </a>
+            <a href="#" class="btn btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Android
+            </a>
+        </div>
+
+        <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-content">
+                <div class="chat-bubble ai">Hey~ 我是 Moodly，今天感觉怎么样？</div>
+                <div class="chat-bubble user">今天有点累，工作压力好大 😮‍💨</div>
+                <div class="chat-bubble ai">辛苦了呀~ 忙了一天，现在可以放松一下了。想聊聊发生了什么吗？我在这里听你说 💜</div>
+                <div class="chat-bubble user">嗯好，感觉跟你聊聊就好多了 ☺️</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>为什么选择 Moodly</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>智能陪聊</h3>
+                <p>AI 驱动的自然对话体验，理解你的情绪，给你最贴心的回应。不是冷冰冰的机器，而是温暖的朋友。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <h3>随时陪伴</h3>
+                <p>深夜睡不着？工作间隙想聊聊？Moodly 24小时在线，任何时候都愿意倾听你的心声。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>隐私安全</h3>
+                <p>你的对话只属于你。端到端加密保护，不分享、不泄露，安心倾诉每一个心事。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span class="logo">Moodly</span>
+        <p>
+            <a href="#">隐私政策</a> &nbsp;|&nbsp; <a href="#">用户协议</a>
+        </p>
+        <p>&copy; 2026 Moodly. All rights reserved.</p>
+    </footer>
+</body>
+</html>
