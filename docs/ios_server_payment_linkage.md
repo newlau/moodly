@@ -111,14 +111,16 @@ iOS 统一通过 `IAPManager` 加载商品，配置在：
 
 商品文档中，会员与糖果配置规则分别是：
 
-#### 会员订阅
+#### 会员商品
 
-- 订阅组：`Bubbly Membership`
-- 商品类型：Auto-Renewable Subscription
-- 商品：
+- Auto-Renewable Subscription：
   - `bubbly.membership.monthly.first`
   - `bubbly.membership.weekly`
   - `bubbly.membership.monthly`
+  - `bubbly.membership.pro.monthly.first`
+- Non-Renewing Subscription（固定时长单独购买，不自动续期）：
+  - `bubbly.membership.pro.weekly`
+  - `bubbly.membership.pro.monthly`
 
 #### 糖果充值
 
@@ -523,7 +525,7 @@ iOS 糖果服务封装在：
 
 | 层级 | 字段 | 示例 | 说明 |
 |---|---|---|---|
-| App Store | Product ID | `bubbly.membership.monthly` | 苹果订阅商品 |
+| App Store | Product ID | `bubbly.membership.monthly` | 苹果会员商品，可能是自动续期或非续期订阅 |
 | iOS 本地 | `planProductMap` | `month -> bubbly.membership.monthly` | `plan_id` 到 Product ID 的映射 |
 | 服务端套餐表 | `membership_plans.plan_code` | `month` | iOS 下单传这个 |
 | 服务端套餐表 | `membership_plans.apple_product_id` | `bubbly.membership.monthly` | 用于 Apple 商品反查套餐 |
