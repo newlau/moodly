@@ -93,7 +93,7 @@ iOS Release 包在 App Review 期间不得展示 App 自定义的兑换码、邀
 }
 ```
 
-过审后如需恢复入口，服务端把 `code_redemption_entry_enabled` 调整为 `true` 即可，不需要重新发版。客户端会把该开关应用到发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口。
+过审后如需恢复入口，服务端把 `src/modules/startup-strategy/startup-strategy.service.ts` 中的 `CODE_REDEMPTION_ENTRY_ENABLED` 常量改为 `true` 并重新发布服务端即可，iOS 不需要重新发版。客户端会把该开关应用到发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口。
 
 如果需要给用户免费或折扣获取 IAP 商品，必须在 App Store Connect 中为对应 IAP 创建 Offer Codes，并使用 StoreKit / App Store 的官方兑换链路。不能使用 `/chat/v1/characters/redeem`、`/v1/invite-code/link` 等自有接口作为 iOS 生产包的促销解锁入口。
 

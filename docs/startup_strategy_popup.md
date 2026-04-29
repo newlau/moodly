@@ -93,7 +93,7 @@ iOS 客户端会额外从 `ext` 中读取功能入口开关，用于服务端控
 - `code_redemption_entry_enabled=false`：隐藏发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口。
 - `code_redemption_entry_enabled=true`：打开上述入口。
 - Release 包本地默认值为 `false`；如果启动策略接口失败，保持本地安全默认或上一次成功下发的值。
-- 当前主服务端通过 `STARTUP_STRATEGY_EXT` 组装 `ext`，即使启动策略是 `close` 也会保留该扩展字段。审核期必须确认线上接口实际返回了 `code_redemption_entry_enabled=false`。
+- 当前主服务端在 `src/modules/startup-strategy/startup-strategy.service.ts` 用 `CODE_REDEMPTION_ENTRY_ENABLED` 常量组装该开关，即使启动策略是 `close` 也会保留该扩展字段。审核期保持 `false`；过审后手动改为 `true` 并重新发布服务端。
 
 ## 4. 默认关闭逻辑说明
 
