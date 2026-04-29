@@ -1,6 +1,8 @@
 # Moodly iOS 与 moodly_server 支付链路梳理
 
-更新时间：2026-04-08
+状态：current
+
+更新时间：2026-04-29
 
 ## 1. 目的
 
@@ -76,6 +78,24 @@ iOS 商品配置文档在：
 
 - 会员：是不是 membership/vip 商品，并写会员状态
 - 糖果：是不是订单对应的糖果商品，并给用户加糖果
+
+### 2.5 App Store 3.1.1 审核合规
+
+iOS Release 包在 App Review 期间不得展示 App 自定义的兑换码、邀请码、二维码或 H5 入口来解锁角色、糖果、会员或其他数字内容。当前生产包默认关闭这些入口，并通过 `GET /v1/app/startup-strategy` 的 `ext` 扩展字段接收服务端开关：
+
+```json
+{
+  "ext": {
+    "ios_feature_flags": {
+      "code_redemption_entry_enabled": false
+    }
+  }
+}
+```
+
+过审后如需恢复入口，服务端把 `code_redemption_entry_enabled` 调整为 `true` 即可，不需要重新发版。客户端会把该开关应用到发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口。
+
+如果需要给用户免费或折扣获取 IAP 商品，必须在 App Store Connect 中为对应 IAP 创建 Offer Codes，并使用 StoreKit / App Store 的官方兑换链路。不能使用 `/chat/v1/characters/redeem`、`/v1/invite-code/link` 等自有接口作为 iOS 生产包的促销解锁入口。
 
 ---
 
