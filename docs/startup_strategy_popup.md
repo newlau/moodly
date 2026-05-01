@@ -95,6 +95,10 @@ iOS 客户端会额外从 `ext` 中读取功能入口开关，用于服务端控
 - Release 包本地默认值为 `false`；如果启动策略接口失败，保持本地安全默认或上一次成功下发的值。
 - 当前主服务端在 `src/modules/startup-strategy/startup-strategy.service.ts` 用 `CODE_REDEMPTION_ENTRY_ENABLED` 常量组装该开关，即使启动策略是 `close` 也会保留该扩展字段。审核期保持 `false`；过审后手动改为 `true` 并重新发布服务端。
 
+### 3.2 登录页优先级配置
+
+登录页优先级复用同一接口的 `data.login_config.primary_login_method` 字段，详细配置、fallback 和审核注意事项见 [login_priority_config.md](./login_priority_config.md)。
+
 ## 4. 默认关闭逻辑说明
 
 当前默认关闭由三层共同保证：
