@@ -6,7 +6,7 @@ Owner topic: login / App Store review / startup strategy config
 
 ## 1. 功能背景
 
-Apple 审核反馈指出，未安装微信时用户可能无法继续登录。Moodly iOS 已支持手机号、Apple、微信三种登录方式，本功能通过服务端配置控制登录页主推荐入口，避免审核环境下微信成为主要或唯一登录路径；正式期可将微信作为首屏主按钮，手机号降级到底部“更多登录方式”。
+Apple 审核反馈指出，未安装微信时用户可能无法继续登录。Moodly iOS 已支持手机号、Apple、微信三种登录方式，本功能通过服务端配置控制登录页主推荐入口，避免审核环境下微信成为主要或唯一登录路径；正式期可将微信作为首屏主按钮，手机号降级到底部“更多登录方式”折叠入口。
 
 ## 2. 后端配置字段说明
 
@@ -35,21 +35,21 @@ Apple 审核反馈指出，未安装微信时用户可能无法继续登录。Mo
 
 | 值 | 含义 |
 | --- | --- |
-| `phone` | 审核/兜底样式：不把微信作为首屏主按钮，Apple 作为主按钮，手机号收在底部更多方式。 |
-| `wechat` | 正式样式：微信登录为首屏主按钮，Apple 与手机号收在底部更多方式。 |
+| `phone` | 审核/兜底样式：不把微信作为首屏主按钮，Apple 作为主按钮，手机号收在底部更多登录方式折叠入口。 |
+| `wechat` | 正式样式：微信登录为首屏主按钮，Apple 与手机号收在底部更多登录方式折叠入口。 |
 
 ## 4. iOS 渲染规则
 
-- `phone`: Apple 登录为首屏主按钮；手机号登录只展示为底部“更多登录方式”图标；如 `wechat_login_entry_enabled=true` 且检测到微信已安装，微信可作为底部更多方式图标。
-- `wechat`: 微信登录为首屏主按钮；Apple 登录与手机号登录展示为底部更多方式图标。
+- `phone`: Apple 登录为首屏主按钮；手机号登录收在底部“更多登录方式”折叠入口，点击展开后显示图标；如 `wechat_login_entry_enabled=true` 且检测到微信已安装，微信也可在展开区显示。
+- `wechat`: 微信登录为首屏主按钮；Apple 登录与手机号登录收在底部更多登录方式折叠入口，点击展开后显示图标。
 - Apple 登录始终可见；微信为主按钮时，Apple 降级到底部图标；微信不可用或审核态隐藏微信时，Apple 回到主按钮。
-- 手机号登录不再作为首屏大按钮，始终收在底部更多方式里。
+- 手机号登录不再作为首屏大按钮，始终收在底部更多登录方式展开区里。
 
 ## 4.1 Android 渲染规则
 
 - Android 当前没有接入 `login_config.primary_login_method` 远程优先级。
 - 微信登录保持首屏主按钮。
-- `BuildConfig.ENABLE_PHONE_LOGIN=true` 时，手机号登录展示为底部“更多登录方式”图标；为 `false` 时隐藏该入口。
+- `BuildConfig.ENABLE_PHONE_LOGIN=true` 时，手机号登录收在底部“更多登录方式”折叠入口，点击展开后显示图标；为 `false` 时隐藏该入口。
 
 ## 5. Fallback 策略
 
@@ -59,17 +59,17 @@ Apple 审核反馈指出，未安装微信时用户可能无法继续登录。Mo
 
 ## 6. 未安装微信时的降级策略
 
-- 无论服务端配置是 `phone` 还是 `wechat`，iOS 都强制把 Apple 登录作为主入口，手机号保留在底部更多方式。
+- 无论服务端配置是 `phone` 还是 `wechat`，iOS 都强制把 Apple 登录作为主入口，手机号保留在底部更多登录方式展开区。
 - 登录页不展示微信主按钮或微信底部入口，避免审核设备点击后进入微信 SDK 拉起或安装引导链路。
 - 如果运行过程中仍触发微信登录动作，客户端只展示提示：“当前设备未安装微信，你可以使用手机号或 Apple 登录继续。” 不调用微信授权启动。
 - 微信可用性同时检查 SDK 安装状态和 `weixin://` 是否可打开，任一失败都按未安装处理。
 
 ## 7. 测试步骤
 
-1. iOS 审核态：服务端配置 `LOGIN_PRIMARY_METHOD=phone` 且 `wechat_login_entry_enabled=false`，打开登录页，确认 Apple 为主按钮、手机号在底部更多方式、不出现微信入口。
-2. iOS 正式态：服务端配置 `LOGIN_PRIMARY_METHOD=wechat` 且 `wechat_login_entry_enabled=true`，打开登录页，确认微信为主按钮，Apple 与手机号在底部更多方式。
+1. iOS 审核态：服务端配置 `LOGIN_PRIMARY_METHOD=phone` 且 `wechat_login_entry_enabled=false`，打开登录页，确认 Apple 为主按钮，点击底部“更多登录方式”后出现手机号图标，不出现微信入口。
+2. iOS 正式态：服务端配置 `LOGIN_PRIMARY_METHOD=wechat` 且 `wechat_login_entry_enabled=true`，打开登录页，确认微信为主按钮，点击底部“更多登录方式”后出现 Apple 与手机号图标。
 3. 真机卸载微信后打开登录页，确认页面只保留 Apple 主按钮与手机号底部入口，不出现可点击微信入口。
-4. Android 打开登录页，确认微信为主按钮；`ENABLE_PHONE_LOGIN=true` 时手机号为底部更多方式图标。
+4. Android 打开登录页，确认微信为主按钮；`ENABLE_PHONE_LOGIN=true` 时点击底部“更多登录方式”后出现手机号图标。
 5. iPad Pro 11-inch / iPad Air 11-inch 审核环境检查登录按钮完整可见，不被协议区域、SafeArea 或弹窗高度遮挡。
 6. 分别执行 Android 与 iOS 编译，确认项目正常构建。
 
