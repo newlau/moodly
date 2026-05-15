@@ -14,9 +14,9 @@
 -- IMPORTANT:
 -- Old iOS builds only know the previous Product IDs. Server-side version
 -- fallback must remain enabled before this script is applied in production:
---   iOS x-app-version < 1.0.5 or missing => old 6 tiers
---   iOS x-app-version >= 1.0.5 / Android => new 4 tiers
--- Do not delete old App Store Connect candy products until iOS 1.0.5 coverage is sufficient.
+--   iOS x-app-version < 1.0.4 or missing => old 6 tiers
+--   iOS x-app-version >= 1.0.4 / Android => new 4 tiers
+-- Do not delete old App Store Connect candy products until iOS 1.0.4 coverage is sufficient.
 
 BEGIN;
 
