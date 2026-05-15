@@ -2,7 +2,7 @@
 -- Historical filename note: this script used to target 6 tiers; keep the file
 -- in place so existing references do not break.
 -- First-recharge bonus target:
---   ¥6: +0%
+--   ¥6: +50%
 --   ¥18: +50%
 --   ¥38: +100%
 --   ¥128: +120%
@@ -46,7 +46,7 @@ INSERT INTO candy_packages (
   sort,
   is_active
 ) VALUES
-  ('candy_600', 600, 6.00, 'bubbly.candy.600', null, true, false, 1, true),
+  ('candy_600', 600, 6.00, 'bubbly.candy.600', '首充多赠300糖果', true, false, 1, true),
   ('candy_1800', 1800, 18.00, 'bubbly.candy.1800', '首充多赠900糖果', true, false, 2, true),
   ('candy_3800', 3800, 38.00, 'bubbly.candy.3800', '首充多赠3800糖果', true, true, 3, true),
   ('candy_12800', 12800, 128.00, 'bubbly.candy.12800', '首充多赠15360糖果', true, false, 4, true)
