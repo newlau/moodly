@@ -34,13 +34,15 @@ iOS 商品配置文档在：
 
 - 6 个会员商品（普通会员 3 个 + Pro 会员 3 个）
 - 4 个 Moly 消耗品
-- 6 个糖果消耗品
+- 4 个新版糖果消耗品
 
 并且说明：
 
 - 本地开发可用 `Products.storekit`
 - Sandbox / TestFlight / 线上需在 App Store Connect 建真实商品
-- 糖果的首充赠送、VIP 加赠不在 App Store Connect 配，而由服务端动态计算。当前首充策略：¥1 不送，¥8 送 30%，其他启用套餐送 60%；VIP 额外 20% 加赠仍按会员权益叠加。
+- 糖果的首充赠送、VIP 加赠不在 App Store Connect 配，而由服务端动态计算。当前新版首充策略：¥6 不送，¥18 送 50%，¥38 送 100%，¥128 送 120%；VIP 额外 20% 加赠仍按会员权益叠加。
+- iOS 老版本不认识新 Apple Product ID，服务端需按 `x-app-version` 兜底：`1.0.5` 以下或未传版本继续下发旧 6 档，`1.0.5` 及以上下发新版 4 档。
+- 旧 iOS 覆盖率足够前不要删除 App Store Connect 里的旧糖果商品；服务端 Apple 验证仍兼容旧档位订单发货。
 
 ### 2.2 当前会员链路的真实实现方式
 
@@ -120,12 +122,10 @@ iOS 统一通过 `IAPManager` 加载商品，配置在：
 
 #### 糖果消耗品
 
-- `bubbly.candy.100`
-- `bubbly.candy.800`
+- `bubbly.candy.600`
 - `bubbly.candy.1800`
 - `bubbly.candy.3800`
-- `bubbly.candy.8800`
-- `bubbly.candy.16800`
+- `bubbly.candy.12800`
 
 ### 3.2 `APP_STORE_CONNECT_SETUP` 中的配置要求
 
@@ -146,16 +146,14 @@ iOS 统一通过 `IAPManager` 加载商品，配置在：
 
 - 商品类型：Consumable
 - 商品：
-  - `bubbly.candy.100`
-  - `bubbly.candy.800`
+  - `bubbly.candy.600`
   - `bubbly.candy.1800`
   - `bubbly.candy.3800`
-  - `bubbly.candy.8800`
-  - `bubbly.candy.16800`
+  - `bubbly.candy.12800`
 
 文档同时明确：
 
-- 首充赠送由服务端控制：¥1 不送，¥8 送 30%，其他启用套餐送 60%
+- 首充赠送由服务端控制：¥6 不送，¥18 送 50%，¥38 送 100%，¥128 送 120%
 - VIP 额外 20% 加赠由服务端控制，并在 `bonus_candy` / `total_candy` 中与首充赠送叠加
 - App Store Connect 只配置基础商品与基础价格
 
@@ -396,7 +394,7 @@ iOS 糖果服务封装在：
    - `IAPManager.loadProducts()`
    - `GET /candy/packages`
 2. 用户选择套餐
-3. 通过 `candy_100 -> bubbly.candy.100` 规则映射到 Apple Product ID
+3. 通过 `candy_600 -> bubbly.candy.600` 规则映射到 Apple Product ID
 4. 调 `POST /candy/orders`
 5. 调 `StoreKit product.purchase()`
 6. 取 `transaction.jsonRepresentation.base64EncodedString()`
@@ -445,7 +443,8 @@ iOS 糖果服务封装在：
 
 其中：
 
-- 首充：¥1 不送，¥8 送 30%，其他启用套餐送 60%
+- 新版首充：¥6 不送，¥18 送 50%，¥38 送 100%，¥128 送 120%
+- iOS 老版本兜底：`x-app-version < 1.0.5` 或未传版本继续返回旧 6 档，避免老包收到新 Product ID 后无法购买
 - VIP：额外 `20%`
 - 两者可叠加
 
@@ -651,8 +650,8 @@ iOS 用户模型与钱包页面当前仍使用：
 
 `WalletViewModel` 里会把：
 
-- `candy_100`
-- 转成 `bubbly.candy.100`
+- `candy_600`
+- 转成 `bubbly.candy.600`
 
 但 `CandyRechargeViewModel` 里是直接：
 
