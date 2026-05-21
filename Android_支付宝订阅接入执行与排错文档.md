@@ -2,7 +2,10 @@
 
 ## 一、当前业务目标
 
-Android 会员页做 4 档商品实验，并保持 iOS 与糖果业务不受影响：
+Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不受影响：
+
+- `control`：旧 Android 会员目录，继续展示 VIP/SVIP 六档
+- `candidate`：展示 VIP 4 档实验商品，并保留 SVIP 连续包月和周卡；不展示 SVIP 月卡
 
 - `month_auto_first`
   - 首次支付：`15`
@@ -13,12 +16,19 @@ Android 会员页做 4 档商品实验，并保持 iOS 与糖果业务不受影�
   - 周卡，单独购买：`15`
 - `year`
   - 年卡，单独购买：`98`
+- `svip_month_auto_first`
+  - SVIP 首次支付：`25`
+  - 后续续费：`35`
+- `svip_week`
+  - SVIP 周卡，单独购买：`25`
 
 说明：
 
 - 当前数据库里的 `month_auto_first.priceCny` 仍可能是 `25`
-- 为避免影响 iOS StoreKit 月卡，Android `month` 的 `15` 由服务端按 `platform=android` / 支付宝或微信支付运行时兜底
+- 为避免影响 iOS StoreKit 月卡，Android candidate 的 `month=15` 由实验 payload 的 `price_overrides` 控制
+- Android candidate 不下发 `svip_month`，因此没有 SVIP 月卡非订阅
 - `year` 需要当前数据库执行 `prisma/upsert_android_vip_experiment_plans.sql` 做幂等补齐
+- 实验定义需要执行 `prisma/upsert_android_vip_plan_catalog_experiment.sql` 做幂等补齐，默认 `draft`，确认后再改 `running`
 
 ## 二、不会影响的业务
 
@@ -27,9 +37,39 @@ Android 会员页做 4 档商品实验，并保持 iOS 与糖果业务不受影�
 - iOS Apple 订阅链路保持原样
 - 糖果支付宝购买保持原样
 - Android 会员普通展示接口继续使用 `/v1/vip/plans`
-- Android 会员页当前只下发 4 档普通会员实验商品，不再补本地 SVIP fallback
+- Android 会员页不再补本地 SVIP fallback，实际展示完全以服务端分组下发为准
 
 ## 三、当前服务端实现
+
+### 0. 商品目录分组与追踪
+
+实验 key：
+
+- `android_vip_plan_catalog_v1`
+
+分组来源：
+
+- 服务端读取 `experiments`
+- 按 Redis round-robin 分配 variant
+- 写入 `experiment_assignments` 锁定用户分组
+
+追踪来源：
+
+- `GET /v1/vip/plans` 实际下发套餐时写入 `experiment_exposures`
+- `exposure_type`: `vip_plan_catalog_served`
+- `surface`: `vip.plans`
+- `payload_snapshot`: 实际 variant payload
+- `metadata.visible_plan_codes`: 本次下发的商品列表
+- `metadata.price_overrides`: 本次价格覆盖
+
+接口返回：
+
+- `data.experiment.experiment_key`
+- `data.experiment.assignment_id`
+- `data.experiment.variant_key`
+- `data.experiment.version`
+- `data.experiment.reason`
+- `data.experiment.exposure_key`
 
 ### 1. 连续包月首次支付并签约
 
@@ -88,11 +128,12 @@ Android 调用：
 - `week`
 - `year`
 
-服务端按 Android 实验价生成支付宝订单：
+服务端重新读取同一用户的 `android_vip_plan_catalog_v1` 分组，并按 candidate payload 价格生成支付宝订单：
 
 - `month`: `15`
 - `week`: `15`
 - `year`: `98`
+- `svip_week`: `25`
 
 ### 5. 后续自动续费
 
@@ -165,11 +206,13 @@ Android 调用：
 
 ### Phase 1：首次支付并签约
 
-1. Android 会员页确认只展示 `month_auto_first/month/week/year`
-2. 勾选自动续费协议
-3. 选择 `month_auto_first` 点击购买
-4. 应拉起支付宝支付并签约
-5. 支付完成后：
+1. Android 会员页确认接口返回 `experiment.variant_key`
+2. 如果是 `candidate`，确认 VIP 展示 `month_auto_first/month/week/year`，SVIP 展示 `svip_month_auto_first/svip_week`，且不展示 `svip_month`
+3. 如果是 `control`，确认展示旧 Android VIP/SVIP 六档
+4. 勾选自动续费协议
+5. 选择 `month_auto_first` 点击购买
+6. 应拉起支付宝支付并签约
+7. 支付完成后：
    - `vip_orders` 应新增一条 `subscription_initial`
    - `vip_subscriptions` 应有 `pending_sign/active`
 
@@ -189,6 +232,24 @@ ORDER BY created_at DESC
 LIMIT 20;
 ```
 
+实验分组与曝光 SQL：
+
+```sql
+SELECT experiment_key, unit_id, variant_key, experiment_version, reason, assigned_at, last_seen_at
+FROM experiment_assignments
+WHERE experiment_key = 'android_vip_plan_catalog_v1'
+ORDER BY updated_at DESC
+LIMIT 20;
+```
+
+```sql
+SELECT exposure_key, user_id, variant_key, exposure_type, surface, platform, app_version, request_id, created_at
+FROM experiment_exposures
+WHERE experiment_key = 'android_vip_plan_catalog_v1'
+ORDER BY created_at DESC
+LIMIT 20;
+```
+
 ### Phase 2：签约成功
 
 预期：
@@ -199,11 +260,12 @@ LIMIT 20;
 
 ### Phase 2.5：单独购买
 
-1. Android 会员页选择 `month/week/year`
-2. 勾选充值协议
-3. 点击购买
-4. 应拉起普通支付宝支付，不创建 `vip_subscriptions`
-5. `vip_orders.amount` 应分别为 `15/15/98`
+1. Android 会员页命中 `candidate`
+2. 选择 `month/week/year/svip_week`
+3. 勾选充值协议
+4. 点击购买
+5. 应拉起普通支付宝支付，不创建 `vip_subscriptions`
+6. `vip_orders.amount` 应分别为 `15/15/98`
 
 ### Phase 3：后续续费
 
@@ -235,11 +297,12 @@ WHERE id = '你的订阅ID';
 
 ### 2. 首月金额不对
 
-当前首月 `15` 是服务端逻辑兜底，不完全依赖数据库：
+当前首月 `15` 和 candidate 单品价格都不完全依赖数据库共享价格：
 
 - `month_auto_first` 首付金额在订阅逻辑里固定按 `15`
-- `month` Android 单独购买金额按服务端 Android 运行时口径固定为 `15`
+- `month/week/year/svip_week` Android candidate 单独购买金额来自 `android_vip_plan_catalog_v1.payload.price_overrides`
 - `year` 需要当前数据库已执行 `prisma/upsert_android_vip_experiment_plans.sql`
+- 用户必须先命中 `candidate`，否则 `control` 仍按旧目录和旧价格口径
 
 ### 3. 支付成功但没开会员
 
@@ -272,11 +335,20 @@ WHERE id = '你的订阅ID';
 
 建议顺序：
 
-1. 先在测试环境验证首次支付并签约
-2. 再验证签约回调
-3. 再手动压测续费任务
-4. 确认 `vip_orders`、`vip_subscriptions`、`vip_status` 状态闭环完整
-5. 最后再考虑是否同步修正数据库套餐价格
+1. 先执行 `prisma/upsert_android_vip_experiment_plans.sql` 补齐年卡
+2. 再执行 `prisma/upsert_android_vip_plan_catalog_experiment.sql` 写入实验定义
+3. 测试环境确认接口和支付链路闭环后，把实验改为 `running`
+4. 小流量先把 `candidate.weight` 调低，例如 control `95` / candidate `5`
+5. 观察 `experiment_assignments`、`experiment_exposures`、`vip_orders`、`vip_subscriptions`、`vip_status`
+6. 稳定后再逐步放量
+
+启用实验 SQL：
+
+```sql
+UPDATE experiments
+SET status = 'running', updated_at = CURRENT_TIMESTAMP(3)
+WHERE experiment_key = 'android_vip_plan_catalog_v1';
+```
 
 ## 九、后续可继续优化
 
