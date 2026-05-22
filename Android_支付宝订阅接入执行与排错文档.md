@@ -5,11 +5,8 @@
 Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不受影响：
 
 - `control`：旧 Android 会员目录，继续展示 VIP/SVIP 六档
-- `candidate`：展示 VIP 4 档实验商品，并展示 SVIP 周卡/月卡/年卡三档非订阅；不展示 SVIP 连续包月
+- `candidate`：展示 VIP 月卡/周卡/年卡三档非订阅，并展示 SVIP 周卡/月卡/年卡三档非订阅；不展示 VIP/SVIP 连续包月
 
-- `month_auto_first`
-  - 首次支付：`15`
-  - 后续续费：`25`
 - `month`
   - 月卡，单独购买：`15`
 - `week`
@@ -27,7 +24,7 @@ Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不�
 
 - 当前数据库里的 `month_auto_first.priceCny` 仍可能是 `25`
 - 为避免影响 iOS StoreKit 月卡，Android candidate 的 `month=15` 由实验 payload 的 `price_overrides` 控制
-- Android candidate 不下发 `svip_month_auto_first`，因此没有 SVIP 连续包月
+- Android candidate 不下发 `month_auto_first` / `svip_month_auto_first`，因此没有 VIP/SVIP 连续包月
 - `year` / `svip_year` 需要当前数据库执行 `prisma/upsert_android_vip_experiment_plans.sql` 做幂等补齐
 - 实验定义需要执行 `prisma/upsert_android_vip_plan_catalog_experiment.sql` 做幂等补齐，默认 `draft`，确认后再改 `running`
 
@@ -210,12 +207,13 @@ Android 调用：
 ### Phase 1：首次支付并签约
 
 1. Android 会员页确认接口返回 `experiment.variant_key`
-2. 如果是 `candidate`，确认 VIP 展示 `month_auto_first/month/week/year`，SVIP 展示 `svip_week/svip_month/svip_year`，且不展示 `svip_month_auto_first`
+2. 如果是 `candidate`，确认 VIP 展示 `month/week/year`，SVIP 展示 `svip_week/svip_month/svip_year`，且不展示 `month_auto_first/svip_month_auto_first`
 3. 如果是 `control`，确认展示旧 Android VIP/SVIP 六档
-4. 勾选自动续费协议
-5. 选择 `month_auto_first` 点击购买
-6. 应拉起支付宝支付并签约
-7. 支付完成后：
+4. 只有 `control` 才继续验证连续包月签约；`candidate` 跳过本阶段
+5. 勾选自动续费协议
+6. 选择 `month_auto_first` 点击购买
+7. 应拉起支付宝支付并签约
+8. 支付完成后：
    - `vip_orders` 应新增一条 `subscription_initial`
    - `vip_subscriptions` 应有 `pending_sign/active`
 
@@ -302,7 +300,6 @@ WHERE id = '你的订阅ID';
 
 当前首月 `15` 和 candidate 单品价格都不完全依赖数据库共享价格：
 
-- `month_auto_first` 首付金额在订阅逻辑里固定按 `15`
 - `month/week/year/svip_week/svip_month/svip_year` Android candidate 单独购买金额来自 `android_vip_plan_catalog_v1.payload.price_overrides`
 - `year` / `svip_year` 需要当前数据库已执行 `prisma/upsert_android_vip_experiment_plans.sql`
 - 用户必须先命中 `candidate`，否则 `control` 仍按旧目录和旧价格口径
