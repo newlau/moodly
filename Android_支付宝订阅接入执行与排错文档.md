@@ -5,7 +5,7 @@
 Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不受影响：
 
 - `control`：旧 Android 会员目录，继续展示 VIP/SVIP 六档
-- `candidate`：展示 VIP 月卡/周卡/年卡三档非订阅，并展示 SVIP 周卡/月卡/年卡三档非订阅；不展示 VIP/SVIP 连续包月
+- `candidate`：展示 VIP 月卡/周卡/年卡三档非订阅，并展示 SVIP 月卡/周卡/年卡三档非订阅；不展示 VIP/SVIP 连续包月；同档位默认月卡在前
 
 - `month`
   - 月卡，单独购买：`15`
@@ -13,10 +13,10 @@ Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不�
   - 周卡，单独购买：`15`
 - `year`
   - 年卡，单独购买：`98`
-- `svip_week`
-  - SVIP 周卡，单独购买：`25`
 - `svip_month`
   - SVIP 月卡，单独购买：`45`
+- `svip_week`
+  - SVIP 周卡，单独购买：`25`
 - `svip_year`
   - SVIP 年卡，单独购买：`168`
 
@@ -207,7 +207,7 @@ Android 调用：
 ### Phase 1：首次支付并签约
 
 1. Android 会员页确认接口返回 `experiment.variant_key`
-2. 如果是 `candidate`，确认 VIP 展示 `month/week/year`，SVIP 展示 `svip_week/svip_month/svip_year`，且不展示 `month_auto_first/svip_month_auto_first`
+2. 如果是 `candidate`，确认 VIP 展示 `month/week/year`，SVIP 展示 `svip_month/svip_week/svip_year`，默认选中月卡，且不展示 `month_auto_first/svip_month_auto_first`
 3. 如果是 `control`，确认展示旧 Android VIP/SVIP 六档
 4. 只有 `control` 才继续验证连续包月签约；`candidate` 跳过本阶段
 5. 勾选自动续费协议
@@ -262,7 +262,7 @@ LIMIT 20;
 ### Phase 2.5：单独购买
 
 1. Android 会员页命中 `candidate`
-2. 选择 `month/week/year/svip_week/svip_month/svip_year`
+2. 选择 `month/week/year/svip_month/svip_week/svip_year`
 3. 勾选充值协议
 4. 点击购买
 5. 应拉起普通支付宝支付，不创建 `vip_subscriptions`
@@ -300,7 +300,7 @@ WHERE id = '你的订阅ID';
 
 当前首月 `15` 和 candidate 单品价格都不完全依赖数据库共享价格：
 
-- `month/week/year/svip_week/svip_month/svip_year` Android candidate 单独购买金额来自 `android_vip_plan_catalog_v1.payload.price_overrides`
+- `month/week/year/svip_month/svip_week/svip_year` Android candidate 单独购买金额来自 `android_vip_plan_catalog_v1.payload.price_overrides`；展示顺序来自 `payload.plan_codes`，默认月卡在前
 - `year` / `svip_year` 需要当前数据库已执行 `prisma/upsert_android_vip_experiment_plans.sql`
 - 用户必须先命中 `candidate`，否则 `control` 仍按旧目录和旧价格口径
 
