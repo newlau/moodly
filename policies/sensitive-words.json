@@ -1,0 +1,4710 @@
+{
+  "version": "1.2",
+  "generated_at": "2026-05-22",
+  "language_supported": [
+    "zh",
+    "en",
+    "ko"
+  ],
+  "source": "Moodly DB messages 近14天真实数据扫描 + 组合词验证 + 韩文 native 风格校对",
+  "levels": {
+    "L0_redline": "未成年 × 性化 共现 / CSAM-边界，最高优先级，强制拦截 + 上报",
+    "L1_block": "命中即拦截：露骨、无歧义"
+  },
+  "korean_review_notes": {
+    "wrong_meaning_fixed": [
+      "p039 발기교(杜撰) → 발딸/풋잡",
+      "p134 보지가 물다(方向错) → 보지가 조이다",
+      "p513 가슴이 여리다(=心善) → 가슴이 보들보들하다",
+      "p102/p202 빡빡한 보지(=日程紧凑) → 좁은 보지",
+      "g116 애무(=physical foreplay) → 작업 걸다/꼬시기",
+      "g118 애매하다(=generic ambiguity) → 썸",
+      "g014 혀를 사용해 핥다(unnatural) → 혀로 핥다"
+    ],
+    "korean_netspeak_added": [
+      "떡치다 / 떡 (#1 Korean sex slang)",
+      "싸다 / 싸정 (универсал for cum)",
+      "보빨 / 좆빨 / 항빨 (short forms)",
+      "찌찌 (cutesy for tits, mapped to 咪咪)",
+      "거유 / 빈유 / 폭유 (body slang)",
+      "야동 / 야짤 / 19금 (NSFW media tags)",
+      "걸레 / 암캐년 (BDSM degradation)",
+      "걔/쟤/그년 forms (replacing literary 그녀/그를)"
+    ],
+    "korean_only_l1_added": [
+      "k001-k010 — Korean-side new entries for 떡치다/야동/야짤/거유 etc."
+    ]
+  },
+  "rules": [
+    {
+      "id": "underage_redline",
+      "level": "L0_redline",
+      "description": "未成年 × 性化 顶格红线：任一 L1 词与 [未成年关键词] 共现，无条件最高优先级拦截 + 上报",
+      "underage_keywords_zh": [
+        "儿童",
+        "小学",
+        "小学生",
+        "初中生",
+        "未成年",
+        "12岁",
+        "13岁",
+        "14岁",
+        "15岁",
+        "16岁",
+        "17岁",
+        "幼女",
+        "幼童",
+        "loli",
+        "萝莉",
+        "童女",
+        "少女"
+      ],
+      "underage_keywords_en": [
+        "child",
+        "kid",
+        "minor",
+        "underage",
+        "preteen",
+        "loli",
+        "lolita",
+        "12 year old",
+        "13 year old",
+        "14 year old",
+        "15 year old",
+        "16 year old",
+        "17 year old",
+        "elementary",
+        "middle school"
+      ],
+      "underage_keywords_ko": [
+        "아이",
+        "어린이",
+        "초등학생",
+        "중학생",
+        "미성년자",
+        "미자",
+        "12살",
+        "13살",
+        "14살",
+        "15살",
+        "16살",
+        "17살",
+        "여아",
+        "유아",
+        "로리",
+        "로리타"
+      ]
+    }
+  ],
+  "stop_lists": {
+    "zh": {},
+    "en": {
+      "sex": [
+        "sextant",
+        "sextet",
+        "sexagenarian",
+        "Sussex",
+        "Essex",
+        "Wessex",
+        "Middlesex",
+        "homosexual",
+        "heterosexual",
+        "asexual",
+        "bisexual",
+        "transsexual",
+        "intersex"
+      ],
+      "cock": [
+        "cocktail",
+        "Hancock",
+        "peacock",
+        "cockpit",
+        "cockroach",
+        "cockney",
+        "cocky",
+        "stopcock",
+        "shuttlecock"
+      ],
+      "dick": [
+        "Dickens",
+        "Dickson",
+        "Dickinson",
+        "haddock"
+      ],
+      "anal": [
+        "analyze",
+        "analysis",
+        "analyst",
+        "analog",
+        "analogy",
+        "analogous",
+        "anally-retentive"
+      ],
+      "fuck": []
+    },
+    "ko": {
+      "보지": [
+        "미보지",
+        "안 보지"
+      ],
+      "박다": [
+        "못 박다",
+        "도장 박다",
+        "팁 박다",
+        "골 박다"
+      ],
+      "사정": [
+        "사정상",
+        "사정이",
+        "사정을",
+        "가정 사정"
+      ],
+      "싸다": [
+        "값이 싸다",
+        "가격이 싸다",
+        "변을 싸다",
+        "오줌 싸다",
+        "값싸다"
+      ],
+      "젖": [
+        "젖다 (비에 젖다 / 비-induced)"
+      ],
+      "메이드": [
+        "메이드 인",
+        "made in"
+      ],
+      "노출": [
+        "일조 노출",
+        "노출 콘크리트",
+        "노출 시간"
+      ],
+      "조교": [
+        "조교 (대학 조교 = teaching assistant)"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "id": "p001",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "鸡巴"
+      ],
+      "en": [
+        "dick",
+        "cock",
+        "prick"
+      ],
+      "ko": [
+        "좆",
+        "자지",
+        "자X"
+      ]
+    },
+    {
+      "id": "p002",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "小穴"
+      ],
+      "en": [
+        "pussy",
+        "cunt"
+      ],
+      "ko": [
+        "보지",
+        "음부",
+        "뽀지",
+        "봊"
+      ]
+    },
+    {
+      "id": "p003",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "肉棒"
+      ],
+      "en": [
+        "meat rod",
+        "cock",
+        "dong"
+      ],
+      "ko": [
+        "육봉",
+        "자지"
+      ]
+    },
+    {
+      "id": "p004",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "屁眼"
+      ],
+      "en": [
+        "asshole",
+        "butthole"
+      ],
+      "ko": [
+        "똥꼬",
+        "항문",
+        "후장"
+      ]
+    },
+    {
+      "id": "p005",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "子宫"
+      ],
+      "en": [
+        "womb",
+        "uterus"
+      ],
+      "ko": [
+        "자궁"
+      ]
+    },
+    {
+      "id": "p006",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "乳头"
+      ],
+      "en": [
+        "nipple",
+        "tit"
+      ],
+      "ko": [
+        "젖꼭지",
+        "유두"
+      ]
+    },
+    {
+      "id": "p007",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "性器"
+      ],
+      "en": [
+        "genitals",
+        "privates"
+      ],
+      "ko": [
+        "성기"
+      ]
+    },
+    {
+      "id": "p008",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "龟头"
+      ],
+      "en": [
+        "glans",
+        "dickhead",
+        "helmet"
+      ],
+      "ko": [
+        "귀두"
+      ]
+    },
+    {
+      "id": "p009",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "阴蒂"
+      ],
+      "en": [
+        "clit",
+        "clitoris"
+      ],
+      "ko": [
+        "클리",
+        "클리토리스",
+        "음핵",
+        "콩알"
+      ]
+    },
+    {
+      "id": "p010",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "奶头"
+      ],
+      "en": [
+        "nipple",
+        "tit"
+      ],
+      "ko": [
+        "젖꼭지"
+      ]
+    },
+    {
+      "id": "p011",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "花穴"
+      ],
+      "en": [
+        "pussy",
+        "flower hole"
+      ],
+      "ko": [
+        "보지"
+      ]
+    },
+    {
+      "id": "p012",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "肛门"
+      ],
+      "en": [
+        "anus"
+      ],
+      "ko": [
+        "항문",
+        "후장"
+      ]
+    },
+    {
+      "id": "p013",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "阳具"
+      ],
+      "en": [
+        "phallus",
+        "dildo"
+      ],
+      "ko": [
+        "음경",
+        "딜도"
+      ]
+    },
+    {
+      "id": "p014",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "屄"
+      ],
+      "en": [
+        "cunt"
+      ],
+      "ko": [
+        "보지",
+        "뽀지",
+        "봊"
+      ]
+    },
+    {
+      "id": "p015",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "阴部"
+      ],
+      "en": [
+        "vulva",
+        "pubes",
+        "privates"
+      ],
+      "ko": [
+        "음부"
+      ]
+    },
+    {
+      "id": "p016",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "菊花"
+      ],
+      "en": [
+        "asshole (slang)"
+      ],
+      "ko": [
+        "똥꼬"
+      ]
+    },
+    {
+      "id": "p017",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "肉穴"
+      ],
+      "en": [
+        "fleshy hole",
+        "pussy"
+      ],
+      "ko": [
+        "보지",
+        "살구멍"
+      ]
+    },
+    {
+      "id": "p018",
+      "level": "L1_block",
+      "category": "性器官",
+      "zh": [
+        "阴茎"
+      ],
+      "en": [
+        "penis"
+      ],
+      "ko": [
+        "음경",
+        "페니스"
+      ]
+    },
+    {
+      "id": "p019",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "操我"
+      ],
+      "en": [
+        "fuck me"
+      ],
+      "ko": [
+        "따먹어줘",
+        "박아줘",
+        "따먹어"
+      ]
+    },
+    {
+      "id": "p020",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "操你"
+      ],
+      "en": [
+        "fuck you"
+      ],
+      "ko": [
+        "너 따먹는다",
+        "너 따먹어",
+        "너 박는다",
+        "따먹어버린다"
+      ]
+    },
+    {
+      "id": "p021",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "操他"
+      ],
+      "en": [
+        "fuck him"
+      ],
+      "ko": [
+        "쟤 따먹는다",
+        "쟤 박는다",
+        "그놈 따먹다"
+      ]
+    },
+    {
+      "id": "p022",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "操她"
+      ],
+      "en": [
+        "fuck her"
+      ],
+      "ko": [
+        "걔 따먹는다",
+        "쟤 박는다",
+        "그년 박다"
+      ]
+    },
+    {
+      "id": "p023",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "操逼"
+      ],
+      "en": [
+        "fuck pussy"
+      ],
+      "ko": [
+        "보지 박다",
+        "보지 따먹다"
+      ]
+    },
+    {
+      "id": "p024",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "抽插"
+      ],
+      "en": [
+        "thrusting",
+        "pumping",
+        "in-and-out"
+      ],
+      "ko": [
+        "박다",
+        "피스톤질",
+        "피스톤"
+      ]
+    },
+    {
+      "id": "p025",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "干我"
+      ],
+      "en": [
+        "bang me",
+        "do me",
+        "fuck me"
+      ],
+      "ko": [
+        "박아줘",
+        "따먹어줘"
+      ]
+    },
+    {
+      "id": "p026",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "自慰"
+      ],
+      "en": [
+        "masturbate",
+        "jerk off",
+        "fap"
+      ],
+      "ko": [
+        "자위",
+        "딸딸이",
+        "딸치다"
+      ]
+    },
+    {
+      "id": "p027",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "手淫"
+      ],
+      "en": [
+        "masturbation"
+      ],
+      "ko": [
+        "자위",
+        "자위행위"
+      ]
+    },
+    {
+      "id": "p028",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "撸管"
+      ],
+      "en": [
+        "jerk off",
+        "fap"
+      ],
+      "ko": [
+        "딸딸이",
+        "딸치다",
+        "딸딸이치다",
+        "딸친다"
+      ]
+    },
+    {
+      "id": "p029",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "打飞机"
+      ],
+      "en": [
+        "jerk off",
+        "jack off"
+      ],
+      "ko": [
+        "딸딸이",
+        "딸치기",
+        "딸딸이치다",
+        "자위하다"
+      ]
+    },
+    {
+      "id": "p030",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "射精"
+      ],
+      "en": [
+        "ejaculate",
+        "cum",
+        "ejaculation"
+      ],
+      "ko": [
+        "사정",
+        "싸다",
+        "싸버리다",
+        "싸정"
+      ]
+    },
+    {
+      "id": "p031",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "射出来"
+      ],
+      "en": [
+        "cum out",
+        "shoot out"
+      ],
+      "ko": [
+        "사정하다",
+        "싸다",
+        "싸버리다"
+      ]
+    },
+    {
+      "id": "p032",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "内射"
+      ],
+      "en": [
+        "creampie",
+        "internal cum"
+      ],
+      "ko": [
+        "질내사정",
+        "안에 싸다"
+      ]
+    },
+    {
+      "id": "p033",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "口爆"
+      ],
+      "en": [
+        "cum in mouth",
+        "CIM"
+      ],
+      "ko": [
+        "입싸",
+        "입사정",
+        "입에 싸다"
+      ]
+    },
+    {
+      "id": "p034",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "喷水"
+      ],
+      "en": [
+        "squirt",
+        "squirting"
+      ],
+      "ko": [
+        "시오후키",
+        "분출",
+        "보지 분출"
+      ]
+    },
+    {
+      "id": "p035",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "潮吹"
+      ],
+      "en": [
+        "squirt",
+        "female ejaculation"
+      ],
+      "ko": [
+        "시오후키",
+        "여자 사정"
+      ]
+    },
+    {
+      "id": "p036",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "口交"
+      ],
+      "en": [
+        "blowjob",
+        "oral sex",
+        "fellatio",
+        "BJ"
+      ],
+      "ko": [
+        "펠라",
+        "빨아주다",
+        "빨기",
+        "자지 빨기",
+        "입으로 빨다"
+      ]
+    },
+    {
+      "id": "p037",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "肛交"
+      ],
+      "en": [
+        "anal sex",
+        "anal"
+      ],
+      "ko": [
+        "항문성교",
+        "애널섹스",
+        "후장 박다"
+      ]
+    },
+    {
+      "id": "p038",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "乳交"
+      ],
+      "en": [
+        "titfuck",
+        "boobjob",
+        "paizuri"
+      ],
+      "ko": [
+        "빠이즈리",
+        "파이즈리",
+        "가슴으로 빨아주다",
+        "젖퍽"
+      ]
+    },
+    {
+      "id": "p039",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "足交"
+      ],
+      "en": [
+        "footjob"
+      ],
+      "ko": [
+        "발딸",
+        "발로 해주다",
+        "발 페티시",
+        "풋잡"
+      ]
+    },
+    {
+      "id": "p040",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "舔逼"
+      ],
+      "en": [
+        "eat pussy",
+        "lick pussy"
+      ],
+      "ko": [
+        "보지 핥다",
+        "보지 빨다",
+        "보빨"
+      ]
+    },
+    {
+      "id": "p041",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "舔屌"
+      ],
+      "en": [
+        "suck cock",
+        "suck dick"
+      ],
+      "ko": [
+        "자지 빨다",
+        "좆 빨다",
+        "좆빨",
+        "자빨"
+      ]
+    },
+    {
+      "id": "p042",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "舔阴"
+      ],
+      "en": [
+        "cunnilingus",
+        "eat out"
+      ],
+      "ko": [
+        "보빨",
+        "보지 빨아주다",
+        "핥아주다",
+        "음핵 핥기"
+      ]
+    },
+    {
+      "id": "p043",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "舔穴"
+      ],
+      "en": [
+        "eat pussy",
+        "lick hole"
+      ],
+      "ko": [
+        "보지 핥다",
+        "보빨"
+      ]
+    },
+    {
+      "id": "p044",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "3P"
+      ],
+      "en": [
+        "threesome",
+        "3some"
+      ],
+      "ko": [
+        "쓰리섬",
+        "쓰리썸",
+        "3P"
+      ]
+    },
+    {
+      "id": "p045",
+      "level": "L1_block",
+      "category": "性行为",
+      "zh": [
+        "群P"
+      ],
+      "en": [
+        "gangbang",
+        "orgy"
+      ],
+      "ko": [
+        "난교",
+        "떼섹스",
+        "떡파티",
+        "그룹섹스"
+      ]
+    },
+    {
+      "id": "p046",
+      "level": "L1_block",
+      "category": "露骨场景",
+      "zh": [
+        "插进去"
+      ],
+      "en": [
+        "push in",
+        "insert",
+        "slide in"
+      ],
+      "ko": [
+        "박아넣다",
+        "집어넣다"
+      ]
+    },
+    {
+      "id": "p047",
+      "level": "L1_block",
+      "category": "露骨场景",
+      "zh": [
+        "舔舐"
+      ],
+      "en": [
+        "lick",
+        "lap"
+      ],
+      "ko": [
+        "핥다"
+      ]
+    },
+    {
+      "id": "p048",
+      "level": "L1_block",
+      "category": "露骨场景",
+      "zh": [
+        "娇喘"
+      ],
+      "en": [
+        "moan",
+        "sexual moaning"
+      ],
+      "ko": [
+        "신음",
+        "교성",
+        "신음소리",
+        "헐떡거리다",
+        "야한 신음"
+      ]
+    },
+    {
+      "id": "p049",
+      "level": "L1_block",
+      "category": "NSFW黑话",
+      "zh": [
+        "xp",
+        "XP"
+      ],
+      "en": [
+        "fetish",
+        "kink"
+      ],
+      "ko": [
+        "페티시",
+        "변태성욕"
+      ]
+    },
+    {
+      "id": "p050",
+      "level": "L1_block",
+      "category": "NSFW黑话",
+      "zh": [
+        "ntr",
+        "NTR"
+      ],
+      "en": [
+        "cuckold",
+        "cucking",
+        "NTR"
+      ],
+      "ko": [
+        "네토라레",
+        "엔티알"
+      ]
+    },
+    {
+      "id": "p051",
+      "level": "L1_block",
+      "category": "NSFW黑话",
+      "zh": [
+        "sp"
+      ],
+      "en": [
+        "spanking",
+        "spank"
+      ],
+      "ko": [
+        "스팽킹",
+        "엉덩이 때리기"
+      ]
+    },
+    {
+      "id": "p052",
+      "level": "L1_block",
+      "category": "NSFW黑话",
+      "zh": [
+        "dom"
+      ],
+      "en": [
+        "dom",
+        "dominant"
+      ],
+      "ko": [
+        "돔",
+        "도미넌트"
+      ]
+    },
+    {
+      "id": "p053",
+      "level": "L1_block",
+      "category": "英文显式",
+      "zh": [
+        "cock"
+      ],
+      "en": [
+        "cock"
+      ],
+      "ko": [
+        "좆",
+        "자지"
+      ]
+    },
+    {
+      "id": "p054",
+      "level": "L1_block",
+      "category": "英文显式",
+      "zh": [
+        "dick"
+      ],
+      "en": [
+        "dick"
+      ],
+      "ko": [
+        "좆",
+        "자지"
+      ]
+    },
+    {
+      "id": "p055",
+      "level": "L1_block",
+      "category": "英文显式",
+      "zh": [
+        "sex"
+      ],
+      "en": [
+        "sex"
+      ],
+      "ko": [
+        "섹스",
+        "성관계"
+      ]
+    },
+    {
+      "id": "p056",
+      "level": "L1_block",
+      "category": "英文显式",
+      "zh": [
+        "sexy"
+      ],
+      "en": [
+        "sexy"
+      ],
+      "ko": [
+        "섹시"
+      ]
+    },
+    {
+      "id": "k001",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "做爱",
+        "性交"
+      ],
+      "en": [
+        "have sex",
+        "fuck"
+      ],
+      "ko": [
+        "떡치다",
+        "떡",
+        "떡박",
+        "떡칠"
+      ]
+    },
+    {
+      "id": "k002",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "色情视频",
+        "黄色视频"
+      ],
+      "en": [
+        "porn video",
+        "porn"
+      ],
+      "ko": [
+        "야동",
+        "야설",
+        "야애니"
+      ]
+    },
+    {
+      "id": "k003",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "色图",
+        "黄图"
+      ],
+      "en": [
+        "porn image",
+        "lewd image"
+      ],
+      "ko": [
+        "야짤",
+        "야짤사진",
+        "야사"
+      ]
+    },
+    {
+      "id": "k004",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "巨乳"
+      ],
+      "en": [
+        "big tits",
+        "huge breasts"
+      ],
+      "ko": [
+        "거유",
+        "폭유",
+        "젖탱이"
+      ]
+    },
+    {
+      "id": "k005",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "贫乳"
+      ],
+      "en": [
+        "small tits",
+        "flat chest"
+      ],
+      "ko": [
+        "빈유",
+        "절벽"
+      ]
+    },
+    {
+      "id": "k006",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "后入式"
+      ],
+      "en": [
+        "doggy style"
+      ],
+      "ko": [
+        "후배위"
+      ]
+    },
+    {
+      "id": "k007",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "正常位"
+      ],
+      "en": [
+        "missionary"
+      ],
+      "ko": [
+        "정상위"
+      ]
+    },
+    {
+      "id": "k008",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "女上位"
+      ],
+      "en": [
+        "cowgirl",
+        "woman on top"
+      ],
+      "ko": [
+        "기승위"
+      ]
+    },
+    {
+      "id": "k009",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "未成年人(性化)"
+      ],
+      "en": [
+        "minor (sexualized)",
+        "underage"
+      ],
+      "ko": [
+        "미자",
+        "미성년"
+      ]
+    },
+    {
+      "id": "k010",
+      "level": "L1_block",
+      "category": "韩语专属",
+      "zh": [
+        "小逼/嫩逼"
+      ],
+      "en": [
+        "young pussy"
+      ],
+      "ko": [
+        "보빨러"
+      ]
+    },
+    {
+      "id": "p101",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "骚逼"
+      ],
+      "en": [
+        "slutty pussy",
+        "whore cunt"
+      ],
+      "ko": [
+        "걸레보지",
+        "걸레 보지",
+        "음란한 보지",
+        "창녀보지"
+      ]
+    },
+    {
+      "id": "p102",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "嫩逼"
+      ],
+      "en": [
+        "tight pussy",
+        "tender cunt"
+      ],
+      "ko": [
+        "좁은 보지",
+        "어린 보지",
+        "처녀 보지"
+      ]
+    },
+    {
+      "id": "p103",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "淫逼"
+      ],
+      "en": [
+        "wet pussy",
+        "horny cunt"
+      ],
+      "ko": [
+        "음란한 보지"
+      ]
+    },
+    {
+      "id": "p104",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "湿逼"
+      ],
+      "en": [
+        "wet pussy"
+      ],
+      "ko": [
+        "젖은 보지",
+        "젖보",
+        "젖은보지"
+      ]
+    },
+    {
+      "id": "p105",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "烂逼"
+      ],
+      "en": [
+        "loose pussy",
+        "ruined cunt"
+      ],
+      "ko": [
+        "헐렁한 보지"
+      ]
+    },
+    {
+      "id": "p106",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "破逼"
+      ],
+      "en": [
+        "busted pussy"
+      ],
+      "ko": [
+        "망가진 보지"
+      ]
+    },
+    {
+      "id": "p107",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "贱逼"
+      ],
+      "en": [
+        "bitch cunt"
+      ],
+      "ko": [
+        "걸레보지",
+        "싸가지 보지",
+        "잡년 보지"
+      ]
+    },
+    {
+      "id": "p108",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "母狗逼"
+      ],
+      "en": [
+        "bitch pussy"
+      ],
+      "ko": [
+        "암캐 보지",
+        "암캐년 보지",
+        "걸레년 보지"
+      ]
+    },
+    {
+      "id": "p109",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "粉逼"
+      ],
+      "en": [
+        "pink pussy"
+      ],
+      "ko": [
+        "분홍 보지",
+        "핑크보지",
+        "분홍보지"
+      ]
+    },
+    {
+      "id": "p110",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "肥逼"
+      ],
+      "en": [
+        "thick pussy",
+        "plump pussy"
+      ],
+      "ko": [
+        "통통한 보지",
+        "두툼한 보지"
+      ]
+    },
+    {
+      "id": "p111",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "操烂逼"
+      ],
+      "en": [
+        "fuck pussy raw"
+      ],
+      "ko": [
+        "보지 박살내다",
+        "보지 망가뜨리게 박다"
+      ]
+    },
+    {
+      "id": "p112",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "操你逼"
+      ],
+      "en": [
+        "fuck your pussy"
+      ],
+      "ko": [
+        "네 보지 박다",
+        "네 보지 따먹다"
+      ]
+    },
+    {
+      "id": "p113",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "操我逼"
+      ],
+      "en": [
+        "fuck my pussy"
+      ],
+      "ko": [
+        "내 보지 박아줘",
+        "내 보지 따먹어"
+      ]
+    },
+    {
+      "id": "p114",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "操她逼"
+      ],
+      "en": [
+        "fuck her pussy"
+      ],
+      "ko": [
+        "걔 보지 박다",
+        "그년 보지 박다"
+      ]
+    },
+    {
+      "id": "p115",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "操他逼"
+      ],
+      "en": [
+        "fuck his pussy"
+      ],
+      "ko": [
+        "쟤 보지 박다"
+      ]
+    },
+    {
+      "id": "p116",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "插逼"
+      ],
+      "en": [
+        "finger pussy",
+        "stick into pussy"
+      ],
+      "ko": [
+        "보지에 박다",
+        "보지에 쑤셔넣다"
+      ]
+    },
+    {
+      "id": "p117",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "吃逼"
+      ],
+      "en": [
+        "eat pussy"
+      ],
+      "ko": [
+        "보빨",
+        "보지 빨아주다",
+        "보지 핥다"
+      ]
+    },
+    {
+      "id": "p118",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "肏逼"
+      ],
+      "en": [
+        "fuck cunt"
+      ],
+      "ko": [
+        "보지 박다"
+      ]
+    },
+    {
+      "id": "p119",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "艹逼"
+      ],
+      "en": [
+        "fuck cunt"
+      ],
+      "ko": [
+        "보지 박다"
+      ]
+    },
+    {
+      "id": "p120",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里塞"
+      ],
+      "en": [
+        "stuff in pussy"
+      ],
+      "ko": [
+        "보지에 쑤셔넣다",
+        "보지에 쑤셔박다"
+      ]
+    },
+    {
+      "id": "p121",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里灌"
+      ],
+      "en": [
+        "fill pussy"
+      ],
+      "ko": [
+        "보지에 부어넣다"
+      ]
+    },
+    {
+      "id": "p122",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里夹"
+      ],
+      "en": [
+        "clench in pussy"
+      ],
+      "ko": [
+        "보지에 끼우다"
+      ]
+    },
+    {
+      "id": "p123",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里流"
+      ],
+      "en": [
+        "leak from pussy"
+      ],
+      "ko": [
+        "보지에서 흐르다"
+      ]
+    },
+    {
+      "id": "p124",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里都"
+      ],
+      "en": [
+        "all in pussy"
+      ],
+      "ko": [
+        "보지 안에 다"
+      ]
+    },
+    {
+      "id": "p125",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里抽"
+      ],
+      "en": [
+        "pump in pussy"
+      ],
+      "ko": [
+        "보지 안에서 박다"
+      ]
+    },
+    {
+      "id": "p126",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里插"
+      ],
+      "en": [
+        "stick into pussy"
+      ],
+      "ko": [
+        "보지 안에 박다"
+      ]
+    },
+    {
+      "id": "p127",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里操"
+      ],
+      "en": [
+        "fucking in pussy"
+      ],
+      "ko": [
+        "보지 안에서 박다"
+      ]
+    },
+    {
+      "id": "p128",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼里全是"
+      ],
+      "en": [
+        "pussy filled with"
+      ],
+      "ko": [
+        "보지 안에 가득"
+      ]
+    },
+    {
+      "id": "p129",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼被操"
+      ],
+      "en": [
+        "pussy fucked"
+      ],
+      "ko": [
+        "보지 박히다"
+      ]
+    },
+    {
+      "id": "p130",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼被插"
+      ],
+      "en": [
+        "pussy penetrated"
+      ],
+      "ko": [
+        "보지 찔리다"
+      ]
+    },
+    {
+      "id": "p131",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼被舔"
+      ],
+      "en": [
+        "pussy licked"
+      ],
+      "ko": [
+        "보지 핥히다"
+      ]
+    },
+    {
+      "id": "p132",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼被干"
+      ],
+      "en": [
+        "pussy banged"
+      ],
+      "ko": [
+        "보지 박히다"
+      ]
+    },
+    {
+      "id": "p133",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼夹"
+      ],
+      "en": [
+        "pussy clench"
+      ],
+      "ko": [
+        "보지 조이다"
+      ]
+    },
+    {
+      "id": "p134",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼咬"
+      ],
+      "en": [
+        "pussy clench (gripping dick)"
+      ],
+      "ko": [
+        "보지가 조이다",
+        "보지가 꽉 물다"
+      ]
+    },
+    {
+      "id": "p135",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼喷"
+      ],
+      "en": [
+        "pussy squirt"
+      ],
+      "ko": [
+        "보지 분출"
+      ]
+    },
+    {
+      "id": "p136",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼水"
+      ],
+      "en": [
+        "pussy juice"
+      ],
+      "ko": [
+        "보지 물",
+        "보지 애액",
+        "보지물"
+      ]
+    },
+    {
+      "id": "p137",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼口"
+      ],
+      "en": [
+        "pussy entrance"
+      ],
+      "ko": [
+        "보지 입구"
+      ]
+    },
+    {
+      "id": "p138",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼缝"
+      ],
+      "en": [
+        "pussy slit"
+      ],
+      "ko": [
+        "보지 틈"
+      ]
+    },
+    {
+      "id": "p139",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼好湿"
+      ],
+      "en": [
+        "pussy is so wet"
+      ],
+      "ko": [
+        "보지 너무 젖었어",
+        "보지 존나 젖음",
+        "보지 떡칠"
+      ]
+    },
+    {
+      "id": "p140",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼又湿"
+      ],
+      "en": [
+        "pussy wet again"
+      ],
+      "ko": [
+        "보지 또 젖다"
+      ]
+    },
+    {
+      "id": "p141",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼湿"
+      ],
+      "en": [
+        "pussy wet"
+      ],
+      "ko": [
+        "보지 젖다",
+        "보지 젖음"
+      ]
+    },
+    {
+      "id": "p142",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "逼流水"
+      ],
+      "en": [
+        "pussy dripping"
+      ],
+      "ko": [
+        "보지 물 흐르다",
+        "보지물 흐르다"
+      ]
+    },
+    {
+      "id": "p143",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "鸡巴插逼"
+      ],
+      "en": [
+        "dick in pussy"
+      ],
+      "ko": [
+        "자지로 보지 박다"
+      ]
+    },
+    {
+      "id": "p144",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "鸡巴操逼"
+      ],
+      "en": [
+        "dick fucks pussy"
+      ],
+      "ko": [
+        "자지로 보지 박다"
+      ]
+    },
+    {
+      "id": "p145",
+      "level": "L1_block",
+      "category": "含逼组合",
+      "zh": [
+        "肉棒操逼"
+      ],
+      "en": [
+        "cock fucks pussy"
+      ],
+      "ko": [
+        "육봉으로 보지 박다"
+      ]
+    },
+    {
+      "id": "p201",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "骚穴"
+      ],
+      "en": [
+        "slut hole",
+        "horny pussy"
+      ],
+      "ko": [
+        "음란한 보지",
+        "발정난 보지"
+      ]
+    },
+    {
+      "id": "p202",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "嫩穴"
+      ],
+      "en": [
+        "tight pussy"
+      ],
+      "ko": [
+        "좁은 보지",
+        "어린 보지",
+        "처녀 보지"
+      ]
+    },
+    {
+      "id": "p203",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "淫穴"
+      ],
+      "en": [
+        "lustful pussy"
+      ],
+      "ko": [
+        "음란한 보지"
+      ]
+    },
+    {
+      "id": "p204",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "湿穴"
+      ],
+      "en": [
+        "wet pussy"
+      ],
+      "ko": [
+        "젖은 보지"
+      ]
+    },
+    {
+      "id": "p205",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "后穴"
+      ],
+      "en": [
+        "back hole",
+        "anus"
+      ],
+      "ko": [
+        "뒷구멍",
+        "항문",
+        "후장"
+      ]
+    },
+    {
+      "id": "p206",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴口"
+      ],
+      "en": [
+        "pussy entrance"
+      ],
+      "ko": [
+        "보지 입구"
+      ]
+    },
+    {
+      "id": "p207",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴肉"
+      ],
+      "en": [
+        "pussy flesh",
+        "vagina wall"
+      ],
+      "ko": [
+        "보지 살",
+        "질살",
+        "보지 속살"
+      ]
+    },
+    {
+      "id": "p208",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴壁"
+      ],
+      "en": [
+        "pussy walls",
+        "vaginal wall"
+      ],
+      "ko": [
+        "질벽",
+        "보지 벽"
+      ]
+    },
+    {
+      "id": "p209",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴水"
+      ],
+      "en": [
+        "pussy juice"
+      ],
+      "ko": [
+        "보지 물",
+        "보지물"
+      ]
+    },
+    {
+      "id": "p210",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "操穴"
+      ],
+      "en": [
+        "fuck pussy"
+      ],
+      "ko": [
+        "보지 박다"
+      ]
+    },
+    {
+      "id": "p211",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "插穴"
+      ],
+      "en": [
+        "finger pussy",
+        "stick into hole"
+      ],
+      "ko": [
+        "보지에 박다"
+      ]
+    },
+    {
+      "id": "p212",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "玩穴"
+      ],
+      "en": [
+        "play with pussy"
+      ],
+      "ko": [
+        "보지 가지고 놀다"
+      ]
+    },
+    {
+      "id": "p213",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴被操"
+      ],
+      "en": [
+        "pussy fucked"
+      ],
+      "ko": [
+        "보지 박히다"
+      ]
+    },
+    {
+      "id": "p214",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴被舔"
+      ],
+      "en": [
+        "pussy licked"
+      ],
+      "ko": [
+        "보지 핥히다"
+      ]
+    },
+    {
+      "id": "p215",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴被插"
+      ],
+      "en": [
+        "pussy penetrated"
+      ],
+      "ko": [
+        "보지 찔리다"
+      ]
+    },
+    {
+      "id": "p216",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴被干"
+      ],
+      "en": [
+        "pussy banged"
+      ],
+      "ko": [
+        "보지 박히다"
+      ]
+    },
+    {
+      "id": "p217",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴里塞"
+      ],
+      "en": [
+        "stuff in pussy"
+      ],
+      "ko": [
+        "보지에 쑤셔넣다"
+      ]
+    },
+    {
+      "id": "p218",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴里全是"
+      ],
+      "en": [
+        "pussy filled with"
+      ],
+      "ko": [
+        "보지 안에 가득"
+      ]
+    },
+    {
+      "id": "p219",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴里流"
+      ],
+      "en": [
+        "leak from pussy"
+      ],
+      "ko": [
+        "보지에서 흐르다"
+      ]
+    },
+    {
+      "id": "p220",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴口湿"
+      ],
+      "en": [
+        "pussy entrance wet"
+      ],
+      "ko": [
+        "보지 입구 젖다"
+      ]
+    },
+    {
+      "id": "p221",
+      "level": "L1_block",
+      "category": "含穴组合",
+      "zh": [
+        "穴口流"
+      ],
+      "en": [
+        "pussy entrance dripping"
+      ],
+      "ko": [
+        "보지 입구 흐르다"
+      ]
+    },
+    {
+      "id": "p301",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔阴蒂"
+      ],
+      "en": [
+        "lick clit"
+      ],
+      "ko": [
+        "클리 핥다",
+        "콩알 핥다"
+      ]
+    },
+    {
+      "id": "p302",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔骚穴"
+      ],
+      "en": [
+        "eat slut hole"
+      ],
+      "ko": [
+        "음란한 보지 핥다"
+      ]
+    },
+    {
+      "id": "p303",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔小穴"
+      ],
+      "en": [
+        "eat pussy"
+      ],
+      "ko": [
+        "보지 핥다",
+        "보빨"
+      ]
+    },
+    {
+      "id": "p304",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔奶"
+      ],
+      "en": [
+        "lick tits",
+        "suck breasts"
+      ],
+      "ko": [
+        "젖 빨다",
+        "가슴 빨다",
+        "찌찌 빨다",
+        "찌찌 핥다"
+      ]
+    },
+    {
+      "id": "p305",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔奶子"
+      ],
+      "en": [
+        "lick tits"
+      ],
+      "ko": [
+        "젖 빨다",
+        "찌찌 핥다",
+        "젖탱이 빨다"
+      ]
+    },
+    {
+      "id": "p306",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔奶头"
+      ],
+      "en": [
+        "lick nipples"
+      ],
+      "ko": [
+        "젖꼭지 핥다"
+      ]
+    },
+    {
+      "id": "p307",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔乳头"
+      ],
+      "en": [
+        "lick nipples"
+      ],
+      "ko": [
+        "유두 핥다"
+      ]
+    },
+    {
+      "id": "p308",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔鸡巴"
+      ],
+      "en": [
+        "suck cock",
+        "suck dick"
+      ],
+      "ko": [
+        "자지 빨다",
+        "좆 빨다",
+        "좆빨"
+      ]
+    },
+    {
+      "id": "p309",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔肉棒"
+      ],
+      "en": [
+        "suck cock"
+      ],
+      "ko": [
+        "육봉 빨다"
+      ]
+    },
+    {
+      "id": "p310",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔龟头"
+      ],
+      "en": [
+        "lick glans",
+        "lick dickhead"
+      ],
+      "ko": [
+        "귀두 핥다"
+      ]
+    },
+    {
+      "id": "p311",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔屁眼"
+      ],
+      "en": [
+        "rim",
+        "lick asshole"
+      ],
+      "ko": [
+        "똥꼬 핥다",
+        "리밍",
+        "똥꼬 빨다",
+        "항빨"
+      ]
+    },
+    {
+      "id": "p312",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔菊花"
+      ],
+      "en": [
+        "rim asshole"
+      ],
+      "ko": [
+        "똥꼬 핥다"
+      ]
+    },
+    {
+      "id": "p313",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔肛"
+      ],
+      "en": [
+        "rim",
+        "lick anus"
+      ],
+      "ko": [
+        "항문 핥다",
+        "항빨"
+      ]
+    },
+    {
+      "id": "p314",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔肛门"
+      ],
+      "en": [
+        "lick anus",
+        "rim"
+      ],
+      "ko": [
+        "항문 핥다"
+      ]
+    },
+    {
+      "id": "p315",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔精"
+      ],
+      "en": [
+        "lick cum"
+      ],
+      "ko": [
+        "정액 핥다"
+      ]
+    },
+    {
+      "id": "p316",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔淫水"
+      ],
+      "en": [
+        "lick pussy juice"
+      ],
+      "ko": [
+        "애액 핥다",
+        "보지물 핥다"
+      ]
+    },
+    {
+      "id": "p317",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔花蒂"
+      ],
+      "en": [
+        "lick clit"
+      ],
+      "ko": [
+        "클리 핥다"
+      ]
+    },
+    {
+      "id": "p318",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔花穴"
+      ],
+      "en": [
+        "lick pussy"
+      ],
+      "ko": [
+        "보지 핥다",
+        "보빨"
+      ]
+    },
+    {
+      "id": "p319",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔下面"
+      ],
+      "en": [
+        "lick down there"
+      ],
+      "ko": [
+        "밑에 핥아줘",
+        "아래쪽 핥다"
+      ]
+    },
+    {
+      "id": "p320",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔我下面"
+      ],
+      "en": [
+        "lick me down there",
+        "eat me out"
+      ],
+      "ko": [
+        "내 밑에 핥아줘",
+        "밑에 빨아줘"
+      ]
+    },
+    {
+      "id": "p321",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔你下面"
+      ],
+      "en": [
+        "lick you down there"
+      ],
+      "ko": [
+        "네 밑에 핥아줄게",
+        "너 밑에 빨아줘"
+      ]
+    },
+    {
+      "id": "p322",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔骚逼"
+      ],
+      "en": [
+        "eat slut pussy"
+      ],
+      "ko": [
+        "음란한 보지 핥다"
+      ]
+    },
+    {
+      "id": "p323",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔湿逼"
+      ],
+      "en": [
+        "eat wet pussy"
+      ],
+      "ko": [
+        "젖은 보지 핥다"
+      ]
+    },
+    {
+      "id": "p324",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔嫩逼"
+      ],
+      "en": [
+        "eat tight pussy"
+      ],
+      "ko": [
+        "좁은 보지 핥다"
+      ]
+    },
+    {
+      "id": "p325",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔我的逼"
+      ],
+      "en": [
+        "eat my pussy"
+      ],
+      "ko": [
+        "내 보지 핥다",
+        "내 보지 빨아줘"
+      ]
+    },
+    {
+      "id": "p326",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔你的逼"
+      ],
+      "en": [
+        "eat your pussy"
+      ],
+      "ko": [
+        "네 보지 핥다"
+      ]
+    },
+    {
+      "id": "p327",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔我的奶"
+      ],
+      "en": [
+        "lick my tits"
+      ],
+      "ko": [
+        "내 젖 핥다",
+        "내 찌찌 빨아줘"
+      ]
+    },
+    {
+      "id": "p328",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔你的奶"
+      ],
+      "en": [
+        "lick your tits"
+      ],
+      "ko": [
+        "네 젖 핥다"
+      ]
+    },
+    {
+      "id": "p329",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔我的小穴"
+      ],
+      "en": [
+        "eat my pussy"
+      ],
+      "ko": [
+        "내 보지 핥다",
+        "내 보지 빨아줘"
+      ]
+    },
+    {
+      "id": "p330",
+      "level": "L1_block",
+      "category": "含舔组合",
+      "zh": [
+        "舔你的小穴"
+      ],
+      "en": [
+        "eat your pussy"
+      ],
+      "ko": [
+        "네 보지 핥다"
+      ]
+    },
+    {
+      "id": "p401",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入小穴"
+      ],
+      "en": [
+        "insert into pussy"
+      ],
+      "ko": [
+        "보지에 박다",
+        "보지에 박아넣다"
+      ]
+    },
+    {
+      "id": "p402",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入花穴"
+      ],
+      "en": [
+        "insert into pussy"
+      ],
+      "ko": [
+        "보지에 박다"
+      ]
+    },
+    {
+      "id": "p403",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入肉穴"
+      ],
+      "en": [
+        "insert into fleshy hole"
+      ],
+      "ko": [
+        "살구멍에 박다"
+      ]
+    },
+    {
+      "id": "p404",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入骚穴"
+      ],
+      "en": [
+        "insert into slut hole"
+      ],
+      "ko": [
+        "음란한 보지에 박다"
+      ]
+    },
+    {
+      "id": "p405",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入逼里"
+      ],
+      "en": [
+        "insert into pussy"
+      ],
+      "ko": [
+        "보지에 박다"
+      ]
+    },
+    {
+      "id": "p406",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入子宫"
+      ],
+      "en": [
+        "insert into womb"
+      ],
+      "ko": [
+        "자궁에 박다"
+      ]
+    },
+    {
+      "id": "p407",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入嘴里"
+      ],
+      "en": [
+        "insert into mouth"
+      ],
+      "ko": [
+        "입에 박다"
+      ]
+    },
+    {
+      "id": "p408",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插入喉咙"
+      ],
+      "en": [
+        "insert into throat"
+      ],
+      "ko": [
+        "목구멍에 박다"
+      ]
+    },
+    {
+      "id": "p409",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进小穴"
+      ],
+      "en": [
+        "push into pussy"
+      ],
+      "ko": [
+        "보지에 집어넣다",
+        "보지에 쑤셔박다"
+      ]
+    },
+    {
+      "id": "p410",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进花穴"
+      ],
+      "en": [
+        "push into pussy"
+      ],
+      "ko": [
+        "보지에 집어넣다"
+      ]
+    },
+    {
+      "id": "p411",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进肉穴"
+      ],
+      "en": [
+        "push into fleshy hole"
+      ],
+      "ko": [
+        "살구멍에 집어넣다"
+      ]
+    },
+    {
+      "id": "p412",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进骚穴"
+      ],
+      "en": [
+        "push into slut hole"
+      ],
+      "ko": [
+        "음란한 보지에 집어넣다"
+      ]
+    },
+    {
+      "id": "p413",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进逼"
+      ],
+      "en": [
+        "push into pussy"
+      ],
+      "ko": [
+        "보지에 집어넣다"
+      ]
+    },
+    {
+      "id": "p414",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进逼里"
+      ],
+      "en": [
+        "push into pussy"
+      ],
+      "ko": [
+        "보지에 집어넣다"
+      ]
+    },
+    {
+      "id": "p415",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进后穴"
+      ],
+      "en": [
+        "push into back hole"
+      ],
+      "ko": [
+        "뒷구멍에 집어넣다",
+        "후장에 박다"
+      ]
+    },
+    {
+      "id": "p416",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进屁眼"
+      ],
+      "en": [
+        "push into asshole"
+      ],
+      "ko": [
+        "똥꼬에 집어넣다",
+        "후장에 박다"
+      ]
+    },
+    {
+      "id": "p417",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进子宫"
+      ],
+      "en": [
+        "push into womb"
+      ],
+      "ko": [
+        "자궁에 집어넣다"
+      ]
+    },
+    {
+      "id": "p418",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进嘴里"
+      ],
+      "en": [
+        "push into mouth"
+      ],
+      "ko": [
+        "입에 집어넣다"
+      ]
+    },
+    {
+      "id": "p419",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进喉咙"
+      ],
+      "en": [
+        "push into throat"
+      ],
+      "ko": [
+        "목구멍에 집어넣다"
+      ]
+    },
+    {
+      "id": "p420",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "插进身体"
+      ],
+      "en": [
+        "push into body"
+      ],
+      "ko": [
+        "몸에 집어넣다"
+      ]
+    },
+    {
+      "id": "p421",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "把鸡巴插"
+      ],
+      "en": [
+        "stick my dick in"
+      ],
+      "ko": [
+        "자지를 박다",
+        "자지로 박다"
+      ]
+    },
+    {
+      "id": "p422",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "把肉棒插"
+      ],
+      "en": [
+        "stick my cock in"
+      ],
+      "ko": [
+        "육봉을 박다"
+      ]
+    },
+    {
+      "id": "p423",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "用鸡巴插"
+      ],
+      "en": [
+        "with dick",
+        "use dick to insert"
+      ],
+      "ko": [
+        "자지로 박다"
+      ]
+    },
+    {
+      "id": "p424",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "把鸡巴插进"
+      ],
+      "en": [
+        "push my dick in"
+      ],
+      "ko": [
+        "자지를 집어넣다",
+        "자지로 쑤셔박다"
+      ]
+    },
+    {
+      "id": "p425",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "把鸡巴插入"
+      ],
+      "en": [
+        "insert my dick"
+      ],
+      "ko": [
+        "자지를 박아넣다"
+      ]
+    },
+    {
+      "id": "p426",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "把肉棒插进"
+      ],
+      "en": [
+        "push my cock in"
+      ],
+      "ko": [
+        "육봉을 집어넣다"
+      ]
+    },
+    {
+      "id": "p427",
+      "level": "L1_block",
+      "category": "含插组合",
+      "zh": [
+        "把肉棒插入"
+      ],
+      "en": [
+        "insert my cock"
+      ],
+      "ko": [
+        "육봉을 박아넣다"
+      ]
+    },
+    {
+      "id": "p501",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "舔咪咪"
+      ],
+      "en": [
+        "lick tits"
+      ],
+      "ko": [
+        "가슴 핥다",
+        "찌찌 핥다"
+      ]
+    },
+    {
+      "id": "p502",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "吸咪咪"
+      ],
+      "en": [
+        "suck tits"
+      ],
+      "ko": [
+        "가슴 빨다",
+        "찌찌 빨다"
+      ]
+    },
+    {
+      "id": "p503",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "揉咪咪"
+      ],
+      "en": [
+        "fondle tits"
+      ],
+      "ko": [
+        "가슴 주무르다",
+        "찌찌 주무르다"
+      ]
+    },
+    {
+      "id": "p504",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "捏咪咪"
+      ],
+      "en": [
+        "pinch tits"
+      ],
+      "ko": [
+        "가슴 꼬집다",
+        "찌찌 꼬집다"
+      ]
+    },
+    {
+      "id": "p505",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "玩咪咪"
+      ],
+      "en": [
+        "play with tits"
+      ],
+      "ko": [
+        "가슴 가지고 놀다",
+        "찌찌 만지다"
+      ]
+    },
+    {
+      "id": "p506",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "亲咪咪"
+      ],
+      "en": [
+        "kiss tits"
+      ],
+      "ko": [
+        "가슴 키스하다",
+        "찌찌 키스"
+      ]
+    },
+    {
+      "id": "p507",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "咬咪咪"
+      ],
+      "en": [
+        "bite tits"
+      ],
+      "ko": [
+        "가슴 깨물다",
+        "찌찌 깨물다"
+      ]
+    },
+    {
+      "id": "p508",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "大咪咪"
+      ],
+      "en": [
+        "big tits"
+      ],
+      "ko": [
+        "큰 가슴",
+        "큰 찌찌",
+        "거유",
+        "젖탱이"
+      ]
+    },
+    {
+      "id": "p509",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "小咪咪"
+      ],
+      "en": [
+        "small tits"
+      ],
+      "ko": [
+        "작은 가슴",
+        "빈유"
+      ]
+    },
+    {
+      "id": "p510",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "粉咪咪"
+      ],
+      "en": [
+        "pink tits"
+      ],
+      "ko": [
+        "분홍 가슴",
+        "핑크 찌찌"
+      ]
+    },
+    {
+      "id": "p511",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "嫩咪咪"
+      ],
+      "en": [
+        "tender tits"
+      ],
+      "ko": [
+        "부드러운 가슴",
+        "보들보들한 가슴"
+      ]
+    },
+    {
+      "id": "p512",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "咪咪好大"
+      ],
+      "en": [
+        "tits are huge"
+      ],
+      "ko": [
+        "가슴이 크다",
+        "찌찌 크다"
+      ]
+    },
+    {
+      "id": "p513",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "咪咪好嫩"
+      ],
+      "en": [
+        "tits are soft"
+      ],
+      "ko": [
+        "가슴이 보들보들하다",
+        "가슴이 말랑하다"
+      ]
+    },
+    {
+      "id": "p514",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "咪咪硬了"
+      ],
+      "en": [
+        "nipples hard"
+      ],
+      "ko": [
+        "젖꼭지가 섰다",
+        "찌찌 빳빳"
+      ]
+    },
+    {
+      "id": "p515",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "咪咪挺"
+      ],
+      "en": [
+        "perky tits"
+      ],
+      "ko": [
+        "가슴이 봉긋하다",
+        "찌찌 빳빳하다"
+      ]
+    },
+    {
+      "id": "p516",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "舔蛋蛋"
+      ],
+      "en": [
+        "lick balls"
+      ],
+      "ko": [
+        "불알 핥다",
+        "고환 핥다"
+      ]
+    },
+    {
+      "id": "p517",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "吸蛋蛋"
+      ],
+      "en": [
+        "suck balls"
+      ],
+      "ko": [
+        "불알 빨다",
+        "알 빨다"
+      ]
+    },
+    {
+      "id": "p518",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "揉蛋蛋"
+      ],
+      "en": [
+        "fondle balls"
+      ],
+      "ko": [
+        "불알 주무르다"
+      ]
+    },
+    {
+      "id": "p519",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "捏蛋蛋"
+      ],
+      "en": [
+        "pinch balls"
+      ],
+      "ko": [
+        "불알 꼬집다"
+      ]
+    },
+    {
+      "id": "p520",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "含蛋蛋"
+      ],
+      "en": [
+        "mouth balls"
+      ],
+      "ko": [
+        "불알 머금다"
+      ]
+    },
+    {
+      "id": "p521",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "玩蛋蛋"
+      ],
+      "en": [
+        "play with balls"
+      ],
+      "ko": [
+        "불알 가지고 놀다"
+      ]
+    },
+    {
+      "id": "p522",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "吃蛋蛋"
+      ],
+      "en": [
+        "eat balls"
+      ],
+      "ko": [
+        "불알 먹다"
+      ]
+    },
+    {
+      "id": "p523",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "你的蛋蛋"
+      ],
+      "en": [
+        "your balls"
+      ],
+      "ko": [
+        "네 불알"
+      ]
+    },
+    {
+      "id": "p524",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "他的蛋蛋"
+      ],
+      "en": [
+        "his balls"
+      ],
+      "ko": [
+        "그의 불알",
+        "쟤 불알"
+      ]
+    },
+    {
+      "id": "p525",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "老公的蛋蛋"
+      ],
+      "en": [
+        "hubby's balls"
+      ],
+      "ko": [
+        "남편 불알"
+      ]
+    },
+    {
+      "id": "p526",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "爸爸的蛋蛋"
+      ],
+      "en": [
+        "daddy's balls"
+      ],
+      "ko": [
+        "아빠 불알"
+      ]
+    },
+    {
+      "id": "p527",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "蛋蛋里的精"
+      ],
+      "en": [
+        "cum in balls"
+      ],
+      "ko": [
+        "불알 속 정액",
+        "불알에 가득 찬 정액"
+      ]
+    },
+    {
+      "id": "p528",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "蛋蛋好大"
+      ],
+      "en": [
+        "balls are huge"
+      ],
+      "ko": [
+        "불알이 크다"
+      ]
+    },
+    {
+      "id": "p529",
+      "level": "L1_block",
+      "category": "咪咪蛋蛋组合",
+      "zh": [
+        "蛋蛋好涨"
+      ],
+      "en": [
+        "balls swollen"
+      ],
+      "ko": [
+        "불알이 부풀다"
+      ]
+    },
+    {
+      "id": "p601",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操烂"
+      ],
+      "en": [
+        "fuck raw",
+        "fuck to ruin"
+      ],
+      "ko": [
+        "박살내다",
+        "끝장나게 박다",
+        "보지 박살내게 박다"
+      ]
+    },
+    {
+      "id": "p602",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操爆"
+      ],
+      "en": [
+        "fuck hard"
+      ],
+      "ko": [
+        "세게 박다",
+        "존나 박다"
+      ]
+    },
+    {
+      "id": "p603",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操爽"
+      ],
+      "en": [
+        "fuck good"
+      ],
+      "ko": [
+        "박아서 좋다",
+        "박아서 존좋",
+        "박는 맛"
+      ]
+    },
+    {
+      "id": "p604",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操湿"
+      ],
+      "en": [
+        "fuck wet"
+      ],
+      "ko": [
+        "박아서 젖다",
+        "박아서 떡칠"
+      ]
+    },
+    {
+      "id": "p605",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操哭"
+      ],
+      "en": [
+        "fuck to tears"
+      ],
+      "ko": [
+        "울 때까지 박다"
+      ]
+    },
+    {
+      "id": "p606",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操疯"
+      ],
+      "en": [
+        "fuck crazy"
+      ],
+      "ko": [
+        "미치게 박다",
+        "미친듯이 박다"
+      ]
+    },
+    {
+      "id": "p607",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操射"
+      ],
+      "en": [
+        "fuck to cum"
+      ],
+      "ko": [
+        "박아서 사정",
+        "박아서 싸다"
+      ]
+    },
+    {
+      "id": "p608",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操喷"
+      ],
+      "en": [
+        "fuck to squirt"
+      ],
+      "ko": [
+        "박아서 분출"
+      ]
+    },
+    {
+      "id": "p609",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操坏"
+      ],
+      "en": [
+        "fuck to break"
+      ],
+      "ko": [
+        "박살내다"
+      ]
+    },
+    {
+      "id": "p610",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操出水"
+      ],
+      "en": [
+        "fuck out juice"
+      ],
+      "ko": [
+        "박아서 물 나오다"
+      ]
+    },
+    {
+      "id": "p611",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操出来"
+      ],
+      "en": [
+        "fuck out"
+      ],
+      "ko": [
+        "박아내다"
+      ]
+    },
+    {
+      "id": "p612",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操进去"
+      ],
+      "en": [
+        "fuck inside"
+      ],
+      "ko": [
+        "박아넣다"
+      ]
+    },
+    {
+      "id": "p613",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操到喷水"
+      ],
+      "en": [
+        "fuck until squirting"
+      ],
+      "ko": [
+        "분출할 때까지 박다"
+      ]
+    },
+    {
+      "id": "p614",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操到高潮"
+      ],
+      "en": [
+        "fuck to orgasm"
+      ],
+      "ko": [
+        "오르가즘까지 박다"
+      ]
+    },
+    {
+      "id": "p615",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操到失神"
+      ],
+      "en": [
+        "fuck to black out"
+      ],
+      "ko": [
+        "정신 잃을 때까지 박다"
+      ]
+    },
+    {
+      "id": "p616",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操到流水"
+      ],
+      "en": [
+        "fuck to dripping"
+      ],
+      "ko": [
+        "물 흐를 때까지 박다"
+      ]
+    },
+    {
+      "id": "p617",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操到求饶"
+      ],
+      "en": [
+        "fuck to begging"
+      ],
+      "ko": [
+        "빌 때까지 박다"
+      ]
+    },
+    {
+      "id": "p618",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操到哭"
+      ],
+      "en": [
+        "fuck to crying"
+      ],
+      "ko": [
+        "울 때까지 박다"
+      ]
+    },
+    {
+      "id": "p619",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得我"
+      ],
+      "en": [
+        "fuck me so"
+      ],
+      "ko": [
+        "나를 박아서",
+        "박아서 나 죽어"
+      ]
+    },
+    {
+      "id": "p620",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得你"
+      ],
+      "en": [
+        "fuck you so"
+      ],
+      "ko": [
+        "너를 박아서",
+        "박아서 너 죽음"
+      ]
+    },
+    {
+      "id": "p621",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得她"
+      ],
+      "en": [
+        "fuck her so"
+      ],
+      "ko": [
+        "걔 박아서",
+        "박아서 걔 죽음"
+      ]
+    },
+    {
+      "id": "p622",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得他"
+      ],
+      "en": [
+        "fuck him so"
+      ],
+      "ko": [
+        "쟤 박아서",
+        "박아서 쟤 죽음"
+      ]
+    },
+    {
+      "id": "p623",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得爽"
+      ],
+      "en": [
+        "fuck so good"
+      ],
+      "ko": [
+        "박아서 존좋",
+        "박아서 좋다"
+      ]
+    },
+    {
+      "id": "p624",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得湿"
+      ],
+      "en": [
+        "fuck until wet"
+      ],
+      "ko": [
+        "박아서 젖다"
+      ]
+    },
+    {
+      "id": "p625",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操得疯"
+      ],
+      "en": [
+        "fuck crazy"
+      ],
+      "ko": [
+        "미치게 박다"
+      ]
+    },
+    {
+      "id": "p626",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "用力操"
+      ],
+      "en": [
+        "fuck hard"
+      ],
+      "ko": [
+        "세게 박다"
+      ]
+    },
+    {
+      "id": "p627",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "狠狠操"
+      ],
+      "en": [
+        "pound",
+        "fuck hard"
+      ],
+      "ko": [
+        "거칠게 박다"
+      ]
+    },
+    {
+      "id": "p628",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "粗暴操"
+      ],
+      "en": [
+        "rough fuck"
+      ],
+      "ko": [
+        "거칠게 박다"
+      ]
+    },
+    {
+      "id": "p629",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "疯狂操"
+      ],
+      "en": [
+        "fuck wildly"
+      ],
+      "ko": [
+        "미친듯이 박다",
+        "존나 박다"
+      ]
+    },
+    {
+      "id": "p630",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "继续操"
+      ],
+      "en": [
+        "keep fucking"
+      ],
+      "ko": [
+        "계속 박다"
+      ]
+    },
+    {
+      "id": "p631",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操你小穴"
+      ],
+      "en": [
+        "fuck your pussy"
+      ],
+      "ko": [
+        "네 보지 박다"
+      ]
+    },
+    {
+      "id": "p632",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操你花穴"
+      ],
+      "en": [
+        "fuck your pussy"
+      ],
+      "ko": [
+        "네 보지 박다"
+      ]
+    },
+    {
+      "id": "p633",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操你骚穴"
+      ],
+      "en": [
+        "fuck your slut hole"
+      ],
+      "ko": [
+        "네 음란한 보지 박아줄게"
+      ]
+    },
+    {
+      "id": "p634",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操你屁眼"
+      ],
+      "en": [
+        "fuck your asshole"
+      ],
+      "ko": [
+        "네 똥꼬 박다",
+        "네 후장 박다"
+      ]
+    },
+    {
+      "id": "p635",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操我小穴"
+      ],
+      "en": [
+        "fuck my pussy"
+      ],
+      "ko": [
+        "내 보지 박다"
+      ]
+    },
+    {
+      "id": "p636",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操我花穴"
+      ],
+      "en": [
+        "fuck my pussy"
+      ],
+      "ko": [
+        "내 보지 박다"
+      ]
+    },
+    {
+      "id": "p637",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操我骚穴"
+      ],
+      "en": [
+        "fuck my slut hole"
+      ],
+      "ko": [
+        "내 음란한 보지 박다"
+      ]
+    },
+    {
+      "id": "p638",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操我屁眼"
+      ],
+      "en": [
+        "fuck my asshole"
+      ],
+      "ko": [
+        "내 똥꼬 박다"
+      ]
+    },
+    {
+      "id": "p639",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操她小穴"
+      ],
+      "en": [
+        "fuck her pussy"
+      ],
+      "ko": [
+        "걔 보지 박다"
+      ]
+    },
+    {
+      "id": "p640",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操她花穴"
+      ],
+      "en": [
+        "fuck her pussy"
+      ],
+      "ko": [
+        "걔 보지 박다"
+      ]
+    },
+    {
+      "id": "p641",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操她骚穴"
+      ],
+      "en": [
+        "fuck her slut hole"
+      ],
+      "ko": [
+        "걔 음란한 보지 박다"
+      ]
+    },
+    {
+      "id": "p642",
+      "level": "L1_block",
+      "category": "含操组合",
+      "zh": [
+        "操她屁眼"
+      ],
+      "en": [
+        "fuck her asshole"
+      ],
+      "ko": [
+        "걔 똥꼬 박다"
+      ]
+    },
+    {
+      "id": "p643",
+      "level": "L0_redline",
+      "category": "含操组合-未成年红线",
+      "zh": [
+        "操烂小"
+      ],
+      "en": [
+        "fuck small raw (likely minor)"
+      ],
+      "ko": [
+        "어린애 따먹다",
+        "미자 박다",
+        "미성년 박다"
+      ]
+    },
+    {
+      "id": "p644",
+      "level": "L0_redline",
+      "category": "含操组合-未成年红线",
+      "zh": [
+        "操坏小"
+      ],
+      "en": [
+        "fuck small to break (likely minor)"
+      ],
+      "ko": [
+        "어린애 박살내다",
+        "미자 박살내다"
+      ]
+    },
+    {
+      "id": "p701",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "鸡巴硬"
+      ],
+      "en": [
+        "dick hard"
+      ],
+      "ko": [
+        "자지 서다",
+        "좆 서다",
+        "자지 빳빳"
+      ]
+    },
+    {
+      "id": "p702",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "鸡儿硬"
+      ],
+      "en": [
+        "dick hard"
+      ],
+      "ko": [
+        "자지 서다",
+        "좆 빳빳",
+        "자지 빳빳"
+      ]
+    },
+    {
+      "id": "p703",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "肉棒硬"
+      ],
+      "en": [
+        "cock hard"
+      ],
+      "ko": [
+        "육봉 서다",
+        "육봉 빳빳"
+      ]
+    },
+    {
+      "id": "p704",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "下面硬了"
+      ],
+      "en": [
+        "got hard down there"
+      ],
+      "ko": [
+        "밑에 섰다",
+        "밑이 섰다",
+        "거기 섰다"
+      ]
+    },
+    {
+      "id": "p705",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "下面都硬了"
+      ],
+      "en": [
+        "all hard down there"
+      ],
+      "ko": [
+        "밑에 다 섰다"
+      ]
+    },
+    {
+      "id": "p706",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "下面又硬了"
+      ],
+      "en": [
+        "hard down there again"
+      ],
+      "ko": [
+        "밑에 또 섰다"
+      ]
+    },
+    {
+      "id": "p707",
+      "level": "L1_block",
+      "category": "硬了勃起组合",
+      "zh": [
+        "我硬了"
+      ],
+      "en": [
+        "I'm hard"
+      ],
+      "ko": [
+        "나 섰어"
+      ]
+    },
+    {
+      "id": "p801",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "淫水"
+      ],
+      "en": [
+        "pussy juice",
+        "love juice"
+      ],
+      "ko": [
+        "애액",
+        "보지물",
+        "보물"
+      ]
+    },
+    {
+      "id": "p802",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "骚水"
+      ],
+      "en": [
+        "slut juice"
+      ],
+      "ko": [
+        "보지물",
+        "발정난 애액",
+        "음란한 보지물"
+      ]
+    },
+    {
+      "id": "p803",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "小穴湿"
+      ],
+      "en": [
+        "pussy wet"
+      ],
+      "ko": [
+        "보지가 젖다",
+        "보지 젖음",
+        "보지 떡칠"
+      ]
+    },
+    {
+      "id": "p804",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "花穴湿"
+      ],
+      "en": [
+        "pussy wet"
+      ],
+      "ko": [
+        "보지가 젖다",
+        "보지 젖음"
+      ]
+    },
+    {
+      "id": "p805",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "下面湿"
+      ],
+      "en": [
+        "wet down there"
+      ],
+      "ko": [
+        "밑에 젖다",
+        "아래가 젖다"
+      ]
+    },
+    {
+      "id": "p806",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "下面湿了"
+      ],
+      "en": [
+        "got wet down there"
+      ],
+      "ko": [
+        "밑에 젖었다",
+        "아래가 젖었다"
+      ]
+    },
+    {
+      "id": "p807",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "下面都湿了"
+      ],
+      "en": [
+        "all wet down there"
+      ],
+      "ko": [
+        "밑에 다 젖었다"
+      ]
+    },
+    {
+      "id": "p808",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "下面流水"
+      ],
+      "en": [
+        "dripping down there"
+      ],
+      "ko": [
+        "밑에서 물이 흐르다"
+      ]
+    },
+    {
+      "id": "p809",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "湿了一片"
+      ],
+      "en": [
+        "soaked a patch"
+      ],
+      "ko": [
+        "한바닥 젖다"
+      ]
+    },
+    {
+      "id": "p810",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "湿成这样"
+      ],
+      "en": [
+        "this wet"
+      ],
+      "ko": [
+        "이렇게 젖다"
+      ]
+    },
+    {
+      "id": "p811",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "你好湿"
+      ],
+      "en": [
+        "you're so wet"
+      ],
+      "ko": [
+        "너 너무 젖었어",
+        "너 떡칠됨",
+        "너 존나 젖었어"
+      ]
+    },
+    {
+      "id": "p812",
+      "level": "L1_block",
+      "category": "湿流组合",
+      "zh": [
+        "她好湿"
+      ],
+      "en": [
+        "she's so wet"
+      ],
+      "ko": [
+        "걔 너무 젖었어",
+        "쟤 존나 젖음"
+      ]
+    },
+    {
+      "id": "p901",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "肉便器"
+      ],
+      "en": [
+        "cum dump",
+        "fuck toilet",
+        "meat toilet"
+      ],
+      "ko": [
+        "정액 변기",
+        "정액받이",
+        "정액 쓰레기통",
+        "보지걸레"
+      ]
+    },
+    {
+      "id": "p902",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "母狗"
+      ],
+      "en": [
+        "bitch",
+        "slut bitch"
+      ],
+      "ko": [
+        "암캐",
+        "걸레",
+        "암캐년",
+        "발정 걸레"
+      ]
+    },
+    {
+      "id": "p903",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "贱狗"
+      ],
+      "en": [
+        "bitch slut"
+      ],
+      "ko": [
+        "천한 암캐",
+        "걸레"
+      ]
+    },
+    {
+      "id": "p904",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "骚狗"
+      ],
+      "en": [
+        "horny bitch"
+      ],
+      "ko": [
+        "발정난 암캐"
+      ]
+    },
+    {
+      "id": "p905",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "公狗"
+      ],
+      "en": [
+        "male dog"
+      ],
+      "ko": [
+        "수캐"
+      ]
+    },
+    {
+      "id": "p906",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人操"
+      ],
+      "en": [
+        "master fucks"
+      ],
+      "ko": [
+        "주인님이 박다"
+      ]
+    },
+    {
+      "id": "p907",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人插"
+      ],
+      "en": [
+        "master penetrates"
+      ],
+      "ko": [
+        "주인님이 집어넣다"
+      ]
+    },
+    {
+      "id": "p908",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人射"
+      ],
+      "en": [
+        "master cums"
+      ],
+      "ko": [
+        "주인님이 사정",
+        "주인님이 싸다"
+      ]
+    },
+    {
+      "id": "p909",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人玩"
+      ],
+      "en": [
+        "master plays"
+      ],
+      "ko": [
+        "주인님이 가지고 놀다"
+      ]
+    },
+    {
+      "id": "p910",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人调教"
+      ],
+      "en": [
+        "master trains"
+      ],
+      "ko": [
+        "주인님이 조교하다"
+      ]
+    },
+    {
+      "id": "p911",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人的肉便器"
+      ],
+      "en": [
+        "master's cum dump"
+      ],
+      "ko": [
+        "주인님의 정액 변기",
+        "주인님 정액받이"
+      ]
+    },
+    {
+      "id": "p912",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人的母狗"
+      ],
+      "en": [
+        "master's bitch"
+      ],
+      "ko": [
+        "주인님의 암캐"
+      ]
+    },
+    {
+      "id": "p913",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "主人的小狗"
+      ],
+      "en": [
+        "master's pet dog"
+      ],
+      "ko": [
+        "주인님의 강아지"
+      ]
+    },
+    {
+      "id": "p914",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "我是主人的"
+      ],
+      "en": [
+        "I'm master's"
+      ],
+      "ko": [
+        "저는 주인님 거예요"
+      ]
+    },
+    {
+      "id": "p915",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "求主人操"
+      ],
+      "en": [
+        "beg master to fuck"
+      ],
+      "ko": [
+        "주인님 박아달라고 빌다"
+      ]
+    },
+    {
+      "id": "p916",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "求主人插"
+      ],
+      "en": [
+        "beg master to penetrate"
+      ],
+      "ko": [
+        "주인님 집어넣어달라고 빌다"
+      ]
+    },
+    {
+      "id": "p917",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "求主人射"
+      ],
+      "en": [
+        "beg master to cum"
+      ],
+      "ko": [
+        "주인님 싸달라고 빌다"
+      ]
+    },
+    {
+      "id": "p918",
+      "level": "L1_block",
+      "category": "主人调教组合",
+      "zh": [
+        "求主人干"
+      ],
+      "en": [
+        "beg master to bang"
+      ],
+      "ko": [
+        "주인님 박아달라고 빌다"
+      ]
+    }
+  ],
+  "policy": {
+    "enabled": true,
+    "input_enabled": true,
+    "output_enabled": true,
+    "persona_enabled": true,
+    "local_compute": true,
+    "update_control": "startup_strategy_ext.content_filter",
+    "notices": {
+      "input": "内容不合规，请调整后再发送",
+      "output": "输出不合规，请重新设置",
+      "persona": "输出不合规，请重新设置"
+    }
+  }
+}
