@@ -9,6 +9,8 @@ Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不�
 
 - `month`
   - 月卡，单独购买：`15`
+- `month_auto_first`
+  - VIP 连续包月：首月 `15`，次月起仍为 `15`，不再加 10 元
 - `week`
   - 周卡，单独购买：`15`
 - `year`
@@ -23,6 +25,7 @@ Android 会员页做商品目录分组实验，并保持 iOS 与糖果业务不�
 说明：
 
 - 当前数据库里的 `month_auto_first.priceCny` 仍可能是 `25`
+- Android 支付宝连续包月的续费价由服务端按 Android 口径覆盖为 `15`，客户端会员页通过 `/v1/vip/plans?platform=android` 展示 `renewal_price` / `renewal_note`
 - 为避免影响 iOS StoreKit 月卡，Android candidate 的 `month=15` 由实验 payload 的 `price_overrides` 控制
 - Android candidate 不下发 `month_auto_first` / `svip_month_auto_first`，因此没有 VIP/SVIP 连续包月
 - `year` / `svip_year` 需要当前数据库执行 `prisma/upsert_android_vip_experiment_plans.sql` 做幂等补齐
@@ -149,6 +152,13 @@ Android 调用：
 3. 对 `agreement_no` 发起商家扣款
 4. 成功则新增/更新续费订单并延长会员
 5. 失败则标记 `past_due`，12 小时后重试
+
+价格口径：
+
+- `month_auto_first` 在 Android 支付宝订阅中首月 `15`
+- 签约参数 `period_rule_params.single_amount` 为 `15`
+- 后续自动续费代扣金额为 `15`
+- 会员页 `renewal_note` 展示为“次月仍为 ¥15.00/月自动续费，可随时取消”
 
 ## 四、关键文件
 
