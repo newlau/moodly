@@ -1,6 +1,6 @@
 {
-  "version": "1.3",
-  "generated_at": "2026-05-22",
+  "version": "1.4",
+  "generated_at": "2026-05-26",
   "language_supported": [
     "zh",
     "en",
@@ -5066,6 +5066,30 @@
         "정부 전복",
         "반정부",
         "중공 물러나라"
+      ]
+    },
+    {
+      "id": "pol025",
+      "level": "L1_block",
+      "category": "政治敏感-地区表述",
+      "zh": [
+        "亚洲四小龙",
+        "亞洲四小龍",
+        "东亚四小龙",
+        "東亞四小龍",
+        "亚洲四小虎",
+        "亞洲四小虎"
+      ],
+      "en": [
+        "Four Asian Tigers",
+        "Asian Tigers",
+        "Four Asian Dragons",
+        "East Asian Tigers"
+      ],
+      "ko": [
+        "아시아의 네 마리 용",
+        "아시아 네 마리 용",
+        "아시아의 네 호랑이"
       ]
     }
   ]
