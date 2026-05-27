@@ -40,7 +40,7 @@ iOS 商品配置文档在：
 
 - 本地开发可用 `Products.storekit`
 - Sandbox / TestFlight / 线上需在 App Store Connect 建真实商品
-- 糖果的首充赠送、VIP 加赠不在 App Store Connect 配，而由服务端动态计算。当前新版首充策略：¥6 送 50%，¥18 送 50%，¥38 送 100%，¥128 送 120%；VIP 额外 20% 加赠仍按会员权益叠加。
+- 糖果的首充赠送、VIP 加赠不在 App Store Connect 配，而由服务端动态计算。当前新版首充策略：¥6 不送，¥18 送 50%，¥38 送 100%，¥128 送 120%；VIP 额外 20% 加赠仍按会员权益叠加。
 - iOS 老版本不认识新 Apple Product ID，服务端需按 `x-app-version` 兜底：`1.0.4` 以下或未传版本继续下发旧 6 档，`1.0.4` 及以上下发新版 4 档。
 - 旧 iOS 覆盖率足够前不要删除 App Store Connect 里的旧糖果商品；服务端 Apple 验证仍兼容旧档位订单发货。
 
@@ -95,7 +95,9 @@ iOS Release 包在 App Review 期间不得展示 App 自定义的兑换码、邀
 }
 ```
 
-过审后如需恢复入口，服务端把 `src/modules/startup-strategy/startup-strategy.service.ts` 中的 `CODE_REDEMPTION_ENTRY_ENABLED` 常量改为 `true` 并重新发布服务端即可，iOS 不需要重新发版。客户端会把该开关应用到发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口。
+Debug 包为了联调完整功能入口，会把本地 debug 默认开启状态作为下限；即使服务端仍下发 `false`，debug 包也保持发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口打开。Release 包继续完全服从服务端开关。
+
+过审后如需恢复生产入口，服务端把 `src/modules/startup-strategy/startup-strategy.service.ts` 中的 `CODE_REDEMPTION_ENTRY_ENABLED` 常量改为 `true` 并重新发布服务端即可，iOS Release 不需要重新发版。客户端会把该开关应用到发现页兑换码、角色分享兑换、个人页邀请码、签到页邀请奖励入口。
 
 如果需要给用户免费或折扣获取 IAP 商品，必须在 App Store Connect 中为对应 IAP 创建 Offer Codes，并使用 StoreKit / App Store 的官方兑换链路。不能使用 `/chat/v1/characters/redeem`、`/v1/invite-code/link` 等自有接口作为 iOS 生产包的促销解锁入口。
 
@@ -153,7 +155,7 @@ iOS 统一通过 `IAPManager` 加载商品，配置在：
 
 文档同时明确：
 
-- 首充赠送由服务端控制：¥6 送 50%，¥18 送 50%，¥38 送 100%，¥128 送 120%
+- 首充赠送由服务端控制：¥6 不送，¥18 送 50%，¥38 送 100%，¥128 送 120%
 - VIP 额外 20% 加赠由服务端控制，并在 `bonus_candy` / `total_candy` 中与首充赠送叠加
 - App Store Connect 只配置基础商品与基础价格
 
@@ -443,7 +445,7 @@ iOS 糖果服务封装在：
 
 其中：
 
-- 新版首充：¥6 送 50%，¥18 送 50%，¥38 送 100%，¥128 送 120%
+- 新版首充：¥6 不送，¥18 送 50%，¥38 送 100%，¥128 送 120%
 - iOS 老版本兜底：`x-app-version < 1.0.4` 或未传版本继续返回旧 6 档，避免老包收到新 Product ID 后无法购买
 - VIP：额外 `20%`
 - 两者可叠加
