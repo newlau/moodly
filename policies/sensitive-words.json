@@ -5102,7 +5102,7 @@
     "update_control": "startup_strategy_ext.content_filter",
     "notices": {
       "input": "内容不合规，请调整后再发送",
-      "output": "输出不合规，请重新设置",
+      "output": "这个话题有点不适合展开聊，我们换个轻松一点的继续吧～",
       "persona": "输出不合规，请重新设置"
     }
   }
