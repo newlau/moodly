@@ -99,6 +99,25 @@ iOS 客户端会额外从 `ext` 中读取功能入口开关，用于服务端控
 
 登录页优先级复用同一接口的 `data.login_config.primary_login_method` 字段，详细配置、fallback 和审核注意事项见 [login_priority_config.md](./login_priority_config.md)。
 
+### 3.4 “我的”页活动入口配置
+
+状态：current，双端已接入 `GET /v1/app/activity-configs/active`。
+
+活动入口与启动策略分开查询，客户端冷启动时按平台拉取：
+
+- `scene=profile_entry`
+- `platform=ios` 或 `android`
+- `app_version=当前客户端版本`
+- Android 额外透传 `app_channel`
+
+展示规则：
+
+- 只取服务端返回列表的第一条有效配置。
+- 青少年模式开启时隐藏。
+- 入口位置在“我的”页会员卡下方、设置菜单上方，作为独立横版活动卡展示，不再混入菜单列表。
+- 点击活动卡优先用 `jumpUrl`，为空时用 `webUrl`。
+- 当前活动配置承载的是运营后台生成的 H5 页面，双端使用 App 内 WebView 打开。
+
 ## 4. 默认关闭逻辑说明
 
 当前默认关闭由三层共同保证：
