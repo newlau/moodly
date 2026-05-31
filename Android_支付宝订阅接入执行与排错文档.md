@@ -7,36 +7,36 @@ Status: current runbook, updated 2026-05-31
 Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业务不受影响：
 
 - 旧实验 `android_vip_plan_catalog_v1` 已下线，服务端 fallback 为默认目录/价格
-- 新实验 key：`android_vip_price_new_user_v2`
+- 新实验 key：`android_vip_price_new_user_v3`
 - 分组维度：`user`
-- 人群：Android 新用户，`created_at >= 2026-05-27T00:00:00.000+08:00`
+- 人群：Android 新用户，`created_at >= 2026-05-31T00:00:00.000+08:00`
 - `control`：展示 VIP/SVIP 连续包月、周卡、月卡
 - `candidate`：展示同一套商品，只调整价格
 
 - `month_auto_first`
   - control：VIP 连续包月 `25/月`
-  - candidate：VIP 连续包月 `25/月`
+  - candidate：VIP 连续包月 `35/月`
 - `week`
   - control：VIP 周卡 `15`
-  - candidate：VIP 周卡 `25`
+  - candidate：VIP 周卡 `15`
 - `month`
   - control：VIP 月卡 `30`
-  - candidate：VIP 月卡 `35`
+  - candidate：VIP 月卡 `30`
 - `svip_month_auto_first`
   - control：SVIP 连续包月 `45/月`
   - candidate：SVIP 连续包月 `45/月`
 - `svip_week`
   - control：SVIP 周卡 `25`
-  - candidate：SVIP 周卡 `45`
+  - candidate：SVIP 周卡 `25`
 - `svip_month`
   - control：SVIP 月卡 `45`
-  - candidate：SVIP 月卡 `65`
+  - candidate：SVIP 月卡 `45`
 
 说明：
 
 - 连续包月商品展示名统一为“连续包月”
 - 连续包月下方小字统一为“可随时取消，次月仍¥xx”
-- VIP 连续包月 `month_auto_first` 已全量推 `25/月`；SVIP 连续包月 `svip_month_auto_first` 已全量推 `45/月`：control、candidate、实验外默认兜底、首扣、续扣均按目标价一致
+- VIP 连续包月 `month_auto_first` 做 `25/月` vs `35/月` 新用户实验；SVIP 连续包月 `svip_month_auto_first` 维持 `45/月`；实验外默认兜底仍为 VIP `25/月`、SVIP `45/月`
 - Android 支付宝连续包月的 `renewal_price`、`period_rule_params.single_amount`、后续自动代扣金额都按当前用户实验分组价格覆盖
 - 为避免影响 iOS StoreKit，Android 实验内价格由 payload 的 `price_overrides` 控制；实验外 Android 兜底价由服务端 Android/非 Apple 支付逻辑控制，不直接修改共享 `month.price_cny`
 - 实验定义执行 `prisma/upsert_android_vip_plan_catalog_experiment.sql` 幂等写入；该脚本会下线旧实验并写入新实验
@@ -56,7 +56,7 @@ Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业�
 
 实验 key：
 
-- `android_vip_price_new_user_v2`
+- `android_vip_price_new_user_v3`
 
 分组来源：
 
@@ -140,10 +140,10 @@ Android 调用：
 - `svip_month`
 - `svip_week`
 
-服务端重新读取同一用户的 `android_vip_price_new_user_v2` 分组，并按 payload 价格生成支付宝订单：
+服务端重新读取同一用户的 `android_vip_price_new_user_v3` 分组，并按 payload 价格生成支付宝订单：
 
 - control：`week=15`、`month=30`、`svip_week=25`、`svip_month=45`
-- candidate：`week=25`、`month=35`、`svip_week=45`、`svip_month=65`
+- candidate：`week=15`、`month=30`、`svip_week=25`、`svip_month=45`
 
 ### 5. 后续自动续费
 
@@ -163,7 +163,7 @@ Android 调用：
 价格口径：
 
 - control：`month_auto_first` 首扣/续扣 `25`，`svip_month_auto_first` 首扣/续扣 `45`
-- candidate：`month_auto_first` 首扣/续扣 `25`，`svip_month_auto_first` 首扣/续扣 `45`
+- candidate：`month_auto_first` 首扣/续扣 `35`，`svip_month_auto_first` 首扣/续扣 `45`
 - 实验外 Android/非 Apple 支付兜底：`month_auto_first` 首扣/续扣 `25`，`svip_month_auto_first` 首扣/续扣 `45`
 - 签约参数 `period_rule_params.single_amount`、后续自动续费代扣金额、会员页 `renewal_note` 必须一致
 - 会员页 `renewal_note` 展示为“可随时取消，次月仍¥xx”
@@ -256,7 +256,7 @@ LIMIT 20;
 ```sql
 SELECT experiment_key, unit_id, variant_key, experiment_version, reason, assigned_at, last_seen_at
 FROM experiment_assignments
-WHERE experiment_key = 'android_vip_price_new_user_v2'
+WHERE experiment_key = 'android_vip_price_new_user_v3'
 ORDER BY updated_at DESC
 LIMIT 20;
 ```
@@ -264,7 +264,7 @@ LIMIT 20;
 ```sql
 SELECT exposure_key, user_id, variant_key, exposure_type, surface, platform, app_version, request_id, created_at
 FROM experiment_exposures
-WHERE experiment_key = 'android_vip_price_new_user_v2'
+WHERE experiment_key = 'android_vip_price_new_user_v3'
 ORDER BY created_at DESC
 LIMIT 20;
 ```
@@ -285,7 +285,7 @@ LIMIT 20;
 4. 点击购买
 5. 应拉起普通支付宝支付，不创建 `vip_subscriptions`
 6. control 的 `vip_orders.amount` 应分别为 `15/30/25/45`
-7. candidate 的 `vip_orders.amount` 应分别为 `25/35/45/65`
+7. candidate 的 `vip_orders.amount` 应分别为 `15/30/25/45`
 
 ### Phase 3：后续续费
 
@@ -319,9 +319,9 @@ WHERE id = '你的订阅ID';
 
 当前首扣/续扣和单品价格都不完全依赖数据库共享价格：
 
-- Android 金额来自 `android_vip_price_new_user_v2.payload.price_overrides`
+- Android 金额来自 `android_vip_price_new_user_v3.payload.price_overrides`
 - 展示顺序来自 `payload.plan_codes`
-- VIP 连续包月 `month_auto_first` 已全量 25，SVIP 连续包月 `svip_month_auto_first` 已全量 45：命中实验时 control/candidate payload 都是目标价；旧用户或不命中人群走 Android/非 Apple 支付兜底目标价
+- VIP 连续包月 `month_auto_first` 当前为 control 25、candidate 35；SVIP 连续包月 `svip_month_auto_first` 维持 45；旧用户或不命中人群走 Android/非 Apple 支付兜底目标价
 - 其他实验价仍要求用户命中新实验人群；旧用户或不命中人群会按默认目录/价格 fallback
 - 首扣、签约 `single_amount`、续扣订单 `amount` 都应与同一用户分组一致
 
