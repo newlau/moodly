@@ -37,10 +37,11 @@ Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业�
 - 连续包月商品展示名统一为“连续包月”
 - 连续包月下方小字统一为“可随时取消，次月仍¥xx”
 - 上次实验组已推全为 Android 默认价和本次 control：VIP 连续包月 `25/月`、周卡 `25`、月卡 `35`；SVIP 连续包月 `45/月`、周卡 `45`、月卡 `65`
+- `vip_plans` 原始价也同步为当前默认/control 方案，不再保留旧的 `15/30/25/45` 原始价
 - 本次是方案级实验：同一用户只会命中一整套 control 或 candidate 价格，不按单个商品独立分桶
 - candidate 方案相比 control 只上调 VIP：连续包月 `25/月` vs `35/月`，周卡 `25` vs `35`，月卡 `35` vs `50`；SVIP 维持 `45/月`、周卡 `45`、月卡 `65`
 - Android 支付宝连续包月的 `renewal_price`、`period_rule_params.single_amount`、后续自动代扣金额都按当前用户实验分组价格覆盖
-- 为避免影响 iOS StoreKit，Android 实验内价格由 payload 的 `price_overrides` 控制；实验外 Android 兜底价由服务端 Android/非 Apple 支付逻辑控制，不直接修改共享 `month.price_cny`
+- Android candidate 价格由 payload 的 `price_overrides` 控制；实验外 Android 兜底价和 `vip_plans` 原始价均为当前默认/control 方案
 - 实验定义执行 `prisma/upsert_android_vip_plan_catalog_experiment.sql` 幂等写入；该脚本会下线旧实验并写入新实验
 
 ## 二、不会影响的业务
@@ -323,6 +324,7 @@ WHERE id = '你的订阅ID';
 
 - Android 金额来自 `android_vip_price_new_user_v3.payload.price_overrides`
 - 展示顺序来自 `payload.plan_codes`
+- `vip_plans` 原始价已同步为当前默认/control 方案
 - VIP 实验是整套价格方案实验，不是商品级独立实验；同一用户套餐页、下单、续扣都必须使用同一个 variant
 - control 和实验外 fallback：VIP 连续包月/周卡/月卡 `25/25/35`，SVIP 连续包月/周卡/月卡 `45/45/65`
 - candidate：VIP 连续包月/周卡/月卡 `35/35/50`，SVIP 连续包月/周卡/月卡 `45/45/65`
