@@ -1,12 +1,12 @@
 # Android 支付宝订阅接入执行与排错文档
 
-Status: current runbook, updated 2026-05-27
+Status: current runbook, updated 2026-05-31
 
 ## 一、当前业务目标
 
 Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业务不受影响：
 
-- 旧实验 `android_vip_plan_catalog_v1` 已下线，服务端 fallback 为对照组
+- 旧实验 `android_vip_plan_catalog_v1` 已下线，服务端 fallback 为默认目录/价格
 - 新实验 key：`android_vip_price_new_user_v2`
 - 分组维度：`user`
 - 人群：Android 新用户，`created_at >= 2026-05-27T00:00:00.000+08:00`
@@ -14,7 +14,7 @@ Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业�
 - `candidate`：展示同一套商品，只调整价格
 
 - `month_auto_first`
-  - control：VIP 连续包月 `15/月`
+  - control：VIP 连续包月 `25/月`
   - candidate：VIP 连续包月 `25/月`
 - `week`
   - control：VIP 周卡 `15`
@@ -23,7 +23,7 @@ Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业�
   - control：VIP 月卡 `30`
   - candidate：VIP 月卡 `35`
 - `svip_month_auto_first`
-  - control：SVIP 连续包月 `25/月`
+  - control：SVIP 连续包月 `45/月`
   - candidate：SVIP 连续包月 `45/月`
 - `svip_week`
   - control：SVIP 周卡 `25`
@@ -36,8 +36,9 @@ Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业�
 
 - 连续包月商品展示名统一为“连续包月”
 - 连续包月下方小字统一为“可随时取消，次月仍¥xx”
+- VIP 连续包月 `month_auto_first` 已全量推 `25/月`；SVIP 连续包月 `svip_month_auto_first` 已全量推 `45/月`：control、candidate、实验外默认兜底、首扣、续扣均按目标价一致
 - Android 支付宝连续包月的 `renewal_price`、`period_rule_params.single_amount`、后续自动代扣金额都按当前用户实验分组价格覆盖
-- 为避免影响 iOS StoreKit，Android 价格由实验 payload 的 `price_overrides` 控制，不直接修改共享 `month.price_cny`
+- 为避免影响 iOS StoreKit，Android 实验内价格由 payload 的 `price_overrides` 控制；实验外 Android 兜底价由服务端 Android/非 Apple 支付逻辑控制，不直接修改共享 `month.price_cny`
 - 实验定义执行 `prisma/upsert_android_vip_plan_catalog_experiment.sql` 幂等写入；该脚本会下线旧实验并写入新实验
 
 ## 二、不会影响的业务
@@ -161,8 +162,9 @@ Android 调用：
 
 价格口径：
 
-- control：`month_auto_first` 首扣/续扣 `15`，`svip_month_auto_first` 首扣/续扣 `25`
+- control：`month_auto_first` 首扣/续扣 `25`，`svip_month_auto_first` 首扣/续扣 `45`
 - candidate：`month_auto_first` 首扣/续扣 `25`，`svip_month_auto_first` 首扣/续扣 `45`
+- 实验外 Android/非 Apple 支付兜底：`month_auto_first` 首扣/续扣 `25`，`svip_month_auto_first` 首扣/续扣 `45`
 - 签约参数 `period_rule_params.single_amount`、后续自动续费代扣金额、会员页 `renewal_note` 必须一致
 - 会员页 `renewal_note` 展示为“可随时取消，次月仍¥xx”
 
@@ -319,7 +321,8 @@ WHERE id = '你的订阅ID';
 
 - Android 金额来自 `android_vip_price_new_user_v2.payload.price_overrides`
 - 展示顺序来自 `payload.plan_codes`
-- 用户必须命中新实验人群；旧用户或不命中人群会按 control fallback
+- VIP 连续包月 `month_auto_first` 已全量 25，SVIP 连续包月 `svip_month_auto_first` 已全量 45：命中实验时 control/candidate payload 都是目标价；旧用户或不命中人群走 Android/非 Apple 支付兜底目标价
+- 其他实验价仍要求用户命中新实验人群；旧用户或不命中人群会按默认目录/价格 fallback
 - 首扣、签约 `single_amount`、续扣订单 `amount` 都应与同一用户分组一致
 
 ### 3. 支付成功但没开会员
