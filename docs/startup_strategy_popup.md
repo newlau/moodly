@@ -94,6 +94,7 @@ iOS 客户端会额外从 `ext` 中读取功能入口开关，用于服务端控
 - `code_redemption_entry_enabled=true`：打开上述入口。
 - Release 包本地默认值为 `false`；如果启动策略接口失败，保持本地安全默认或上一次成功下发的值。
 - 当前主服务端在 `src/modules/startup-strategy/startup-strategy.service.ts` 用 `CODE_REDEMPTION_ENTRY_ENABLED` 常量组装该开关，即使启动策略是 `close` 也会保留该扩展字段。审核期保持 `false`；过审后手动改为 `true` 并重新发布服务端。
+- 登录审核入口同样复用 `ios_feature_flags`：iOS `1.0.8` / `1.0.9` 提审态下发 `wechat_login_entry_enabled=false`，并保持 `phone_login_entry_enabled=true`，登录页不会展示微信入口。
 
 ### 3.2 登录页优先级配置
 
