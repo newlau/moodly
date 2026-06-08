@@ -1,6 +1,6 @@
 # Android 支付宝订阅接入执行与排错文档
 
-Status: current runbook, updated 2026-05-31
+Status: current runbook, updated 2026-06-08
 
 ## 一、当前业务目标
 
@@ -49,7 +49,8 @@ Android 会员页重新开始新用户价格实验，并保持 iOS 与糖果业�
 本次改动按渠道和模块做了隔离：
 
 - iOS Apple 订阅链路保持原样
-- 糖果支付宝购买保持原样
+- iOS Apple 订阅和糖果 IAP 链路保持原样
+- Android 糖果钱包新增支付宝 / 微信支付方式选择，不影响会员价格实验分组
 - Android 会员普通展示接口继续使用 `/v1/vip/plans`
 - Android 会员页不再补本地 SVIP fallback，实际展示完全以服务端分组下发为准
 
@@ -147,6 +148,50 @@ Android 调用：
 
 - control：`week=25`、`month=35`、`svip_week=45`、`svip_month=65`
 - candidate：`week=35`、`month=50`、`svip_week=45`、`svip_month=65`
+
+### 4.1 微信单次购买（1.1.0）
+
+状态：implementation record，2026-06-07。
+
+Android 会员页从 1.1.0 开始支持在底部栏选择支付方式：
+
+- 默认支付方式仍为支付宝。
+- 选择支付宝时，连续包月套餐继续走 `/v1/vip/subscriptions/alipay/pay-and-sign`，展示《自动续费服务协议》。
+- 选择微信时，连续包月套餐改走普通订单 `POST /v1/vip/orders`，请求体 `pay_channel=wechat`。
+- 微信支付只做当次扣款，不创建/处理 `vip_subscriptions`，不展示《自动续费服务协议》。
+- 微信订单仍用 `GET /v1/vip/orders/:order_id` 轮询确认支付结果。
+- Android 客户端新增 `WXPayEntryActivity` 作为微信支付 SDK 回调入口。
+
+当前 VIP 默认/control 价格下，VIP 连续包月选择微信时当次订单金额为 `25`；服务端实际金额以 `getOrderChargeAmount(plan, 'wechat', priceOverrides)` 为准。
+
+微信支付上线前必须确认：
+
+- Android `WECHAT_APP_ID` 与微信开放平台应用 AppID 一致。
+- 服务端 `WECHAT_PAY_APP_ID`、`WECHAT_PAY_MCH_ID`、`WECHAT_PAY_NOTIFY_URL`、`WECHAT_PAY_PUBLIC_KEY_PATH`、`WECHAT_PAY_PRIVATE_KEY_PATH` 已配置。
+- 微信商户平台 App 支付已开通，应用包名和签名已登记。
+- `WECHAT_PAY_NOTIFY_URL` 指向可公网访问的 `/v1/vip/pay/notify/wechat`。
+- `vip_plans.pay_channels` 包含 `wechat`，当前 seed 已包含。
+
+### 4.2 Android 糖果钱包微信支付（1.1.0）
+
+状态：implementation record，2026-06-08。
+
+Android 糖果钱包底部购买栏新增支付方式选项卡：
+
+- 默认支付方式仍为支付宝。
+- 选择支付宝时，糖果充值继续走 `POST /v1/candy/orders`，请求体 `pay_channel=alipay`。
+- 选择微信时，糖果充值走同一接口，请求体 `pay_channel=wechat`，客户端拉起微信 App 支付。
+- 音色卡 tab 使用 `POST /v1/candy/voice-cards/orders`，同样按所选方式传 `pay_channel=alipay/wechat`。
+- 糖果订单仍用 `GET /v1/candy/orders/:order_id` 轮询确认支付结果；音色卡订单用 `GET /v1/candy/voice-cards/orders/:order_id` 轮询确认。
+- 音色卡商品 `voice_card_1` 固定到账 1 张，定价 ¥6；Android 客户端本地 fallback、iOS StoreKit 和服务端订单常量需保持一致。
+- 聊天内快捷糖果充值当前仍保持原支付宝链路，未纳入本次钱包选项卡改造。
+
+微信支付上线前必须确认：
+
+- Android `WECHAT_APP_ID` 与微信开放平台应用 AppID 一致。
+- 微信商户平台 App 支付已开通，应用包名和签名已登记。
+- 服务端微信支付配置可生成糖果和音色卡订单的 `pay_params`。
+- 微信异步通知可完成糖果/音色卡入账；如通知延迟，客户端轮询订单状态时服务端应主动查询渠道状态并幂等入账。
 
 ### 5. 后续自动续费
 
