@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.4.1",
   "generated_at": "2026-05-26",
   "language_supported": [
     "zh",
@@ -97,7 +97,14 @@
     }
   ],
   "stop_lists": {
-    "zh": {},
+    "zh": {
+      "做爱": [
+        "做爱豆"
+      ],
+      "做愛": [
+        "做愛豆"
+      ]
+    },
     "en": {
       "sex": [
         "sextant",
