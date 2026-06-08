@@ -183,7 +183,8 @@ Android 糖果钱包底部购买栏新增支付方式选项卡：
 - 选择微信时，糖果充值走同一接口，请求体 `pay_channel=wechat`，客户端拉起微信 App 支付。
 - 音色卡 tab 使用 `POST /v1/candy/voice-cards/orders`，同样按所选方式传 `pay_channel=alipay/wechat`。
 - 糖果订单仍用 `GET /v1/candy/orders/:order_id` 轮询确认支付结果；音色卡订单用 `GET /v1/candy/voice-cards/orders/:order_id` 轮询确认。
-- 音色卡商品 `voice_card_1` 固定到账 1 张，定价 ¥6；Android 客户端本地 fallback、iOS StoreKit 和服务端订单常量需保持一致。
+- 音色卡商品 `voice_card_1` 固定到账 1 张，定价 ¥6，非会员也可单独购买；Android 客户端本地 fallback、iOS StoreKit 和服务端订单常量需保持一致。
+- 如果音色卡下单返回 `403 / VIP_REQUIRED / 仅会员可购买音色卡`，说明服务端仍是旧版本会员门槛逻辑，需要发布新服务端或确认实例已重启。
 - 聊天内快捷糖果充值当前仍保持原支付宝链路，未纳入本次钱包选项卡改造。
 
 微信支付上线前必须确认：
@@ -191,7 +192,7 @@ Android 糖果钱包底部购买栏新增支付方式选项卡：
 - Android `WECHAT_APP_ID` 与微信开放平台应用 AppID 一致。
 - 微信商户平台 App 支付已开通，应用包名和签名已登记。
 - 服务端微信支付配置可生成糖果和音色卡订单的 `pay_params`。
-- 微信异步通知可完成糖果/音色卡入账；如通知延迟，客户端轮询订单状态时服务端应主动查询渠道状态并幂等入账。
+- 糖果/音色卡微信支付结果以客户端轮询订单状态为主；服务端在轮询接口里主动查询微信订单状态并幂等入账。
 
 ### 5. 后续自动续费
 
