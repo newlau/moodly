@@ -41,7 +41,7 @@ Owner topic：认证 / 短信验证码
 本轮新增服务端兜底：
 
 - 服务端已增加短信发送版本判断。
-- `TURNSTILE_ENABLED=true` 时，未带版本或版本低于 `1.1.2` 的请求会在发短信前直接返回 `UPGRADE_REQUIRED`。
+- 生产环境或 `TURNSTILE_ENABLED=true` 时，未带版本或版本低于 `1.1.2` 的请求会在发短信前直接返回 `UPGRADE_REQUIRED`。
 - 老版本不会继续走 Turnstile 校验，也不会触发短信 provider。
 - 当前 iOS / Android 版本为 `1.1.2`，达到该门槛后仍然必须携带有效 `turnstile_token` 才能发短信。
 
