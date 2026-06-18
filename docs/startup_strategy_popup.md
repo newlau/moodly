@@ -120,6 +120,33 @@ iOS 客户端会额外从 `ext` 中读取功能入口开关，用于服务端控
 - 点击活动卡优先用 `jumpUrl`，为空时用 `webUrl`。
 - 当前活动配置承载的是运营后台生成的 H5 页面，双端使用 App 内 WebView 打开。
 
+### 3.6 双端糖果入口开关
+
+状态：current，iOS / Android 已接入客户端开关解析；服务端按 `1.1.3` 新用户 AB 下发时使用。
+
+糖果入口开关复用 `GET /v1/app/startup-strategy` 的 `ext` 扩展字段，默认开启：
+
+```json
+{
+  "ext": {
+    "ios_feature_flags": {
+      "candy_entry_enabled": true
+    },
+    "android_feature_flags": {
+      "candy_entry_enabled": true
+    }
+  }
+}
+```
+
+- `candy_entry_enabled=false`：隐藏我的页“糖果钱包”、首页签到入口、签到页内“充值糖果”按钮；聊天糖果不足、图片查看、内心 OS 解锁、语音通话时长不足、通话卡购买等糖果引导改为会员页或会员权益文案；聊天偏好、语音频率、邀请/分享奖励里的糖果说明改为通用权益/奖励文案；会员权益里的糖果赠送展示为“赠送 5 分钟通话时长”。
+- `candy_entry_enabled=true`：保持原糖果钱包、签到、快充、糖果支付引导和糖果奖励文案。
+- iOS 兼容 `ios_feature_flags.candy_entry_enabled`、`ios_feature_flags.candy_wallet_entry_enabled`、通用 `feature_flags.*` 和顶层 `candy_entry_enabled / candy_wallet_entry_enabled`。
+- Android 兼容 `android_feature_flags.candy_entry_enabled`、`android_feature_flags.candy_wallet_entry_enabled`、通用 `feature_flags.*` 和顶层 `candy_entry_enabled / candy_wallet_entry_enabled`。
+- 该开关只控制客户端入口和不足引导，不禁用服务端下单、查单、余额、流水、Apple verify、支付补偿等 API 链路。
+- 已购用户的余额展示、交易记录和补偿链路不得依赖该开关关闭；如需审核/合规级支付禁用，必须另设服务端下单 gate。
+- 客户端仅负责开关展示和跳转；“赠送 5 分钟通话时长”的真实发放仍需服务端权益/ledger 设计承接，不由本开关隐式实现。
+
 ## 4. 默认关闭逻辑说明
 
 当前默认关闭由三层共同保证：
