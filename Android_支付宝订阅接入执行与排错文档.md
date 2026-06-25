@@ -4,7 +4,7 @@ Status: current runbook, updated 2026-06-25
 
 ## 一、当前业务目标
 
-Android 会员页默认仍下发线上固定时长套餐；2026-06-25 起新增服务端会员价格实验 `android_vip_price_catalog_20260625`，对照组保持线上固定样式，实验组重新下发连续包月/周卡/月卡价格方案：
+Android 会员页默认仍下发线上固定时长套餐；2026-06-25 起重新拉起服务端会员价格实验 `android_vip_price_catalog_20260625_v2`，对照组保持线上固定样式，实验组重新下发连续包月/周卡/月卡价格方案；旧实验 `android_vip_price_catalog_20260625` 停用，仅保留历史数据。
 
 - 对照组普通会员下发：`month`、`week`、`year`
   - 月卡 `25`
@@ -25,6 +25,7 @@ Android 会员页默认仍下发线上固定时长套餐；2026-06-25 起新增�
 
 说明：
 
+- 会员价格实验只面向实验开始后注册的新用户；实验开始前注册的老用户不进入该价格实验，避免已见过线上价格的用户再次变价导致数据失真。
 - 连续包月 `month_auto_first` / `svip_month_auto_first` 不出现在对照组目录；实验组 1 会重新下发。
 - 自动续费相关字段对对照组目录隐藏：`is_subscription=false`、`purchase_type=single_purchase`、`agreement_text=null`、`renewal_note=null`；实验组连续包月 plan 会走支付宝签约流。
 - 月卡价格对齐原连续包月：普通会员月卡 `25`，Pro 月卡 `45`。
@@ -45,7 +46,7 @@ Android 会员页默认仍下发线上固定时长套餐；2026-06-25 起新增�
 
 ### 0. 会员目录下发与实验
 
-- `GET /v1/vip/plans?platform=android` 会读取服务端实验 `android_vip_price_catalog_20260625`。
+- `GET /v1/vip/plans?platform=android` 会读取服务端实验 `android_vip_price_catalog_20260625_v2`。
 - 未命中实验或命中 `control` 时，返回固定时长目录。
 - 命中 `treatment_1` 时，返回连续月/周卡/月卡目录，并返回 `experiment` 字段用于追踪。
 - 旧实验 `android_vip_catalog_copy_year_anchor_v1` assignment/exposure 仅保留用于历史分析。
@@ -269,7 +270,7 @@ LIMIT 20;
 ```sql
 SELECT experiment_key, unit_id, variant_key, experiment_version, reason, assigned_at, last_seen_at
 FROM experiment_assignments
-WHERE experiment_key IN ('android_vip_price_catalog_20260625', 'android_vip_catalog_copy_year_anchor_v1')
+WHERE experiment_key IN ('android_vip_price_catalog_20260625_v2', 'android_vip_catalog_copy_year_anchor_v1')
 ORDER BY updated_at DESC
 LIMIT 20;
 ```
@@ -277,7 +278,7 @@ LIMIT 20;
 ```sql
 SELECT exposure_key, user_id, variant_key, exposure_type, surface, platform, app_version, request_id, created_at
 FROM experiment_exposures
-WHERE experiment_key IN ('android_vip_price_catalog_20260625', 'android_vip_catalog_copy_year_anchor_v1')
+WHERE experiment_key IN ('android_vip_price_catalog_20260625_v2', 'android_vip_catalog_copy_year_anchor_v1')
 ORDER BY created_at DESC
 LIMIT 20;
 ```
