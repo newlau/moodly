@@ -1,27 +1,35 @@
 # Android 支付宝订阅接入执行与排错文档
 
-Status: current runbook, updated 2026-06-17
+Status: current runbook, updated 2026-06-25
 
 ## 一、当前业务目标
 
-Android 会员页不再做新用户会员目录实验，改为服务端直接全量下发固定时长套餐，并保持 iOS 与糖果业务不受影响：
+Android 会员页默认仍下发线上固定时长套餐；2026-06-25 起新增服务端会员价格实验 `android_vip_price_catalog_20260625`，对照组保持线上固定样式，实验组重新下发连续包月/周卡/月卡价格方案：
 
-- 普通会员下发：`month`、`week`、`year`
+- 对照组普通会员下发：`month`、`week`、`year`
   - 月卡 `25`
   - 周卡 `25`
   - 年卡 `168`
-- Pro 会员下发：`svip_month`、`svip_week`、`svip_year`
+- 对照组 Pro 会员下发：`svip_month`、`svip_week`、`svip_year`
   - Pro 月卡 `45`
   - Pro 周卡 `45`
   - Pro 年卡 `298`
+- 实验组 1 普通会员下发：`month_auto_first`、`week`、`month`
+  - 连续月 `35`
+  - 周卡 `35`
+  - 月卡 `45`
+- 实验组 1 Pro 会员下发：`svip_month_auto_first`、`svip_week`、`svip_month`
+  - Pro 连续月 `45`
+  - Pro 周卡 `45`
+  - Pro 月卡 `65`
 
 说明：
 
-- 连续包月 `month_auto_first` / `svip_month_auto_first` 不再出现在 Android 会员页下发目录。
-- 自动续费相关字段对新下发目录隐藏：`is_subscription=false`、`purchase_type=single_purchase`、`agreement_text=null`、`renewal_note=null`。
+- 连续包月 `month_auto_first` / `svip_month_auto_first` 不出现在对照组目录；实验组 1 会重新下发。
+- 自动续费相关字段对对照组目录隐藏：`is_subscription=false`、`purchase_type=single_purchase`、`agreement_text=null`、`renewal_note=null`；实验组连续包月 plan 会走支付宝签约流。
 - 月卡价格对齐原连续包月：普通会员月卡 `25`，Pro 月卡 `45`。
 - 原月卡卡位替换为年卡：普通会员年卡 `year=168`，Pro 年卡 `svip_year=298`。
-- 历史签约、取消、自动续费对账能力保留给已签约用户兼容；新购买入口走普通会员订单。
+- 历史签约、取消、自动续费对账能力保留给已签约用户兼容；实验组重新下发连续包月时会复用该能力。
 
 ## 二、不会影响的业务
 
@@ -35,15 +43,16 @@ Android 会员页不再做新用户会员目录实验，改为服务端直接全
 
 ## 三、当前服务端实现
 
-### 0. 会员目录直接下发
+### 0. 会员目录下发与实验
 
-- `GET /v1/vip/plans?platform=android` 直接返回固定时长目录，不读取会员目录实验。
-- `experiment` 字段返回 `null`。
-- 旧实验 assignment/exposure 仅保留用于历史分析。
+- `GET /v1/vip/plans?platform=android` 会读取服务端实验 `android_vip_price_catalog_20260625`。
+- 未命中实验或命中 `control` 时，返回固定时长目录。
+- 命中 `treatment_1` 时，返回连续月/周卡/月卡目录，并返回 `experiment` 字段用于追踪。
+- 旧实验 `android_vip_catalog_copy_year_anchor_v1` assignment/exposure 仅保留用于历史分析。
 
 ### 1. 历史连续包月首次支付并签约
 
-当前新下发目录不会触达该流程；以下仅用于排查历史已签约或旧缓存请求。
+对照组不会触达该流程；实验组连续包月和历史已签约/旧缓存请求会使用该流程。
 
 Android 调用：
 
@@ -115,8 +124,8 @@ Android 调用：
 Android 会员页从 1.1.0 开始支持在底部栏选择支付方式：
 
 - 默认支付方式仍为支付宝。
-- 当前服务端不再下发连续包月套餐，支付宝/微信均走普通订单 `POST /v1/vip/orders`。
-- 普通订单只做当次扣款，不创建/处理 `vip_subscriptions`，不展示《自动续费服务协议》。
+- 对照组服务端不下发连续包月套餐，支付宝/微信均走普通订单 `POST /v1/vip/orders`。
+- 对照组普通订单只做当次扣款，不创建/处理 `vip_subscriptions`，不展示《自动续费服务协议》；实验组连续包月 + 支付宝会走签约流。
 - 微信订单仍用 `GET /v1/vip/orders/:order_id` 轮询确认支付结果。
 - Android 客户端新增 `WXPayEntryActivity` 作为微信支付 SDK 回调入口。
 
@@ -228,9 +237,9 @@ Android 糖果钱包底部购买栏新增支付方式选项卡：
 
 ## 六、联调验证步骤
 
-### Phase 1：普通订单首次支付
+### Phase 1：对照组普通订单首次支付
 
-1. Android 会员页确认接口不返回实验分组，`experiment=null`
+1. Android 会员页确认接口返回 `experiment.variant_key=control`，或未命中实验时 `experiment=null`
 2. 确认普通会员展示 `month/week/year`，Pro 展示 `svip_month/svip_week/svip_year`
 3. 确认页面不展示“连续包月”、`renewal_note` 或《自动续费服务协议》
 4. 选择 `month` 点击购买，应拉起支付宝普通支付
@@ -255,12 +264,12 @@ ORDER BY created_at DESC
 LIMIT 20;
 ```
 
-历史实验分组与曝光 SQL（仅查旧数据）：
+实验分组与曝光 SQL：
 
 ```sql
 SELECT experiment_key, unit_id, variant_key, experiment_version, reason, assigned_at, last_seen_at
 FROM experiment_assignments
-WHERE experiment_key IN ('android_vip_price_new_user_v3', 'android_vip_catalog_copy_year_anchor_v1')
+WHERE experiment_key IN ('android_vip_price_catalog_20260625', 'android_vip_catalog_copy_year_anchor_v1')
 ORDER BY updated_at DESC
 LIMIT 20;
 ```
@@ -268,7 +277,7 @@ LIMIT 20;
 ```sql
 SELECT exposure_key, user_id, variant_key, exposure_type, surface, platform, app_version, request_id, created_at
 FROM experiment_exposures
-WHERE experiment_key IN ('android_vip_price_new_user_v3', 'android_vip_catalog_copy_year_anchor_v1')
+WHERE experiment_key IN ('android_vip_price_catalog_20260625', 'android_vip_catalog_copy_year_anchor_v1')
 ORDER BY created_at DESC
 LIMIT 20;
 ```
@@ -281,14 +290,22 @@ LIMIT 20;
 - `vip_subscriptions.auto_renew = 1`
 - `agreement_no` 已回填
 
-### Phase 2.5：单独购买
+### Phase 2.5：对照组单独购买
 
-1. Android 会员页不返回实验分组，`experiment=null`
+1. Android 会员页返回 `experiment.variant_key=control`，或未命中实验时 `experiment=null`
 2. 选择 `month/week/year/svip_month/svip_week/svip_year`
 3. 勾选充值协议
 4. 点击购买
 5. 应拉起普通支付宝支付，不创建 `vip_subscriptions`
 6. `vip_orders.amount` 应分别为 `25/25/168/45/45/298`
+
+### Phase 2.6：实验组连续包月/价格方案
+
+1. Android 会员页返回 `experiment.variant_key=treatment_1`
+2. 确认普通会员展示 `month_auto_first/week/month`，Pro 展示 `svip_month_auto_first/svip_week/svip_month`
+3. 确认价格分别为 VIP `35/35/45`，Pro `45/45/65`
+4. 选择 `month_auto_first` 或 `svip_month_auto_first` 且支付方式为支付宝时，应走 `/v1/vip/subscriptions/alipay/pay-and-sign`
+5. 选择周卡/月卡或微信支付时，走普通订单 `POST /v1/vip/orders`
 
 ### Phase 3：历史订阅后续续费
 
