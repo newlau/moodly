@@ -307,6 +307,29 @@ P0 必须补的缺口：
 - 通话 turn 作为 trusted server route 跳过普通聊天“语音消息按条扣糖”，只保留通话 session 秒级计费。
 - 当前仍不是最终全双工实时流式电话：P0 先把 stream TTS 的 WAV 响应缓存并上传；Pipecat 后续需要把 STT final transcript 调这个 turn 接口，再升级为 WS + ASR/TTS chunk 直传客户端播放。
 
+2026-06-25 静默追话/自动告别客户端兼容记录：
+
+- iOS / Android 客户端已在“助手 TTS 播放结束”后启动通话内静默阶段计时，不从接口返回时开始计时。
+- 阶段值按 `followup_5s`、`followup_30s`、`goodbye_60s` 兼容；客户端按约定调用 `POST /chat/v1/voice-call/sessions/:session_id/idle-turn`，body 为 `{ "stage": "..." }`，期望返回 `audio/wav` stream，并继续读取 `X-Voice-Call-Tts-Text-B64` 作为展示文本。
+- 用户开始说话、打断角色播放、提交新一轮语音、挂断、重载或续时阻塞时，客户端取消当前静默计时；每个阶段在同一段静默链路内只触发一次。
+- `goodbye_60s` 音频播放完成后，客户端主动结束通话，并用 `end_reason=idle_goodbye_60s` 调 session end。
+- `moodly-chat-svr` 已实现 `POST /chat/v1/voice-call/sessions/:session_id/idle-turn` 与 `/idle-turn/audio-stream`；联调时需要继续用真实接口响应和日志复核响应头、realtime 写回和 session 静默结束标记是否一致。
+
+2026-06-25 自动打断降敏客户端记录：
+
+- 当前 iOS / Android P0 仍是本地电平门控，不是真正 VAD / 声纹识别。
+- 已把“角色 TTS 播放中第一帧达到音量阈值就打断”改为“连续达到打断阈值并满足最短持续时间后才停 TTS”。
+- 2026-06-26 根据真机反馈“太难打断”回调到中间档：iOS / Android barge-in 监听延后从 900ms 调到 600ms；确认门限从约 480ms、4 帧调到约 320-340ms、3 帧；同时适当放低播放中起始/持续音量阈值。目标是保留连续确认，避免回到“一响就断”，但让短句插话更容易触发。
+- iOS 继续使用系统 voice processing；Android TTS 播放期间继续优先使用 `VOICE_COMMUNICATION` 音源。Android 已在 `VoiceCallLoop` 日志输出本次捕获窗口阈值；iOS DEBUG 构建会输出 `VoiceCallBargeIn` 窗口、确认和丢弃信息，便于真机调试。
+- 后续如仍有误触发，应优先接入真正 VAD（仅判断人声）作为 `音量门限 + VAD speech + 持续时间` 的组合条件；“熟悉的人声/声纹”属于更高风险能力，需要单独隐私授权、声纹注册/删除流程和产品开关，不纳入当前 P0 打断可用性修复。
+
+2026-06-26 自动打断声纹保护客户端/服务端记录：
+
+- 因实时语音成本较高，iOS / Android 已把“自动开口打断”改成声纹保护状态机：播放中本地音量门限只产出 barge-in candidate，不再立即停止角色 TTS；候选录音结束后先调用声纹验证接口，只有返回允许后才停止 TTS 并提交通话 turn。
+- 客户端约定接口：`POST /chat/v1/voice-call/sessions/:session_id/voiceprint/verify`，body 包含 `audio_b64`、`mime_type` / `audio_mime_type`、`duration` / `audio_duration_seconds`、`stage: "barge_in"`、`client_version`。期望响应包含 `allowed`，可选 `matched`、`confidence`、`threshold`、`mode`、`reason`。客户端要求 `allowed=true`，且当 `matched=false` 时强制拒绝。
+- `moodly-chat-svr` 已新增服务端控制层：`VOICE_CALL_VOICEPRINT_MODE=deny_all|allow_all|audio_gate|remote`。非生产未配置时默认 `audio_gate` 方便联调；生产未配置时默认 `deny_all` 保护成本；`allow_all` 只用于看打断体验；`remote` 会把候选音频转发到 `VOICE_CALL_VOICEPRINT_VERIFY_URL`。
+- 当前 `audio_gate` 只是服务端轻量音频门控（按候选音频字节数和时长），不是真正声纹识别；真实声纹仍需要外部服务、注册/更新/删除、隐私授权、数据留存和阈值策略单独补齐。接口未上线、失败或返回 false 时，客户端会丢弃自动打断候选；用户点击“插话”仍保留即时打断。
+
 ### 6.2 P1：半双工实时电话
 
 P1 开始做真正实时链路：
