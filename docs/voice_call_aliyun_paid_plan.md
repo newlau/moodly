@@ -246,9 +246,10 @@ voice_call_tick
 
 | package_id | 展示时长 | 入账秒数 | 价格 | Apple Product ID |
 |---|---:|---:|---:|---|
-| `voice_call_minutes_10` | 10 分钟 | 600 秒 | ¥18 | `bubbly.voice_call.minutes_10` |
-| `voice_call_minutes_30` | 30 分钟 | 1800 秒 | ¥38.10 | `bubbly.voice_call.minutes_30` |
-| `voice_call_minutes_90` | 90 分钟 | 5400 秒 | ¥48 | `bubbly.voice_call.minutes_90` |
+| `voice_call_minutes_20` | 20 分钟 | 1200 秒 | ¥6 | `bubbly.voice_call.minutes_20` |
+| `voice_call_minutes_90` | 90 分钟 | 5400 秒 | ¥18 | `bubbly.voice_call.minutes_90` |
+| `voice_call_minutes_300` | 300 分钟 | 18000 秒 | ¥38 | `bubbly.voice_call.minutes_300` |
+| `voice_call_minutes_1000` | 1000 分钟 | 60000 秒 | ¥98 | `bubbly.voice_call.minutes_1000` |
 
 计费规则：
 

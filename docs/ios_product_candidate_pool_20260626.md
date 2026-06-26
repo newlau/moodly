@@ -50,11 +50,12 @@ Owner topic：iOS payment / App Store Product ID / pricing experiment
 
 | package_id | Apple Product ID | 时长 | 价格 | 当前是否下发 |
 |---|---|---:|---:|---|
-| `voice_call_minutes_10` | `bubbly.voice_call.minutes_10` | 10 分钟 | ¥18 | 是 |
-| `voice_call_minutes_30` | `bubbly.voice_call.minutes_30` | 30 分钟 | ¥38.10 | 是 |
-| `voice_call_minutes_90` | `bubbly.voice_call.minutes_90` | 90 分钟 | ¥48 | 是 |
+| `voice_call_minutes_20` | `bubbly.voice_call.minutes_20` | 20 分钟 | ¥6 | 是 |
+| `voice_call_minutes_90` | `bubbly.voice_call.minutes_90` | 90 分钟 | ¥18 | 是 |
+| `voice_call_minutes_300` | `bubbly.voice_call.minutes_300` | 300 分钟 | ¥38 | 是 |
+| `voice_call_minutes_1000` | `bubbly.voice_call.minutes_1000` | 1000 分钟 | ¥98 | 是 |
 
-注意：语音通话时长卡已在线上下发，iOS `IAPManager` 白名单也包含这 3 个 Product ID，但当前 `Products.storekit` 尚未包含它们。本地 StoreKit 调试会加载不到；App Store Connect 也需要逐项确认已创建且价格一致。
+注意：语音通话时长卡已在线上下发，iOS `IAPManager` 白名单也包含这 4 个 Product ID，但当前 `Products.storekit` 尚未包含它们。本地 StoreKit 调试会加载不到；App Store Connect 也需要逐项确认已创建且价格一致。
 
 ## 3. VIP / SVIP 候选池
 
@@ -125,9 +126,10 @@ Owner topic：iOS payment / App Store Product ID / pricing experiment
 
 | package_id | Apple Product ID | 类型 | 时长 | 价格 | StoreKit 本地配置 |
 |---|---|---|---:|---:|---|
-| `voice_call_minutes_10` | `bubbly.voice_call.minutes_10` | Consumable | 10 分钟 | ¥18 | 缺失 |
-| `voice_call_minutes_30` | `bubbly.voice_call.minutes_30` | Consumable | 30 分钟 | ¥38.10 | 缺失 |
-| `voice_call_minutes_90` | `bubbly.voice_call.minutes_90` | Consumable | 90 分钟 | ¥48 | 缺失 |
+| `voice_call_minutes_20` | `bubbly.voice_call.minutes_20` | Consumable | 20 分钟 | ¥6 | 缺失 |
+| `voice_call_minutes_90` | `bubbly.voice_call.minutes_90` | Consumable | 90 分钟 | ¥18 | 缺失 |
+| `voice_call_minutes_300` | `bubbly.voice_call.minutes_300` | Consumable | 300 分钟 | ¥38 | 缺失 |
+| `voice_call_minutes_1000` | `bubbly.voice_call.minutes_1000` | Consumable | 1000 分钟 | ¥98 | 缺失 |
 
 ## 7. 与 iOS 价格实验的匹配情况
 
