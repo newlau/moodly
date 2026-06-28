@@ -52,7 +52,7 @@ Apple 审核反馈指出，未安装微信时用户可能无法继续登录。Mo
 - 微信登录保持首屏主按钮。
 - 启动策略接口成功返回 `data.ext.android_feature_flags.phone_login_entry_enabled` 时，以远程值为准；为 `true` 时手机号登录收在底部“更多登录方式”折叠入口，点击展开后显示图标，为 `false` 时隐藏该入口。
 - 启动策略接口失败或字段缺省时，回落到包内 `BuildConfig.DEFAULT_PHONE_LOGIN_ENTRY_ENABLED`。华为渠道包本地默认关闭手机号入口。
-- 服务端当前对华为 `1.0.6`、`1.0.7`、`1.0.8.1` 内置提审态：`android_feature_flags.phone_login_entry_enabled=false`；华为 `1.0.8` 默认打开手机号入口。iOS `1.0.7` 提审态关闭 `ios_feature_flags.phone_login_entry_enabled`；iOS `1.0.8` / `1.0.9` 提审态关闭 `ios_feature_flags.wechat_login_entry_enabled`，并保持 `ios_feature_flags.phone_login_entry_enabled=true`。
+- 服务端当前对华为 `1.0.6`、`1.0.7`、`1.0.8.1` 内置提审态：`android_feature_flags.phone_login_entry_enabled=false`；华为 `1.0.8` 默认打开手机号入口。iOS `1.0.7` 提审态关闭 `ios_feature_flags.phone_login_entry_enabled`；iOS `1.0.8` / `1.0.9` 提审态关闭 `ios_feature_flags.wechat_login_entry_enabled`，并保持 `ios_feature_flags.phone_login_entry_enabled=true`；iOS `1.1.0` 正式态打开 `ios_feature_flags.wechat_login_entry_enabled`。
 
 ## 5. Fallback 策略
 
