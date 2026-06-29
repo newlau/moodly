@@ -255,7 +255,7 @@ voice_call_tick
 
 - 开始通话时优先消耗通话秒数余额。
 - 通话秒数不足时允许糖果兜底，按 `100 糖果 / 分钟` 换算为 `5/3 糖果 / 秒`；服务端按实际消耗秒数向上取整扣糖。
-- VIP/SVIP 暂不赠送通话分钟，也不打折；后续可在独立 ledger reason 里扩展，不能复用音色卡月赠。
+- VIP 每月赠送 30 分钟通话时长，SVIP 每月赠送 90 分钟通话时长；不打折。会员月赠写入独立 `voice_call_credit_ledger`，reason 为 `membership_monthly_grant`，不复用音色卡月赠。
 - 断线、首包失败、provider 失败或没有产生有效通话消耗时不扣。
 - 钱包明细必须记录“和谁通话”：至少包含 `session_id`、`chat_id`、`character_id`、`character_name`、`duration_seconds`、`payment_source`。
 
@@ -330,6 +330,65 @@ P0 必须补的缺口：
 - 客户端约定接口：`POST /chat/v1/voice-call/sessions/:session_id/voiceprint/verify`，body 包含 `audio_b64`、`mime_type` / `audio_mime_type`、`duration` / `audio_duration_seconds`、`stage: "barge_in"`、`client_version`。期望响应包含 `allowed`，可选 `matched`、`confidence`、`threshold`、`mode`、`reason`。客户端要求 `allowed=true`，且当 `matched=false` 时强制拒绝。
 - `moodly-chat-svr` 已新增服务端控制层：`VOICE_CALL_VOICEPRINT_MODE=deny_all|allow_all|audio_gate|remote`。非生产未配置时默认 `audio_gate` 方便联调；生产未配置时默认 `deny_all` 保护成本；`allow_all` 只用于看打断体验；`remote` 会把候选音频转发到 `VOICE_CALL_VOICEPRINT_VERIFY_URL`。
 - 当前 `audio_gate` 只是服务端轻量音频门控（按候选音频字节数和时长），不是真正声纹识别；真实声纹仍需要外部服务、注册/更新/删除、隐私授权、数据留存和阈值策略单独补齐。接口未上线、失败或返回 false 时，客户端会丢弃自动打断候选；用户点击“插话”仍保留即时打断。
+
+2026-06-27 Android 客户端 WebRTC VAD 门控记录：
+
+- Android 实时语音通话已把通话录音从 `MediaRecorder` 电平采样切到 `AudioRecord` PCM 采样，并以 `audio/wav` 通过原有 `audio_b64 + mime_type` 字段提交，不改变 voice-call API path / 字段语义。
+- Android 播放中自动打断前新增客户端 WebRTC VAD 门控：依赖 `com.github.gkonovalov.android-vad:webrtc:2.0.9`，参数为 `16kHz / frameSize=320 / VERY_AGGRESSIVE`。`2.0.10` 会拉入 Kotlin 2.2 stdlib，与当前 Android Kotlin 2.0.21 不兼容，故先固定 2.0.9。
+- 自动打断必须同时满足音量阈值、WebRTC VAD speech frame、连续帧数和最短持续时间，才进入 barge-in 候选；普通聆听阶段也复用 WebRTC VAD 门控，拍手/敲击等非人声高能量输入不会直接进入“用户开始说话”。若 WebRTC VAD 初始化或单帧执行失败，则回退到本地 RMS / 过零率 / crest factor 兜底门控。
+- Android 录音会优先使用 `VOICE_COMMUNICATION` 音源，并启用系统可用的 AEC / NS / AGC 音频处理；高能量但 WebRTC VAD 判非 speech 的帧会输出 `VoiceCallLoop: listen non-voice frame ignored` 或 `VoiceCallLoop: barge-in non-voice frame ignored` 日志，便于真机调阈值。
+- 这是客户端人声活动检测，不是熟人声纹识别。WebRTC VAD 只判断“是否有人声”，不会判断“是不是当前用户本人”；声纹/本人识别仍需服务端 speaker verification、隐私授权、注册/删除和阈值策略。
+- 打断候选录音在确认用户人声开始时会丢弃此前捕获的音频，避免把角色外放 TTS、前置静音和误触片段一起提交给后端，减少打断后 `让我想想` 等待过长和 ASR 误识别。
+
+2026-06-29 Android 发版阻断修复记录：
+
+Status: current。
+
+- 麦克风按钮改为纯“打开麦克风 / 关闭麦克风”语义；关闭麦克风只停止用户采集和提交，不影响角色语音播放，也不再承担“插话”按钮职责。
+- 扬声器路由改为通话路由：播放使用 `USAGE_VOICE_COMMUNICATION`，页面进入后保持 `MODE_IN_COMMUNICATION`；检测到有线耳机、蓝牙或 USB/助听输出时不强制外放，拔掉后默认回到扬声器。
+- Android P0 自动打断临时取消声纹强依赖：本地 WebRTC VAD + 音量/持续时间确认人声后立即停止角色播放并继续录完本轮用户语音；候选录音仍通过现有 voice-call turn 提交给服务端 ASR，服务端 no-speech 只作为兜底，不生成新回复。`voiceprint/verify` 接口保留给后续风控，但当前不作为发版放行条件。
+- 声纹后续方案单独做：需要用户授权、注册/删除、服务端 speaker verification、阈值策略和失败降级；在这些流程补齐前，不能让未上线/返回 false 的声纹接口阻断付费通话体验。
+- 发版前真机验收顺序：无耳机默认扬声器播放；插入有线耳机/蓝牙后走耳机；麦克风关闭时不采集、不提交 turn；角色说话时用户正常开口可自动打断；拍手/敲击等非人声不应频繁打断；通话结束仍调用 session end 并返回摘要。
+
+2026-06-29 iOS 同步记录：
+
+Status: current。
+
+- iOS `VoiceCallMockView` 已同步同一产品口径：麦克风按钮只负责“打开麦克风 / 关闭麦克风”，不再在角色说话时变成“插话”。
+- iOS 输出路由复用一份当前输出判断：有线耳机、蓝牙、USB、车载或 AirPlay 输出存在时显示“耳机”并取消强制外放；无外接输出时默认扬声器，用户可手动关闭扬声器。
+- iOS 自动打断不再调用 `voiceprint/verify` 作为 P0 放行条件；本地峰值、平均能量、持续时间和连续帧确认人声后立即停止角色播放，候选录音提交给服务端 ASR，服务端 no-speech 只作为兜底，不生成新回复。`MessageService.verifyVoiceCallBargeInVoiceprint` 保留给后续真实声纹方案。
+- iOS 录音和流式播放的 `AVAudioSession` 选项补齐 `allowBluetoothA2DP` / `allowBluetoothHFP`，避免耳机/蓝牙场景被录音或播放会话抢回外放。
+
+2026-06-29 拍手误打断修复记录：
+
+Status: historical。最新热麦阈值、pre-roll 与 `interrupted_*` 上下文契约见下方“豆包式自动打断与上下文修复记录”。
+
+- 根因：上一版客户端在本地 barge-in candidate 确认后就停止角色播放；拍手/敲击等高能量噪声可能先造成“听感已被打断”，即使服务端随后返回 no-speech，也已经破坏通话体验。
+- 修正口径：不能等服务端返回才打断，否则用户开口体感像“没有自动打断”。客户端必须在本地确认连续人声后立即停止旧播放；服务端 `ASR_NO_SPEECH`、静音、无有效语音或候选请求失败只负责丢弃本轮候选，不生成新回复。
+- Android 依赖 WebRTC VAD + 音量/持续时间确认人声；stream 与 legacy 兜底都带 `wasBargeIn` 语义。非 stream fallback 的 422 no-speech 也统一映射成 `VoiceCallNoSpeechException`。
+- iOS 同步立即打断，并把播放中插话候选调整为约 480ms / 5 帧 / 560ms post-silence，同时增加平均能量门控，减少单次拍手峰值被当成人声候选的概率。
+- 服务端现状已能把 ASR 客户端静音/无效音频映射为 `ASR_NO_SPEECH`，且过滤部分 ASR 幻觉文本；P0 暂不新增接口。若后续追求更低延迟，可增加 ASR-only `barge-in/validate` 接口，返回 `{accepted, transcript, confidence}` 后客户端再停播并复用 transcript 生成回复。
+
+2026-06-29 远距离开口与静默追问修复记录：
+
+Status: historical。静默追问结论仍适用；最新热麦阈值与打断上下文见下方“豆包式自动打断与上下文修复记录”。
+
+- 真实通话口径：用户不应必须贴着麦克风说话。Android 普通聆听与播放中插话都降低音量门限，继续用 WebRTC VAD / 声学特征判断人声；iOS 普通聆听降低 peak 门限，播放中插话降低 peak + average 门限。
+- Android 插话当前约 `520ms / 5 帧` 即可确认人声并立即停播；iOS 插话当前约 `440ms / 5 帧`，同时要求平均能量满足门槛。
+- 静默追问修复：用户轻声/远距离说话触发过“用户开始说话”后，如果录音最终被丢弃、编码为空、服务端返回 `ASR_NO_SPEECH` 或提交失败，客户端会重新启动静默追问计时。避免计时被一次无效候选取消后永远不追问。
+- 验收重点：离手机更远自然说一句应能进入用户回合；角色说话时远一点插话应打断；完全不说话 5 秒左右应触发第一句追问，后续约 30 秒追问，再到 60 秒自动告别。
+
+2026-06-29 豆包式自动打断与上下文修复记录：
+
+Status: current。
+
+- 当前发版口径是“本地确认人声后立即停旧播放，录完这句话后作为打断 turn 提交”，不是点击插话，也不是等待服务端 ASR 后才停播。
+- 服务端现有 `/turns` 与 `/turns/audio-stream` 已支持打断上下文：`interrupted_assistant_message_id`、`interrupted_played_text`、`interrupted_played_char_count`、`interrupted_played_segment_count`。客户端读取 `X-Voice-Call-Assistant-Message-Id` 和 `X-Voice-Call-Tts-Text-B64`，在打断瞬间按播放耗时估算已播字符数并随下一轮用户音频提交；服务端据此排除未播完的旧 assistant 回复，并把已播片段作为上下文注入。
+- Android 播放中热麦延迟保持约 `180ms`，但停播确认收紧到约 `440ms / 4 帧`，继续要求 WebRTC VAD + 音量 + RMS / 过零率 / crest factor 兜底声学特征共同成立；确认用户人声开始时回退到最近 `420ms` pre-roll，保住第一句话开头。若 TTS 正好自然结束但用户已经开口，`onAssistantPlaybackFinished` 不再递增 `userCaptureNonce` 取消当前捕获；同一个捕获窗口会从“打断阈值”自动降回“普通聆听阈值”，轻声接话也能作为下一轮提交。
+- iOS 播放中热麦延迟保持约 `180ms`，停播确认收紧到约 `460ms / 5 帧`；除 peak / average 能量外增加 peak-average spread 与短间隙 reset，降低拍手、敲击等瞬态高能量输入误打断概率。播放中的被动热麦不再重新配置 `AVAudioSession`，避免角色 TTS 被录音会话打断或产生停顿；若角色语音自然结束时用户已经在说话，当前候选继续收尾并作为普通下一轮提交。
+- 服务端补齐 no-speech 兜底：当 voice-call turn 携带音频但 ASR provider 成功返回空文本时，也统一抛 `ASR_NO_SPEECH`，与供应商静音错误、客户端静音和 ASR 幻觉过滤同一恢复路径，避免客户端卡在普通失败分支。
+- 仍保留 `voiceprint/verify` 接口给后续本人声纹风控，但当前 P0 不以声纹作为可用性前置条件；否则未完成注册/授权/删除/阈值策略前会阻断付费通话。
+- 真机验收优先级：角色长句播放中自然说“等一下我想问...”应在约半秒内停旧播放，并且 ASR 能拿到句首；连续拍手、敲桌、咳嗽不应稳定打断；耳机/Bluetooth 下不强制外放；麦克风关闭后不再采集打断候选。
 
 ### 6.2 P1：半双工实时电话
 
@@ -541,7 +600,7 @@ DASHSCOPE_ASR_MODEL=qwen3-asr-flash
 
 1. 语音电话是否按 6 糖果/分钟起步。
 2. 是否每天给一次 30 秒免费体验。
-3. VIP/SVIP 是否享受通话折扣或赠通话分钟。
+3. VIP/SVIP 已确认赠通话分钟：VIP 30 分钟/月，SVIP 90 分钟/月；是否需要额外折扣待确认。
 4. 通话摘要是否默认写入聊天记录。
 5. 通话中是否展示实时字幕。
 6. 用户克隆音色是否允许绑定多个角色。
@@ -581,11 +640,12 @@ DASHSCOPE_ASR_MODEL=qwen3-asr-flash
 - 失败自动恢复。
 - Provider A/B：Qwen vs CosyVoice vs 火山旧音色。
 
-## 13. 本轮未做
+## 13. 当前验证状态
 
-- 未修改业务代码。
-- 未跑 iOS build。
-- 未跑 Android Gradle。
+- 2026-06-29 已修改 Android / iOS 客户端实时语音业务代码，同步麦克风开关、音频路由和自动打断口径。
+- 2026-06-29 已跑 Android `./gradlew :app:compileDebugKotlin` 与 `./gradlew :app:testDebugUnitTest`，结果通过；同时把现有 `voice-playback` timeout 改动与单测期望收口到 15s，避免阻断验证。
+- 2026-06-29 已跑 iOS `xcodebuild -workspace Bubbly.xcworkspace -scheme Bubbly -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build`，结果通过；仅有既有 iOS `requestRecordPermission` deprecated warning 与 AppIntents metadata skip warning。
+- 2026-06-29 已跑服务端定向 `npx vitest run src/modules/voice-call/routes.test.ts src/modules/voice-call/service.test.ts -t "ASR no-speech|ASR silence hallucinations"`，结果 2 passed，确认 no-speech 映射和 ASR 幻觉文本过滤仍可用。
 - 未查生产阿里云账单。
 - 未调用真实阿里云 API。
 - 未修改商品、支付、埋点或隐私 SDK 配置。
