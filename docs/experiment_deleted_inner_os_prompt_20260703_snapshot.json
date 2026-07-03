@@ -1,0 +1,136 @@
+{
+  "recordedAt": "2026-07-03T10:25:24.615Z",
+  "reason": "inner OS prompt experiments paused/deleted by request 2026-07-03",
+  "experiments": [
+    {
+      "id": "f70ed772-71d2-11f1-a202-5254ac1c0a25",
+      "experimentKey": "chat_inner_os_prompt_v2_20260627",
+      "name": "Inner OS prompt v2",
+      "description": "2026-06-27 on-demand inner-OS prompt A/B for new users only: control keeps current prompt, treatment uses copied v2 prompt.",
+      "domain": "chat",
+      "status": "running",
+      "unitType": "user",
+      "allocationStrategy": "round_robin",
+      "fallbackVariantKey": "control_current_prompt",
+      "variants": [
+        {
+          "key": "control_current_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "prompt_name": "chat/inner_os_on_demand",
+                "prompt_version": "inner_os_on_demand_v1"
+              }
+            }
+          },
+          "description": "Current online on-demand inner-OS prompt"
+        },
+        {
+          "key": "treatment_new_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "prompt_name": "chat/inner_os_on_demand_v2",
+                "prompt_version": "inner_os_on_demand_v2"
+              }
+            }
+          },
+          "description": "Copied v2 on-demand inner-OS prompt"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "2026-06-27T10:40:40+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": true,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {},
+      "clientVisible": false,
+      "serverVisible": true,
+      "priority": 100,
+      "version": 1,
+      "startsAt": "2026-06-27T02:50:32.721Z",
+      "endsAt": null,
+      "createdBy": "launch_inner_os_prompt_experiment_20260627_script",
+      "updatedBy": "codex_fix_inner_os_prompt_experiment_starts_at_utc",
+      "createdAt": "2026-06-27T10:50:32.721Z",
+      "updatedAt": "2026-06-27T11:28:28.856Z",
+      "counts": {
+        "assignments": 855,
+        "exposures": 0,
+        "overrides": 0
+      }
+    },
+    {
+      "id": "f7e6b59f-213a-4516-b4c7-95d67856a270",
+      "experimentKey": "chat_inner_os_prompt_v2_examples_20260628",
+      "name": "Inner OS prompt v2 examples",
+      "description": "2026-06-28 on-demand inner-OS prompt A/B for new registered users only: control keeps current prompt, treatment uses v2 prompt with dynamic rewritten examples.",
+      "domain": "chat",
+      "status": "paused",
+      "unitType": "user",
+      "allocationStrategy": "round_robin",
+      "fallbackVariantKey": "control_current_prompt",
+      "variants": [
+        {
+          "key": "control_current_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "prompt_name": "chat/inner_os_on_demand",
+                "prompt_version": "inner_os_on_demand_v1"
+              }
+            }
+          },
+          "description": "Current online on-demand inner-OS prompt"
+        },
+        {
+          "key": "treatment_new_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "prompt_name": "chat/inner_os_on_demand_v2",
+                "prompt_version": "inner_os_on_demand_v2"
+              }
+            }
+          },
+          "description": "V2 on-demand inner-OS prompt with dynamic rewritten examples"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "$experiment.starts_at"
+        },
+        "allow_guest": false,
+        "allow_minor": true,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {},
+      "clientVisible": false,
+      "serverVisible": false,
+      "priority": 100,
+      "version": 1,
+      "startsAt": "2026-06-27T19:38:18.085Z",
+      "endsAt": null,
+      "createdBy": "launch_inner_os_prompt_experiment_20260628_script",
+      "updatedBy": "restore_inner_os_prompt_20260703",
+      "createdAt": "2026-06-28T03:38:18.085Z",
+      "updatedAt": "2026-07-03T10:18:52.644Z",
+      "counts": {
+        "assignments": 861,
+        "exposures": 0,
+        "overrides": 0
+      }
+    }
+  ]
+}

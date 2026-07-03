@@ -1,0 +1,90 @@
+{
+  "recordedAt": "2026-07-03T10:21:50.415Z",
+  "reason": "paused experiment cleanup requested 2026-07-03",
+  "experiment": {
+    "id": "2d14eb01-74f2-11f1-a202-5254ac1c0a25",
+    "experimentKey": "chat_message_candy_cost_new_users_20260701",
+    "name": "新用户聊天消息糖果消耗实验",
+    "description": "实验重新生效后的新用户先按稳定采样取60%入组；入组后三个variant等权，各占全量新用户约20%。对照组保持当前普通聊天1糖扣费路径，实验组分别走0.5糖累计、0糖普通聊天扣费。剩余40%新用户不入组。仅影响普通聊天“聊天消耗”，不影响充值、VIP、图片、内心OS、语音、OpenClaw bypass。",
+    "domain": "chat",
+    "status": "paused",
+    "unitType": "user",
+    "allocationStrategy": "weighted_random",
+    "fallbackVariantKey": "control_current_a",
+    "variants": [
+      {
+        "key": "control_current_a",
+        "weight": 1,
+        "payload": {
+          "chat": {
+            "message_candy_cost": {
+              "mode": "legacy",
+              "cost_milli": 1000
+            }
+          }
+        },
+        "description": "对照组A：不走新计费状态，保持当前每条普通聊天1糖"
+      },
+      {
+        "key": "treatment_cost_0_5",
+        "weight": 1,
+        "payload": {
+          "chat": {
+            "message_candy_cost": {
+              "mode": "metered",
+              "cost_milli": 500
+            }
+          }
+        },
+        "description": "实验组2：每条普通聊天0.5糖，累计满1糖才扣费并写一条聊天消耗"
+      },
+      {
+        "key": "treatment_cost_0",
+        "weight": 1,
+        "payload": {
+          "chat": {
+            "message_candy_cost": {
+              "mode": "legacy",
+              "cost_milli": 0
+            }
+          }
+        },
+        "description": "实验组3：普通聊天0糖，不写新计费状态"
+      }
+    ],
+    "audienceRules": {
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "vip_tiers": [
+        "free"
+      ],
+      "created_at": {
+        "gte": "2026-07-01T10:11:30.000+08:00"
+      },
+      "allow_guest": false,
+      "allow_minor": false,
+      "stable_sample": {
+        "salt": "chat_message_candy_cost_new_users_20260701",
+        "percent": 60
+      }
+    },
+    "guardrailRules": {},
+    "clientVisible": false,
+    "serverVisible": true,
+    "priority": 94,
+    "version": 2,
+    "startsAt": "2026-07-01T02:11:30.769Z",
+    "endsAt": "2026-07-03T10:19:40.270Z",
+    "createdBy": "codex",
+    "updatedBy": "codex",
+    "createdAt": "2026-07-01T10:11:31.244Z",
+    "updatedAt": "2026-07-03T10:19:40.270Z"
+  },
+  "counts": {
+    "assignments": 2357,
+    "exposures": 0,
+    "overrides": 0
+  }
+}

@@ -1,0 +1,2506 @@
+{
+  "exportedAt": "2026-07-03T10:05:12.195Z",
+  "deleteScope": "experiments where status != running plus documented-closed android_candy_catalog_18_38_88_128_20260613",
+  "experiments": [
+    {
+      "experimentKey": "android_vip_plan_catalog_v1",
+      "name": "Android 会员商品目录实验",
+      "domain": "billing",
+      "status": "draft",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-05-22T03:50:23.324Z",
+      "updatedAt": "2026-06-09T17:06:13.597Z",
+      "assignmentCount": 4988,
+      "exposureCount": 0,
+      "overrideCount": 1,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "control",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "month_auto_first": 15,
+              "svip_month_auto_first": 25
+            }
+          },
+          "description": "对照组：VIP 连续包月 ¥15/月且续费 ¥15，SVIP 连续包月 ¥25/月且续费 ¥25，其他旧档保持原价"
+        },
+        {
+          "key": "candidate",
+          "weight": 1,
+          "payload": {
+            "catalog": "candidate",
+            "plan_codes": [
+              "month",
+              "week",
+              "year",
+              "svip_month",
+              "svip_week",
+              "svip_year"
+            ],
+            "price_overrides": {
+              "week": 15,
+              "year": 98,
+              "month": 15,
+              "svip_week": 25,
+              "svip_year": 168,
+              "svip_month": 45
+            }
+          },
+          "description": "实验组：VIP 月卡 ¥15，周卡/年卡保持不变；SVIP 月/周/年价格保持不变"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "allow_guest": false,
+        "allow_minor": false
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "android_vip_price_new_user_v2",
+      "name": "Android 新用户会员价格实验",
+      "domain": "billing",
+      "status": "draft",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-05-27T19:50:27.882Z",
+      "updatedAt": "2026-06-09T17:06:13.598Z",
+      "assignmentCount": 2924,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "price_control",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 15,
+              "month": 30,
+              "svip_week": 25,
+              "svip_month": 45,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "对照组：VIP 连续包月 25/月、周卡 15、月卡 30；SVIP 连续包月 45/月、周卡 25、月卡 45"
+        },
+        {
+          "key": "candidate",
+          "weight": 1,
+          "payload": {
+            "catalog": "price_candidate",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "month": 35,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "实验组：VIP 连续包月 25/月、周卡 25、月卡 35；SVIP 连续包月 45/月、周卡 45、月卡 65"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "created_at": {
+          "gte": "2026-05-27T00:00:00.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "android_vip_price_new_user_v3",
+      "name": "Android 新用户会员价格实验",
+      "domain": "billing",
+      "status": "draft",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-05-31T20:25:07.493Z",
+      "updatedAt": "2026-06-09T17:06:13.599Z",
+      "assignmentCount": 1000,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "price_control",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "month": 35,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "对照组：VIP 连续包月 25/月、周卡 25、月卡 35；SVIP 连续包月 45/月、周卡 45、月卡 65"
+        },
+        {
+          "key": "candidate",
+          "weight": 1,
+          "payload": {
+            "catalog": "price_candidate",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 35,
+              "month": 50,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 35,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "实验组：VIP 连续包月 35/月、周卡 35、月卡 50；SVIP 连续包月 45/月、周卡 45、月卡 65"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "created_at": {
+          "gte": "2026-05-31T00:00:00.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_inner_os_price_1_0_8_1_202606",
+      "name": "内心OS糖果价格实验",
+      "domain": "chat",
+      "status": "draft",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-05-31T23:11:54.703Z",
+      "updatedAt": "2026-06-04T22:42:29.164Z",
+      "assignmentCount": 34,
+      "exposureCount": 1264,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "cost": 30,
+                "candy_cost": 30
+              }
+            }
+          },
+          "description": "对照组：内心OS每次30糖果"
+        },
+        {
+          "key": "price_50",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "cost": 50,
+                "candy_cost": 50
+              }
+            }
+          },
+          "description": "实验组1：内心OS每次50糖果"
+        },
+        {
+          "key": "price_100",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "cost": 100,
+                "candy_cost": 100
+              }
+            }
+          },
+          "description": "实验组2：内心OS每次100糖果"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios",
+          "android"
+        ],
+        "created_at": {
+          "gte": "2026-05-31T00:00:00.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {
+          "gte": "1.0.8.1"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_inner_os_price_1_8_1_202606",
+      "name": "内心OS糖果价格实验",
+      "domain": "chat",
+      "status": "draft",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-05-31T20:18:00.530Z",
+      "updatedAt": "2026-06-04T22:42:29.164Z",
+      "assignmentCount": 0,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "cost": 30,
+                "candy_cost": 30
+              }
+            }
+          },
+          "description": "对照组：内心OS每次30糖果"
+        },
+        {
+          "key": "price_50",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "cost": 50,
+                "candy_cost": 50
+              }
+            }
+          },
+          "description": "实验组1：内心OS每次50糖果"
+        },
+        {
+          "key": "price_100",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "cost": 100,
+                "candy_cost": 100
+              }
+            }
+          },
+          "description": "实验组2：内心OS每次100糖果"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios",
+          "android"
+        ],
+        "created_at": {
+          "gte": "2026-05-31T00:00:00.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {
+          "gte": "1.8.1"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "android_vip_catalog_copy_year_anchor_v1",
+      "name": "Android 新用户会员月卡文案与年卡锚点实验",
+      "domain": "billing",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "ops",
+      "createdAt": "2026-06-09T17:06:13.602Z",
+      "updatedAt": "2026-06-11T17:16:25.922Z",
+      "assignmentCount": 737,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "price_control",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "month": 35,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "对照组：保持现状；VIP 连续包月 25/月、周卡 25、月卡 35；SVIP 连续包月 45/月、周卡 45、月卡 65"
+        },
+        {
+          "key": "candidate",
+          "weight": 1,
+          "payload": {
+            "catalog": "copy_year_anchor",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "year",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_year"
+            ],
+            "copy_overrides": {
+              "month_auto_first": {
+                "label": "月卡",
+                "renewal_note": null
+              },
+              "svip_month_auto_first": {
+                "label": "月卡",
+                "renewal_note": null
+              }
+            },
+            "price_overrides": {
+              "week": 25,
+              "year": 168,
+              "svip_week": 45,
+              "svip_year": 168,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "实验组：连续包月前台展示为月卡并隐藏续费提示；原月卡位替换为年卡，VIP/SVIP 年卡均为 168"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "created_at": {
+          "gte": "2026-05-31T00:00:00.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "assignment_strata": {
+          "type": "android_vip_pay_intent_v1",
+          "buckets": [
+            "paid_or_subscription_history_free",
+            "new_free_0_3d",
+            "recent_free_4_14d",
+            "older_free_15d_plus"
+          ],
+          "description": "按付费意图分层：历史付费/订阅免费用户、新注册免费用户、近期免费用户、较老免费用户；每层内 control/candidate 均衡随机。"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "android_vip_price_catalog_20260625",
+      "name": "Android VIP/SVIP 会员价格实验 2026-06-25",
+      "domain": "billing",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "relaunch_android_vip_price_catalog_20260625_v2",
+      "createdAt": "2026-06-25T17:23:52.698Z",
+      "updatedAt": "2026-06-25T23:09:13.426Z",
+      "assignmentCount": 735,
+      "exposureCount": 2632,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "online_fixed_term",
+            "plan_codes": [
+              "month",
+              "week",
+              "year",
+              "svip_month",
+              "svip_week",
+              "svip_year"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "year": 168,
+              "month": 25,
+              "svip_week": 45,
+              "svip_year": 298,
+              "svip_month": 45
+            }
+          },
+          "description": "对照组：线上固定时长样式"
+        },
+        {
+          "key": "treatment_1",
+          "weight": 1,
+          "payload": {
+            "catalog": "android_price_treatment_1",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "copy_overrides": {
+              "month_auto_first": {
+                "label": "连续包月"
+              },
+              "svip_month_auto_first": {
+                "label": "连续包月"
+              }
+            },
+            "price_overrides": {
+              "week": 35,
+              "month": 45,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 35,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "实验组 1：VIP 连续月/周卡/月卡 35/35/45，SVIP 连续月/周卡/月卡 45/45/65"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "created_at": {
+          "gte": "2026-06-25T17:23:52.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "assignment_strata": {
+          "type": "android_vip_pay_intent_v1",
+          "buckets": [
+            "paid_or_subscription_history_free",
+            "new_free_0_3d",
+            "recent_free_4_14d",
+            "older_free_15d_plus"
+          ],
+          "description": "按付费意图分层：历史付费/订阅免费用户、新注册免费用户、近期免费用户、较老免费用户；每层内 control/treatment_1 均衡随机。"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "android_vip_price_catalog_20260625_v2",
+      "name": "Android VIP/SVIP 会员价格实验 2026-06-25 v2",
+      "domain": "billing",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "pause_android_vip_price_catalog_experiment_20260625_v2",
+      "createdAt": "2026-06-25T23:09:13.427Z",
+      "updatedAt": "2026-06-26T16:49:39.612Z",
+      "assignmentCount": 619,
+      "exposureCount": 3033,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "online_fixed_term",
+            "plan_codes": [
+              "month",
+              "week",
+              "year",
+              "svip_month",
+              "svip_week",
+              "svip_year"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "year": 168,
+              "month": 25,
+              "svip_week": 45,
+              "svip_year": 298,
+              "svip_month": 45
+            }
+          },
+          "description": "对照组：线上固定时长样式"
+        },
+        {
+          "key": "treatment_1",
+          "weight": 1,
+          "payload": {
+            "catalog": "android_price_treatment_1",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "copy_overrides": {
+              "month_auto_first": {
+                "label": "连续包月"
+              },
+              "svip_month_auto_first": {
+                "label": "连续包月"
+              }
+            },
+            "price_overrides": {
+              "week": 35,
+              "month": 45,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 35,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "实验组 1：VIP 连续月/周卡/月卡 35/35/45，SVIP 连续月/周卡/月卡 45/45/65"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "created_at": {
+          "gte": "2026-06-25T23:09:13.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "assignment_strata": {
+          "type": "android_vip_pay_intent_v1",
+          "buckets": [
+            "paid_or_subscription_history_free",
+            "new_free_0_3d",
+            "recent_free_4_14d",
+            "older_free_15d_plus"
+          ],
+          "description": "按付费意图分层：历史付费/订阅免费用户、新注册免费用户、近期免费用户、较老免费用户；每层内 control/treatment_1 均衡随机。"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "candy_wallet_entry_non_vip_visibility_1_1_2",
+      "name": "非会员糖果钱包入口隐藏实验",
+      "domain": "billing",
+      "status": "paused",
+      "clientVisible": true,
+      "serverVisible": false,
+      "version": 3,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-06-13T23:14:10.000Z",
+      "updatedAt": "2026-06-20T22:50:04.404Z",
+      "assignmentCount": 32329,
+      "exposureCount": 669,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 50,
+          "payload": {
+            "hide_non_vip_entry": false
+          },
+          "description": "存量用户可见糖果；新用户对照组继续展示入口"
+        },
+        {
+          "key": "candidate",
+          "weight": 50,
+          "payload": {
+            "hide_non_vip_entry": true
+          },
+          "description": "新用户实验组隐藏非会员糖果钱包入口"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios",
+          "android"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {
+          "gte": "1.1.2"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "ios_vip_price_catalog_20260625",
+      "name": "iOS VIP/SVIP 会员价格实验 2026-06-25",
+      "domain": "billing",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "codex_relaunch_ios_vip_experiment_no_intro_20260627",
+      "createdAt": "2026-06-25T17:23:49.805Z",
+      "updatedAt": "2026-06-26T16:38:07.919Z",
+      "assignmentCount": 176,
+      "exposureCount": 715,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "online_pricing",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "month": 35,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "对照组：线上定价"
+        },
+        {
+          "key": "treatment_1",
+          "weight": 1,
+          "payload": {
+            "catalog": "ios_price_monthly_raise_no55",
+            "plan_codes": [
+              "month_auto_35",
+              "week_45",
+              "month_auto_45",
+              "svip_month_auto_65",
+              "svip_week",
+              "svip_month"
+            ],
+            "copy_overrides": {
+              "svip_month": {
+                "label": "月卡"
+              },
+              "month_auto_35": {
+                "label": "连续包月"
+              },
+              "month_auto_45": {
+                "label": "月卡"
+              },
+              "svip_month_auto_65": {
+                "label": "连续包月"
+              }
+            },
+            "price_overrides": {
+              "week_45": 45,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_35": 35,
+              "month_auto_45": 45,
+              "svip_month_auto_65": 65
+            }
+          },
+          "description": "实验组：VIP 连续包月/周卡/月卡 35/45/45，SVIP 连续包月/周卡/月卡 65/45/65"
+        },
+        {
+          "key": "treatment_2",
+          "weight": 0,
+          "payload": {
+            "catalog": "ios_price_monthly_raise_no55_compat",
+            "plan_codes": [
+              "month_auto_35",
+              "week_45",
+              "month_auto_45",
+              "svip_month_auto_65",
+              "svip_week",
+              "svip_month"
+            ],
+            "copy_overrides": {
+              "svip_month": {
+                "label": "月卡"
+              },
+              "month_auto_35": {
+                "label": "连续包月"
+              },
+              "month_auto_45": {
+                "label": "月卡"
+              },
+              "svip_month_auto_65": {
+                "label": "连续包月"
+              }
+            },
+            "price_overrides": {
+              "week_45": 45,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_35": 35,
+              "month_auto_45": 45,
+              "svip_month_auto_65": 65
+            }
+          },
+          "description": "兼容保留：旧 treatment_2 assignment 使用无 55 安全方案，不再新分配"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "created_at": {
+          "gte": "2026-06-25T17:23:49.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {
+          "gte": "1.1.0"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "ios_vip_price_catalog_20260625_v2",
+      "name": "iOS VIP/SVIP 会员价格实验 2026-06-25 v2",
+      "domain": "billing",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "pause_ios_vip_price_catalog_experiment_20260628_codex",
+      "createdAt": "2026-06-25T23:02:49.601Z",
+      "updatedAt": "2026-06-28T01:57:58.601Z",
+      "assignmentCount": 771,
+      "exposureCount": 4657,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "catalog": "online_pricing",
+            "plan_codes": [
+              "month_auto_first",
+              "week",
+              "month",
+              "svip_month_auto_first",
+              "svip_week",
+              "svip_month"
+            ],
+            "price_overrides": {
+              "week": 25,
+              "month": 35,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_first": 25,
+              "svip_month_auto_first": 45
+            }
+          },
+          "description": "对照组：线上定价"
+        },
+        {
+          "key": "treatment_1",
+          "weight": 1,
+          "payload": {
+            "catalog": "ios_price_monthly_raise_no55",
+            "plan_codes": [
+              "month_auto_35",
+              "week_45",
+              "month_auto_45",
+              "svip_month_auto_65",
+              "svip_week",
+              "svip_month"
+            ],
+            "copy_overrides": {
+              "svip_month": {
+                "label": "月卡"
+              },
+              "month_auto_35": {
+                "label": "连续包月"
+              },
+              "month_auto_45": {
+                "label": "月卡"
+              },
+              "svip_month_auto_65": {
+                "label": "连续包月"
+              }
+            },
+            "price_overrides": {
+              "week_45": 45,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_35": 35,
+              "month_auto_45": 45,
+              "svip_month_auto_65": 65
+            }
+          },
+          "description": "实验组：VIP 连续包月/周卡/月卡 35/45/45，SVIP 连续包月/周卡/月卡 65/45/65"
+        },
+        {
+          "key": "treatment_2",
+          "weight": 0,
+          "payload": {
+            "catalog": "ios_price_monthly_raise_no55_compat",
+            "plan_codes": [
+              "month_auto_35",
+              "week_45",
+              "month_auto_45",
+              "svip_month_auto_65",
+              "svip_week",
+              "svip_month"
+            ],
+            "copy_overrides": {
+              "svip_month": {
+                "label": "月卡"
+              },
+              "month_auto_35": {
+                "label": "连续包月"
+              },
+              "month_auto_45": {
+                "label": "月卡"
+              },
+              "svip_month_auto_65": {
+                "label": "连续包月"
+              }
+            },
+            "price_overrides": {
+              "week_45": 45,
+              "svip_week": 45,
+              "svip_month": 65,
+              "month_auto_35": 35,
+              "month_auto_45": 45,
+              "svip_month_auto_65": 65
+            }
+          },
+          "description": "兼容保留：旧 treatment_2 assignment 使用无 55 安全方案，不再新分配"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "created_at": {
+          "gte": "2026-06-25T23:02:49.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {
+          "gte": "1.1.0"
+        }
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_basic_persona_prompt_5050_20260518",
+      "name": "Chat basic persona prompt 50/50",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 2,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-19T10:55:14.937Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 113,
+      "exposureCount": 1559,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_baseline",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Use baseline generate_reply system prompt"
+        },
+        {
+          "key": "treatment_basic_prompt_candidate",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "basic_prompt_candidate"
+              }
+            }
+          },
+          "description": "Use basic persona candidate generate_reply system prompt"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_basic_persona_prompt_5050_v2_20260519",
+      "name": "Chat basic persona prompt 50/50 v2",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 2,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-19T18:29:15.150Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 207,
+      "exposureCount": 1567,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_baseline",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Refreshed control baseline after promoting the previous basic treatment prompt"
+        },
+        {
+          "key": "treatment_basic_prompt_candidate",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "basic_prompt_candidate"
+              }
+            }
+          },
+          "description": "New basic candidate prompt after the previous treatment was promoted to control"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_basic_persona_prompt_5050_v3_20260519",
+      "name": "Chat basic persona prompt 50/50 v3",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 3,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-19T22:24:37.546Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 297,
+      "exposureCount": 3011,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_baseline",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Refreshed control baseline after promoting the previous basic treatment prompt"
+        },
+        {
+          "key": "treatment_basic_prompt_candidate",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "basic_prompt_candidate"
+              }
+            }
+          },
+          "description": "Latest basic candidate prompt with updated extension guidance"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_basic_persona_prompt_5050_v4_20260520",
+      "name": "Chat basic persona prompt 50/50 v4",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 4,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "manual",
+      "createdAt": "2026-05-20T18:16:58.456Z",
+      "updatedAt": "2026-05-25T17:16:30.770Z",
+      "assignmentCount": 4253,
+      "exposureCount": 77240,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_baseline",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Refreshed control baseline after promoting the previous basic treatment prompt"
+        },
+        {
+          "key": "treatment_basic_prompt_candidate",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "basic_prompt_candidate"
+              }
+            }
+          },
+          "description": "Latest basic candidate prompt with revised topic-extension guidance"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_character_tone_prompt_v2_20260518",
+      "name": "Chat character-tone prompt v2",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-18T21:14:26.397Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 0,
+      "exposureCount": 4912,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_baseline",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Baseline generate_reply system prompt"
+        },
+        {
+          "key": "treatment_prompt_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_v2"
+              }
+            }
+          },
+          "description": "Generate_reply v2 system prompt for B-group characters"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_cold_persona_prompt_5050_20260518",
+      "name": "Chat cold persona prompt 50/50",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 2,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-19T10:55:15.011Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 280,
+      "exposureCount": 4082,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_prompt_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_v2"
+              }
+            }
+          },
+          "description": "Current cold-persona generate_reply v2 system prompt"
+        },
+        {
+          "key": "treatment_cold_prompt_candidate",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "cold_prompt_candidate"
+              }
+            }
+          },
+          "description": "Editable copy of the cold-persona generate_reply v2 system prompt"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_cold_persona_prompt_5050_v2_20260520",
+      "name": "Chat cold persona prompt 50/50 v2",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 2,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "manual",
+      "createdAt": "2026-05-20T18:16:58.458Z",
+      "updatedAt": "2026-05-25T17:16:30.770Z",
+      "assignmentCount": 2683,
+      "exposureCount": 67857,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_prompt_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_v2"
+              }
+            }
+          },
+          "description": "Current cold-persona generate_reply v2 system prompt"
+        },
+        {
+          "key": "treatment_cold_prompt_candidate",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "cold_prompt_candidate"
+              }
+            }
+          },
+          "description": "Latest cold candidate prompt after removing the previous target statement"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_decide_recent_context_registered_user_20260609",
+      "name": "Dynamic decide recent-context 50/50",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "launch_dynamic_decide_context_experiment_script",
+      "updatedBy": "codex_pause_bad_bucket_20260609",
+      "createdAt": "2026-06-08T20:46:12.851Z",
+      "updatedAt": "2026-06-09T08:07:01.688Z",
+      "assignmentCount": 49,
+      "exposureCount": 1017,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_online",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "dynamic_decide": {
+                "recent_context_enabled": true
+              }
+            }
+          },
+          "description": "Online dynamic_decide prompt with recent 10 dialogue lines"
+        },
+        {
+          "key": "treatment_no_recent_context",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "dynamic_decide": {
+                "recent_context_enabled": false
+              }
+            }
+          },
+          "description": "Dynamic_decide prompt without the recent 10 dialogue section"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "2026-06-09T00:00:00+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": true,
+        "app_version": {
+          "gte": "1.0.9"
+        },
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_reply_shape_bubble_cap_minus1_202606",
+      "name": "Dynamic reply shape bubble cap minus 1",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "launch_dynamic_reply_shape_bubble_cap_minus1_experiment_script",
+      "updatedBy": "launch_dynamic_reply_shape_zero_example_v3_20260622_script",
+      "createdAt": "2026-06-18T02:05:43.316Z",
+      "updatedAt": "2026-06-23T00:51:20.874Z",
+      "assignmentCount": 61,
+      "exposureCount": 918,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_shape",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "current"
+              }
+            }
+          },
+          "description": "Current online 45 dynamic reply-shape snippets"
+        },
+        {
+          "key": "treatment_bubble_cap_minus1",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "bubble_cap_minus1"
+              }
+            }
+          },
+          "description": "Current snippets with chat/action bubble max minus one and brief-response guidance"
+        }
+      ],
+      "audienceRules": {
+        "allow_guest": false,
+        "allow_minor": true,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_reply_shape_bubble_cap_minus1_v2_20260618",
+      "name": "Dynamic reply shape bubble cap minus 1 v2",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "launch_dynamic_reply_shape_bubble_cap_minus1_v2_20260618_script",
+      "updatedBy": "launch_dynamic_reply_shape_zero_example_v3_20260622_script",
+      "createdAt": "2026-06-18T05:10:37.266Z",
+      "updatedAt": "2026-06-23T00:51:20.874Z",
+      "assignmentCount": 2744,
+      "exposureCount": 91620,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_shape_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "current"
+              }
+            }
+          },
+          "description": "Current online 45 dynamic reply-shape snippets"
+        },
+        {
+          "key": "treatment_bubble_cap_minus1_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "bubble_cap_minus1"
+              }
+            }
+          },
+          "description": "Updated document snippets with bubble cap minus one and brief-response guidance"
+        }
+      ],
+      "audienceRules": {
+        "allow_guest": false,
+        "allow_minor": true,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_generate_model_deepseek_pro_flash_202605",
+      "name": "聊天生成模型腾讯 TokenHub 50/50",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 2,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "system",
+      "createdAt": "2026-05-09T15:41:44.828Z",
+      "updatedAt": "2026-06-02T19:36:56.061Z",
+      "assignmentCount": 580,
+      "exposureCount": 13289,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "flash",
+          "weight": 50,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "base_model_choice": "deepseek-v4-flash"
+              }
+            }
+          },
+          "description": "DeepSeek Official deepseek-v4-flash"
+        },
+        {
+          "key": "pro",
+          "weight": 50,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "base_model_choice": "tencent-deepseek-v4-flash"
+              }
+            }
+          },
+          "description": "Tencent TokenHub deepseek-v4-flash"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": []
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_generate_reply_prompt_3arm_20260515",
+      "name": "Chat generate_reply prompt 3-arm",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-15T18:14:04.898Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 1169,
+      "exposureCount": 40027,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_baseline",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Always use baseline generate_reply system prompt"
+        },
+        {
+          "key": "treatment_prompt_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_v2"
+              }
+            }
+          },
+          "description": "Always use generate_reply v2 system prompt"
+        },
+        {
+          "key": "warmup4_then_prompt_v2",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "warmup_scope": "chat",
+                "prompt_variant": "prompt_v2",
+                "warmup_user_turns": 4,
+                "warmup_prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Use baseline for first four user messages in the chat, then v2"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_generate_reply_prompt_v2_20260514",
+      "name": "Chat generate_reply prompt v2 AB",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "codex",
+      "updatedBy": "persona_prompt_5050_relaunch_20260520",
+      "createdAt": "2026-05-14T02:59:07.896Z",
+      "updatedAt": "2026-05-20T18:16:58.452Z",
+      "assignmentCount": 674,
+      "exposureCount": 12080,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "baseline",
+          "weight": 50,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "baseline"
+              }
+            }
+          },
+          "description": "Current online generate_reply system prompt"
+        },
+        {
+          "key": "prompt_v2",
+          "weight": 50,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_v2"
+              }
+            }
+          },
+          "description": "New generate_reply prompt from 706ede8"
+        }
+      ],
+      "audienceRules": {},
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_generate_reply_sticker_delivery_202605",
+      "name": "Chat generate_reply sticker delivery",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "manual",
+      "updatedBy": "ab_key_rotate_20260513",
+      "createdAt": "2026-05-12T11:14:05.866Z",
+      "updatedAt": "2026-05-13T10:53:24.826Z",
+      "assignmentCount": 170,
+      "exposureCount": 3625,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_no_sticker",
+          "weight": 50,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "sticker_delivery_enabled": false
+              }
+            }
+          },
+          "description": "Suppress sticker delivery"
+        },
+        {
+          "key": "treatment_sticker",
+          "weight": 50,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "sticker_delivery_enabled": true
+              }
+            }
+          },
+          "description": "Allow sticker delivery"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": []
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_inner_os_prompt_v2_examples_20260628",
+      "name": "Inner OS prompt v2 examples",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": false,
+      "version": 1,
+      "startsAt": "2026-06-27T19:38:18.085Z",
+      "endsAt": null,
+      "createdBy": "launch_inner_os_prompt_experiment_20260628_script",
+      "updatedBy": "codex_pause_inner_os_prompt_experiment_20260629",
+      "createdAt": "2026-06-28T03:38:18.085Z",
+      "updatedAt": "2026-06-29T04:52:22.700Z",
+      "assignmentCount": 861,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "prompt_name": "chat/inner_os_on_demand",
+                "prompt_version": "inner_os_on_demand_v1"
+              }
+            }
+          },
+          "description": "Current online on-demand inner-OS prompt"
+        },
+        {
+          "key": "treatment_new_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "inner_os": {
+                "prompt_name": "chat/inner_os_on_demand_v2",
+                "prompt_version": "inner_os_on_demand_v2"
+              }
+            }
+          },
+          "description": "V2 on-demand inner-OS prompt with dynamic rewritten examples"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "$experiment.starts_at"
+        },
+        "allow_guest": false,
+        "allow_minor": true,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_personality_recipe_inject_20260517",
+      "name": "Chat personality recipe inject AB",
+      "domain": "chat",
+      "status": "paused",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": "2026-05-17T16:00:00.000Z",
+      "endsAt": null,
+      "createdBy": "chat_svr_personality_recipe_launch_20260518",
+      "updatedBy": "manual_remove_personality_recipe_experiment",
+      "createdAt": "2026-05-17T23:35:21.095Z",
+      "updatedAt": "2026-05-18T20:41:02.707Z",
+      "assignmentCount": 107,
+      "exposureCount": 1609,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "personality_recipe": {
+                "inject": false
+              }
+            },
+            "variant": "control"
+          },
+          "description": "Baseline generate_reply template without personality recipe inject"
+        },
+        {
+          "key": "recipe_inject",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "personality_recipe": {
+                "inject": true
+              }
+            },
+            "variant": "recipe_inject"
+          },
+          "description": "Inject type-specific personality recipe block via generate_reply_recipe template"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [],
+        "created_at": {
+          "gte": "2026-05-18T00:00:00+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "app_version": {},
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "android_candy_catalog_18_38_88_128_20260613",
+      "name": "Android 糖果充值档位实验",
+      "domain": "billing",
+      "status": "running",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "system",
+      "updatedBy": "system",
+      "createdAt": "2026-06-13T21:13:56.521Z",
+      "updatedAt": "2026-06-15T15:14:36.331Z",
+      "assignmentCount": 1270,
+      "exposureCount": 4997,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control",
+          "weight": 1,
+          "payload": {
+            "candy": {
+              "catalog": {
+                "package_ids": [
+                  "candy_1800",
+                  "candy_3800",
+                  "candy_8800",
+                  "candy_12800"
+                ]
+              }
+            }
+          },
+          "description": "对照组：保留历史分组 key，目录已同步为 18/38/88/128"
+        },
+        {
+          "key": "candidate",
+          "weight": 1,
+          "payload": {
+            "candy": {
+              "catalog": {
+                "package_ids": [
+                  "candy_1800",
+                  "candy_3800",
+                  "candy_8800",
+                  "candy_12800"
+                ]
+              }
+            }
+          },
+          "description": "实验组：统一 Android 糖果目录 18/38/88/128"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "android"
+        ],
+        "allow_guest": false,
+        "allow_minor": false
+      },
+      "guardrailRules": {
+        "guardrails": [
+          "candy_order_create_error_rate",
+          "candy_pay_success_rate"
+        ],
+        "primary_metric": "candy_recharge_paid_conversion"
+      }
+    },
+    {
+      "experimentKey": "candy_first_6_recharge_bonus_100pct_20260629",
+      "name": "6元糖果首充100%赠送实验",
+      "domain": "billing",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": "2026-06-29T09:04:38.166Z",
+      "endsAt": "2026-06-30T07:50:35.171Z",
+      "createdBy": "codex",
+      "updatedBy": "codex",
+      "createdAt": "2026-06-29T17:04:38.685Z",
+      "updatedAt": "2026-06-30T07:50:35.171Z",
+      "assignmentCount": 907,
+      "exposureCount": 2815,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_full_bonus_ge_18",
+          "weight": 1,
+          "payload": {
+            "candy": {
+              "recharge_bonus": {
+                "mode": "full_bonus_ge_18"
+              }
+            }
+          },
+          "description": "对照组：6元不赠送，18元及以上赠送100%"
+        },
+        {
+          "key": "treatment_full_bonus_ge_6",
+          "weight": 1,
+          "payload": {
+            "candy": {
+              "recharge_bonus": {
+                "mode": "full_bonus_ge_6"
+              }
+            }
+          },
+          "description": "实验组：6元及以上首充糖果包赠送100%"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios",
+          "android"
+        ],
+        "created_at": {
+          "gte": "2026-06-29T17:04:38.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_reply_shape_mode_examples_v1_new_users_20260702",
+      "name": "Dynamic reply shape mode examples v1 new users",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": "2026-07-02T19:00:26.767Z",
+      "endsAt": "2026-07-03T05:56:42.229Z",
+      "createdBy": "launch_dynamic_reply_shape_mode_examples_v1_new_users_script",
+      "updatedBy": "launch_dynamic_reply_shape_mode_examples_v2_new_users_script",
+      "createdAt": "2026-07-02T19:00:26.767Z",
+      "updatedAt": "2026-07-03T05:58:56.266Z",
+      "assignmentCount": 238,
+      "exposureCount": 5985,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_shape_v4",
+          "weight": 100,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "current"
+              }
+            }
+          },
+          "description": "Current online dynamic reply-shape snippets"
+        },
+        {
+          "key": "treatment_asset_bubble_examples_v1",
+          "weight": 100,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "asset_bubble_examples"
+              }
+            }
+          },
+          "description": "Generated per-reply-mode examples; second prompt receives bubble requirements only"
+        },
+        {
+          "key": "treatment_asset_bubble_length_examples_v1",
+          "weight": 100,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "asset_bubble_length_examples"
+              }
+            }
+          },
+          "description": "Generated per-reply-mode examples; second prompt receives bubble and total-turn-length requirements"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "$experiment.starts_at"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_reply_shape_zero_example_v3_20260622",
+      "name": "Dynamic reply shape zero example v3",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": "2026-06-29T05:58:26.529Z",
+      "createdBy": "launch_dynamic_reply_shape_zero_example_v3_20260622_script",
+      "updatedBy": "force_dynamic_reply_shape_zero_example_v3_control_script",
+      "createdAt": "2026-06-23T00:51:20.881Z",
+      "updatedAt": "2026-06-29T05:58:26.529Z",
+      "assignmentCount": 8097,
+      "exposureCount": 469227,
+      "overrideCount": 1,
+      "variants": [
+        {
+          "key": "control_current_shape_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "current"
+              }
+            }
+          },
+          "description": "Current online dynamic reply-shape snippets"
+        },
+        {
+          "key": "treatment_rewritten_examples_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "rewritten_examples"
+              }
+            }
+          },
+          "description": "Rewritten dynamic reply-shape snippets with scenario examples"
+        },
+        {
+          "key": "treatment_zero_examples_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "zero_examples"
+              }
+            }
+          },
+          "description": "Rewritten dynamic reply-shape rules without scenario examples"
+        }
+      ],
+      "audienceRules": {
+        "allow_guest": false,
+        "allow_minor": true,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_reply_shape_zero_example_v4_new_users_20260629",
+      "name": "Dynamic reply shape zero example v4 new users",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": "2026-06-29T05:08:06.472Z",
+      "endsAt": "2026-06-29T06:59:51.200Z",
+      "createdBy": "launch_dynamic_reply_shape_zero_example_v4_new_users_script",
+      "updatedBy": "launch_dynamic_reply_shape_zero_example_v5_new_users_script",
+      "createdAt": "2026-06-29T05:08:06.472Z",
+      "updatedAt": "2026-06-29T06:59:51.887Z",
+      "assignmentCount": 30,
+      "exposureCount": 183,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_shape_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "current"
+              }
+            }
+          },
+          "description": "Current online dynamic reply-shape snippets"
+        },
+        {
+          "key": "treatment_rewritten_examples_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "rewritten_examples"
+              }
+            }
+          },
+          "description": "Rewritten dynamic reply-shape snippets with scenario examples"
+        },
+        {
+          "key": "treatment_zero_examples_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "zero_examples"
+              }
+            }
+          },
+          "description": "Rewritten dynamic reply-shape rules without scenario examples"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "$experiment.starts_at"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_dynamic_reply_shape_zero_example_v5_new_users_20260629",
+      "name": "Dynamic reply shape zero example v5 new users",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": true,
+      "version": 1,
+      "startsAt": "2026-06-29T07:21:58.577Z",
+      "endsAt": "2026-07-02T19:00:26.767Z",
+      "createdBy": "launch_dynamic_reply_shape_zero_example_v5_new_users_script",
+      "updatedBy": "launch_dynamic_reply_shape_mode_examples_v1_new_users_script",
+      "createdAt": "2026-06-29T06:59:51.546Z",
+      "updatedAt": "2026-07-02T19:00:26.768Z",
+      "assignmentCount": 1855,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_shape_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "current"
+              }
+            }
+          },
+          "description": "Current online dynamic reply-shape snippets"
+        },
+        {
+          "key": "treatment_rewritten_examples_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "rewritten_examples"
+              }
+            }
+          },
+          "description": "Rewritten dynamic reply-shape snippets with scenario examples"
+        },
+        {
+          "key": "treatment_zero_examples_v3",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "reply_shape_version": "zero_examples"
+              }
+            }
+          },
+          "description": "Rewritten dynamic reply-shape rules without scenario examples"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "$experiment.starts_at"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_generate_reply_dynamic_prompt_ab_20260624",
+      "name": "Generate reply dynamic prompt 1.0.9+ 50/50",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": false,
+      "version": 1,
+      "startsAt": null,
+      "endsAt": null,
+      "createdBy": "launch_generate_reply_dynamic_prompt_experiment_script",
+      "updatedBy": "codex_disable_dynamic_prompt_ab",
+      "createdAt": "2026-06-24T15:13:46.191Z",
+      "updatedAt": "2026-06-25T16:27:58.101Z",
+      "assignmentCount": 1716,
+      "exposureCount": 55536,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_online_dynamic_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "system_prompt_name": "chat/generate_reply_dynamic"
+              }
+            }
+          },
+          "description": "Online generate_reply_dynamic system prompt"
+        },
+        {
+          "key": "treatment_dynamic_prompt_ab",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "system_prompt_name": "chat/generate_reply_dynamic_ab"
+              }
+            }
+          },
+          "description": "Editable copy of the online generate_reply_dynamic system prompt"
+        }
+      ],
+      "audienceRules": {
+        "allow_guest": false,
+        "allow_minor": true,
+        "app_version": {
+          "gte": "1.0.9"
+        },
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_generate_reply_dynamic_prompt_three_arm_20260627",
+      "name": "Generate reply dynamic prompt 1.0.9+ three-arm",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": false,
+      "version": 1,
+      "startsAt": "2026-06-27T18:46:57.488Z",
+      "endsAt": "2026-06-29T12:30:13.510Z",
+      "createdBy": "launch_generate_reply_dynamic_prompt_three_arm_experiment_script",
+      "updatedBy": "codex_stop_dynamic_prompt_three_arm",
+      "createdAt": "2026-06-27T16:16:11.414Z",
+      "updatedAt": "2026-06-29T12:30:13.510Z",
+      "assignmentCount": 1602,
+      "exposureCount": 43229,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_online_dynamic_prompt",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "online"
+              }
+            }
+          },
+          "description": "Online generate_reply_dynamic system prompt"
+        },
+        {
+          "key": "treatment_dynamic_prompt_a",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_a"
+              }
+            }
+          },
+          "description": "Editable generate_reply_dynamic prompt A"
+        },
+        {
+          "key": "treatment_dynamic_prompt_b",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "generate_reply": {
+                "prompt_variant": "prompt_b"
+              }
+            }
+          },
+          "description": "Editable generate_reply_dynamic prompt B"
+        }
+      ],
+      "audienceRules": {
+        "created_at": {
+          "gte": "$experiment.starts_at"
+        },
+        "allow_guest": false,
+        "allow_minor": true,
+        "app_version": {
+          "gte": "1.0.9"
+        },
+        "user_id_allowlist": [],
+        "user_id_blocklist": [],
+        "require_registered": true
+      },
+      "guardrailRules": {}
+    },
+    {
+      "experimentKey": "chat_message_candy_cost_new_users_20260630",
+      "name": "新用户聊天消息糖果消耗实验",
+      "domain": "chat",
+      "status": "stopped",
+      "clientVisible": false,
+      "serverVisible": false,
+      "version": 2,
+      "startsAt": "2026-06-30T12:12:34.099Z",
+      "endsAt": "2026-07-01T02:11:30.769Z",
+      "createdBy": "codex",
+      "updatedBy": "codex",
+      "createdAt": "2026-06-30T20:12:34.099Z",
+      "updatedAt": "2026-07-01T10:11:31.063Z",
+      "assignmentCount": 500,
+      "exposureCount": 0,
+      "overrideCount": 0,
+      "variants": [
+        {
+          "key": "control_current_a",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "message_candy_cost": {
+                "mode": "legacy",
+                "cost_milli": 1000
+              }
+            }
+          },
+          "description": "对照组A：不走新计费状态，保持当前每条普通聊天1糖"
+        },
+        {
+          "key": "control_current_b",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "message_candy_cost": {
+                "mode": "legacy",
+                "cost_milli": 1000
+              }
+            }
+          },
+          "description": "对照组B：不走新计费状态，保持当前每条普通聊天1糖"
+        },
+        {
+          "key": "treatment_cost_1",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "message_candy_cost": {
+                "mode": "legacy",
+                "cost_milli": 1000
+              }
+            }
+          },
+          "description": "实验组1：每条普通聊天1糖，继续走当前整数扣费路径"
+        },
+        {
+          "key": "treatment_cost_0_5",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "message_candy_cost": {
+                "mode": "metered",
+                "cost_milli": 500
+              }
+            }
+          },
+          "description": "实验组2：每条普通聊天0.5糖，累计满1糖才扣费并写一条聊天消耗"
+        },
+        {
+          "key": "treatment_cost_0",
+          "weight": 1,
+          "payload": {
+            "chat": {
+              "message_candy_cost": {
+                "mode": "legacy",
+                "cost_milli": 0
+              }
+            }
+          },
+          "description": "实验组3：普通聊天0糖，不写新计费状态"
+        }
+      ],
+      "audienceRules": {
+        "platforms": [
+          "ios",
+          "android"
+        ],
+        "vip_tiers": [
+          "free"
+        ],
+        "created_at": {
+          "gte": "2026-06-30T20:12:34.000+08:00"
+        },
+        "allow_guest": false,
+        "allow_minor": false,
+        "stable_sample": {
+          "salt": "chat_message_candy_cost_new_users_20260630",
+          "percent": 50
+        }
+      },
+      "guardrailRules": {}
+    }
+  ]
+}
