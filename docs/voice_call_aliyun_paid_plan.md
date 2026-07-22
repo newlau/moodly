@@ -81,6 +81,17 @@ chat-svr 现在已经有账号级音色资产和复刻任务：
 - Qwen 克隆 TTS 默认目标模型是 `qwen3-tts-vc-2026-01-22`。
 - CosyVoice 默认 TTS 模型是 `cosyvoice-v3.5-plus`。
 
+#### 3.1.1 待保存试听任务收口（implementation record，2026-07-22）
+
+复刻完成只表示试听音频可用，并不表示已加入“我的声音”。为避免未保存任务持续占用服务端 provider 资源，当前链路采用**每个账号最多一个待处理试听任务**：
+
+1. `POST /chat/v1/voices/clone/jobs` 会拒绝已有 `training` 或 `preview_ready` 任务的账号。
+2. 双端只显示“试听音色已生成，待保存”；保存成功后任务转为 `saved` 并创建 `Voice` 资产。
+3. 用户可调用 `DELETE /chat/v1/voices/clone/jobs/:jobId` 放弃未保存任务；任务标为 `discarded`，不会再作为活动任务返回。
+4. 阿里云未保存音色的定时清理同时覆盖 `preview_ready` 与 `discarded`，释放远端音色额度；已保存音色不会被该清理任务处理。
+
+`active_clone_job_count` 仍可用于运营观测，但不再作为客户端允许并发创建的依据。
+
 关键代码：
 
 - `/Users/liuyingying/Desktop/moodly-chat-svr/src/config/env.ts`
