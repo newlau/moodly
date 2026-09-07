@@ -7,6 +7,20 @@ Owner topic：voice / voice call / paid plan
 
 说明：本文是当前代码真相 + 阿里云官方价格/能力核对后的执行方案。真实代码、配置、日志和线上账单优先于旧文档。2026-06-17 已确认语音通话卡按秒计费、套餐按分钟展示、商品与音色卡独立。
 
+## 0. 2026-09-07 MP4 分句实时播放实施记录
+
+Status: current。
+
+问题不是 MP4 不能播放：旧链路把完整回复一次交给 TTS，并将一个完整 MP4 HTTP body 缓存完成后才播放；网络字节分包不是可播放的句边界，因此首句仍会等全文音频完成。
+
+- 版本门槛：服务端只对 `client_version >= 1.2.1` 开启 `segmented_mp4_v1`。缺失、非标准或较低版本一律保留旧的单条 WAV/PCM 流，不改变已发布客户端行为；服务端会向旧链路上游声明 `Accept: audio/wav`，但上游必须实际遵守该协商（否则不可把 MP4 伪装成 WAV）。
+- 新协议：`POST .../turns/audio-stream` 和 idle-turn 返回 `multipart/mixed; boundary=moodly-voice-segments-v1`；每个 part 必须是完整、独立可解码的 `audio/mp4`，带 `Content-Length` 和从 `0` 连续递增的 `X-Voice-Call-Segment-Sequence`。HTTP body 内不得裸拼多个 MP4。
+- 服务端：按 `voice_tts_segments` 分句并发发起短句 TTS，按序输出。上游返回的格式不是 MP4 时自动退回旧单流，不能伪标为 MP4。上游应统一使用音频容器 MIME `audio/mp4`，不得用 `video/mp4`。
+- iOS/Android：解析 multipart、校验长度与序号，每收到一个完整句文件即交给各自系统 MP4 解码器播放，不再等待整条回复音频结束；后续句按序继续读取、播放。打断/挂断沿用既有播放 generation 取消路径。
+- 旧版 WAV：若上游实际只在全文合成完成后才返回音频，事后把完整 MP4 转 WAV 不能降低首句延迟；旧路径也必须由上游按句生成或输出连续 PCM/WAV 才能做到实时。
+
+验收：分别用 `1.2.0`、`1.2.1`、缺失版本请求 turn 和 idle-turn；前两者/缺失版本检查 content type 和旧 WAV 播放不变，`1.2.1` 检查 transport header、连续 part 序号、首个 MP4 part 到达及可听时间、段间空隙、打断后不再播放旧 part。线上记录 `client_version`、transport、首 part 到达/可听时间、段数、字节数、格式/序号错误和打断取消数。
+
 ## 1. 结论
 
 我们自己复刻的音色应按阿里云音色资产处理，角色语音输出优先走阿里云 Qwen-TTS / CosyVoice provider，而不是把用户复刻音色映射成火山音色。
