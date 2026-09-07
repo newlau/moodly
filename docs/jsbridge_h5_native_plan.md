@@ -50,6 +50,7 @@ window.MoodlyJSBridge.call(method, params, callback)
 | `openNativeRoute` | `{ "route": "subscription", "initialTier": "vip", "source": "h5_bridge" }` | `{}` | 跳转原生页，未知 route 返回 `unsupported_route` |
 | `pickImage` | `{ "count": 1 }` | `url`, `mediaUrl`, `fileName`, `mimeType`, `size` | 打开系统相册，由客户端上传图片后把远端 URL 回给 H5 |
 | `downloadImage`（兼容 `saveImage`） | `{ "url": "https://...", "fileName": "活动海报.png" }` | `saved: true`；Android 额外返回 `uri` | 下载 `http/https` 图片并保存到系统相册；首次使用会请求相册写入权限 |
+| `saveMediaToAlbum` | `{ "urls": ["https://..."], "media_type": "image" \| "video", "file_names": ["可选文件名"] }` | `saved_count`, `failed_count`, `saved_urls`, `failed_urls` | 顺序下载并保存官方活动素材。仅当 `code = 0` 且 `failed_count = 0` 时，H5 才能标记为已下载；最多 20 个 URL。 |
 | `trackEvent` | `{ "actionName": "join_click", "buttonName": "立即参加", "result": "click" }` | `{}` | 上报 `activity_webview_action_click` |
 
 当前原生 route 白名单：
@@ -64,8 +65,8 @@ window.MoodlyJSBridge.call(method, params, callback)
 
 ## 已落地
 
-- iOS: `EmbeddedWebView` 注入 `MoodlyJSBridge`，覆盖协议页、活动页以及复用该容器的 H5；支持环境、标题、关闭、内嵌网页、原生 route、外链、相册选择后客户端上传、图片保存到相册、H5 行为埋点。
-- Android: `LegalWebViewScreen` 注入 `MoodlyJSBridge`；`MoodlyNavHost` 已接 `openWebView` 和原生 route 白名单；支持环境、标题、关闭、内嵌网页、原生 route、外链、相册选择后客户端上传、图片保存到相册、H5 行为埋点。
+- iOS: `EmbeddedWebView` 注入 `MoodlyJSBridge`，覆盖协议页、活动页以及复用该容器的 H5；支持环境、标题、关闭、内嵌网页、原生 route、外链、相册选择后客户端上传、图片/视频保存到相册、H5 行为埋点。
+- Android: `LegalWebViewScreen` 注入 `MoodlyJSBridge`；`MoodlyNavHost` 已接 `openWebView` 和原生 route 白名单；支持环境、标题、关闭、内嵌网页、原生 route、外链、相册选择后客户端上传、图片/视频保存到相册、H5 行为埋点。视频保存使用 scoped storage，Android 10 以下会在回包中报告失败。
 - 双端 WebView 打开 `taxiangapp.com` 及其子域 H5 时，如果链接缺少 `token/access_token`，客户端会自动追加当前登录 `token`；外部域名不注入登录态。
 
 ## 待确认
@@ -99,6 +100,18 @@ function downloadPoster(url) {
   window.MoodlyJSBridge.call('downloadImage', { url, fileName: '活动海报.png' }, function (res) {
     if (res.code !== 0) throw new Error(res.message)
     console.log('图片已保存', res.data)
+  })
+}
+
+function saveOfficialVideo(url) {
+  window.MoodlyJSBridge.call('saveMediaToAlbum', {
+    urls: [url],
+    media_type: 'video'
+  }, function (res) {
+    if (res.code !== 0 || res.data.failed_count !== 0) {
+      throw new Error(res.message || '保存失败')
+    }
+    console.log('已保存', res.data.saved_count, '个素材')
   })
 }
 ```
