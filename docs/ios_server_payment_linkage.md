@@ -2,7 +2,23 @@
 
 状态：current
 
-更新时间：2026-05-13
+更新时间：2026-11-03
+
+## 2026-11-03 音色卡、通话卡到账恢复（implementation record / needs verification）
+
+本轮修复覆盖客户端与主业务服务代码；尚未部署服务、发布客户端或执行真机 Sandbox 付款。接口归属为 [主服务糖果模块](../../moodly_server/docs/candy.md)，客户端归属为 [IAPManager](../moodly-ios/Bubbly/Services/IAPManager.swift) 和钱包。运营后台、H5 与 Android 支付流程不增加字段或入口。
+
+- Apple 决定付款是否成功；主服务订单与权益账本决定是否到账。客户端只能在服务端明确返回已支付订单、正数发放数量及有效余额后结束 Apple 交易；断网、取消等待或确认失败保留 unfinished。
+- 音色卡和通话卡创建订单的 `pay_params` 增加 `app_account_token`，值为订单内部 UUID 主键，不是 `VCO_` / `VCCO_` 业务订单号，也不是用户 UID。客户端购买前验证 UUID，并传给 StoreKit；缺失时不拉起付款。数据库已有该主键，无需增加表或迁移。
+- 认证恢复接口为 `POST /v1/candy/voice-cards/apple/recover`、`POST /v1/candy/voice-call-cards/apple/recover`，提交 `signed_transaction`。服务端验签后，按签名 token 精确找订单，校验账号、Apple 渠道、商品及交易号；禁止按商品、时间或最近订单猜测。响应沿用各自的订单状态、发放数量及新余额字段。Apple 服务端通知使用同一幂等核销逻辑。
+- 精确订单 token 允许 Ask to Buy 等延迟批准后的交易到账；旧版无 token 的直接核销仍保留原时间窗，不能用无绑定凭证绕过校验。交易号唯一约束及账本事务负责重复请求、通知与重试不重复发放。
+- iOS 在启动、登录、回到前台及收到交易更新时有限重试 unfinished；确认前后检查账号和会话，旧请求不能覆盖新账号页面。钱包及用户资料对确认前启动的旧余额读取增加保护；新查询仍接受合法消费后的余额下降。
+
+发布顺序：先上线兼容旧客户端的主服务，再发布 iOS；不要在仍有新版未完成交易时回滚掉恢复接口。旧版本已经 finish 且丢失凭证的订单不承诺自动补发，仍需按原订单人工对账。商品 ID、价格及签名配置不变。
+
+本地自动验证：主服务 116 例相关回归、类型检查及完整构建通过；iOS 新旧付款、钱包真实入口、会员/余额/聊天与账号隔离回归及完整 Debug iPhoneOS 无签名构建通过，构建期间源码/配置哈希保持一致。详细范围见 [iOS 验收记录](../moodly-ios/acceptance-checklist.md) 和主服务接口文档；这些结果不代表线上已生效或真实付款通过。
+
+待人工 Sandbox 验收：普通购买与取消、Apple 成功后断网、杀进程重启补单、重装后按签名 token 恢复、延迟批准、切换账号、多设备、重复请求/通知单次入账；同时检查聊天文字发送、重连及语音入口。使用独立沙盒服务或已批准的受控账号策略，不将生产全局 Apple 环境改为 sandbox。
 
 ## 1. 目的
 
@@ -68,13 +84,13 @@ iOS 商品配置文档在：
 
 会员与糖果目前共用同一套 Apple IAP 解析能力：
 
-- `moodly_server/src/modules/membership/iap.service.ts`
+- `moodly_server/src/modules/billing/iap.service.ts`
 
 这个服务当前做的是：
 
-- 解析 `signedTransaction` 的 JWS payload
-- 校验 `bundleId`
-- 返回 `transactionId / productId / purchaseDate / expiresDate`
+- 通过 Apple 官方服务端库验证 `signedTransaction` 的 JWS 签名、证书链、环境和 `bundleId`，默认拒绝撤销的交易
+- 兼容旧格式交易号时先通过 App Store Server API 取得签名交易，再走相同校验
+- 返回 `transactionId / productId / purchaseDate / expiresDate / appAccountToken` 等已验签字段
 
 然后由上层业务模块分别判断：
 
