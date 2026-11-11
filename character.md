@@ -1,5 +1,7 @@
 # 人物接口文档（`chat/v1/characters`）
 
+> 1.3.0（2026-11-12，current）：列表新增 `keyword` 关键词搜索；创建角色恢复 `is_public` 用户意愿（客户端默认公开、可关闭），审核通过前仍不会出现在广场。服务端权威说明见 `moodly-chat-svr/.docs/character.md`。
+
 说明：
 - 公共前缀：`chat/v1/characters`
 - 认证：`Authorization: Bearer <token>`
@@ -9,7 +11,7 @@
 
 ## 1) 获取角色列表
 
-- 功能：分页获取角色列表，支持分类与角色类型筛选，并返回是否聊过。
+- 功能：分页获取角色列表，支持分类、角色类型与关键词搜索，并返回是否聊过。
 - 接口路径：`GET chat/v1/characters`
 
 ### 请求参数（Query）
@@ -18,14 +20,18 @@
 {
   "category": "custom",
   "_comment_category": "string, 可选, 分类筛选",
+  "keyword": "雨夜",
+  "_comment_keyword": "string, 可选, 最多 50 字, 匹配名称/简介或宣传语/分类",
   "type": "all",
-  "_comment_type": "string, 可选, all/system/user, 默认 all",
+  "_comment_type": "string, 可选, all/system/user/public, 默认 all",
   "page": 1,
   "_comment_page": "number, 可选, 页码, 默认 1",
   "page_size": 20,
   "_comment_page_size": "number, 可选, 每页数量 1~100, 默认 20"
 }
 ```
+
+补充（1.3.0）：`GET chat/v1/characters/search?q=<关键词>&page=1&page_size=20` 供注册引导/发现页搜索使用；范围同商店（官方 + 审核通过公开角色），返回与列表同形。`q` 最多 50 字，空值返回空列表；服务端也兼容 `keyword` 参数。
 
 ### 响应数据
 
@@ -65,6 +71,8 @@
   "_comment_page_size": "number, 可选, 每页数量 1~100, 默认 20"
 }
 ```
+
+补充（1.3.0）：`GET chat/v1/characters/search?q=<关键词>&page=1&page_size=20` 供注册引导/发现页搜索使用；范围同商店（官方 + 审核通过公开角色），返回与列表同形。`q` 最多 50 字，空值返回空列表；服务端也兼容 `keyword` 参数。
 
 ### 响应数据
 
@@ -178,7 +186,9 @@
   "user_title": "你",
   "_comment_user_title": "string, 必填；当前客户端创建页不再单独暴露该输入项，统一传固定兜底值",
   "chat_background": "#FFF7F2",
-  "_comment_chat_background": "string, 必填, 长度 1~255"
+  "_comment_chat_background": "string, 必填, 长度 1~255",
+  "is_public": true,
+  "_comment_is_public": "boolean, 可选, 1.3.0 创建页默认 true; 仅记录用户公开意愿, 仍需后台审核 publicReviewedAt"
 }
 ```
 
