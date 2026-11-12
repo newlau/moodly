@@ -1,6 +1,6 @@
 # 人物接口文档（`chat/v1/characters`）
 
-> 1.3.0（2026-11-12，current）：列表新增 `keyword` 关键词搜索；创建角色恢复 `is_public` 用户意愿（客户端默认公开、可关闭），审核通过前仍不会出现在广场。服务端权威说明见 `moodly-chat-svr/.docs/character.md`。
+> 1.3.0（2026-11-12，current）：发现页复用既有 `GET chat/v1/characters/search` 做关键词搜索；创建角色恢复 `is_public` 用户意愿（客户端默认公开、可关闭），审核通过前仍不会出现在广场。服务端权威说明见 `moodly-chat-svr/.docs/character.md`。
 
 说明：
 - 公共前缀：`chat/v1/characters`
@@ -11,7 +11,7 @@
 
 ## 1) 获取角色列表
 
-- 功能：分页获取角色列表，支持分类、角色类型与关键词搜索，并返回是否聊过。
+- 功能：分页获取角色列表，支持分类与角色类型筛选，并返回是否聊过。
 - 接口路径：`GET chat/v1/characters`
 
 ### 请求参数（Query）
@@ -20,8 +20,6 @@
 {
   "category": "custom",
   "_comment_category": "string, 可选, 分类筛选",
-  "keyword": "雨夜",
-  "_comment_keyword": "string, 可选, 最多 50 字, 匹配名称/简介或宣传语/分类",
   "type": "all",
   "_comment_type": "string, 可选, all/system/user/public, 默认 all",
   "page": 1,
@@ -31,48 +29,7 @@
 }
 ```
 
-补充（1.3.0）：`GET chat/v1/characters/search?q=<关键词>&page=1&page_size=20` 供注册引导/发现页搜索使用；范围同商店（官方 + 审核通过公开角色），返回与列表同形。`q` 最多 50 字，空值返回空列表；服务端也兼容 `keyword` 参数。
-
-### 响应数据
-
-```json
-{
-  "total": 12,
-  "items": [
-    {
-      "character_uid": "8f5b4f40-7dd5-4f4c-9d1e-9c9ff8b209a7",
-      "name": "晚晚",
-      "gender": "female",
-      "avatar_url": "https://example.com/avatar.png",
-      "description": "温柔治愈系角色",
-      "tags": ["温柔", "恋人"],
-      "category": "custom",
-      "is_system": 0,
-      "is_chatted": true
-    }
-  ]
-}
-```
-
----
-
-## 2) 获取聊过天的角色列表
-
-- 功能：分页获取当前用户聊过天的角色（游客固定返回空列表）。
-- 接口路径：`GET chat/v1/characters/chatted`
-
-### 请求参数（Query）
-
-```json
-{
-  "page": 1,
-  "_comment_page": "number, 可选, 页码, 默认 1",
-  "page_size": 20,
-  "_comment_page_size": "number, 可选, 每页数量 1~100, 默认 20"
-}
-```
-
-补充（1.3.0）：`GET chat/v1/characters/search?q=<关键词>&page=1&page_size=20` 供注册引导/发现页搜索使用；范围同商店（官方 + 审核通过公开角色），返回与列表同形。`q` 最多 50 字，空值返回空列表；服务端也兼容 `keyword` 参数。
+补充（1.3.0）：`GET chat/v1/characters/search?q=<角色名>&page=1&page_size=20` 供注册引导/发现页搜索使用；范围同商店（官方 + 审核通过公开角色），返回与列表同形。`q` 必填，1–30 字，服务端按名称/标签匹配；不分页时默认 20 条。
 
 ### 响应数据
 
